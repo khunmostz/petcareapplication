@@ -35,145 +35,138 @@ class _SignInPageState extends State<SignInPage>
     }
 
     return Scaffold(
-      backgroundColor: Colors.grey[300],
-      body: Container(
-        width: size.width,
-        height: size.height,
-        child: Stack(
+      backgroundColor: kDefualtColorMain,
+      body: SingleChildScrollView(
+        child: Column(
           children: [
             Container(
-              width: size.width,
-              height: size.height * 0.6,
-              decoration: BoxDecoration(
-                color: kDefualtColorMain,
-              ),
-              child: Column(
-                children: [
-                  Image.asset(
-                    'assets/image/logo-petcare-white.png',
-                  ),
-                ],
+              width: double.infinity,
+              height: size.height * 0.4,
+              child: Image.asset(
+                'assets/image/logo-petcare-white.png',
               ),
             ),
-            Positioned(
-              bottom: 0,
-              child: Container(
-                width: size.width,
-                height: size.height * 0.6,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(16),
-                    topLeft: Radius.circular(16),
-                  ),
+            Container(
+              decoration: BoxDecoration(
+                // border: Border.all(),
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(18),
+                  topRight: Radius.circular(18),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(kDefualtPadding),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Email',
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(kDefualtPadding),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Username',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.grey.shade200,
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        hintText: 'example@test.com',
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      'Password',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    TextFormField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.grey.shade200,
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        hintText: '*************',
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    ElevatedButton(
+                      style: buttonStyle,
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/signup');
+                      },
+                      child: Text(
+                        'Sign Up',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.grey.shade200,
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          hintText: 'example@hotmail.com',
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      Text(
-                        'Password',
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        'Forgot Password ?',
                         style: TextStyle(
-                          fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.grey.shade200,
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          hintText: '*************',
-                        ),
-                      ),
-                      SizedBox(
-                        height: 25,
-                      ),
-                      ElevatedButton(
-                        style: buttonStyle,
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/content');
-                        },
-                        child: Text(
-                          'Sign In',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Text(
-                          'Forgot Password ?',
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Don't have an account ?",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ),
-                      Spacer(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Don't have an account ?",
+                        SizedBox(
+                          width: 5,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/signup');
+                          },
+                          child: Text(
+                            'Sign Up',
                             style: TextStyle(
+                              color: kDefualtColorMain,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(context, '/signup');
-                            },
-                            child: Text(
-                              'Sign Up',
-                              style: TextStyle(
-                                  color: kDefualtColorMain,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      )
-                    ],
-                  ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    )
+                  ],
                 ),
               ),
-            ),
+            )
           ],
         ),
       ),
