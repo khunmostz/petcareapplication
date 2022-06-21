@@ -47,6 +47,7 @@ class _SignInPageState extends State<SignInPage>
               ),
             ),
             Container(
+              height: size.height * 0.65,
               decoration: BoxDecoration(
                 // border: Border.all(),
                 color: Colors.white,
@@ -109,10 +110,10 @@ class _SignInPageState extends State<SignInPage>
                     ElevatedButton(
                       style: buttonStyle,
                       onPressed: () {
-                        Navigator.pushNamed(context, '/signup');
+                        Navigator.pushNamed(context, '/content');
                       },
                       child: Text(
-                        'Sign Up',
+                        'Sign In',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -162,7 +163,7 @@ class _SignInPageState extends State<SignInPage>
                     ),
                     SizedBox(
                       height: 10,
-                    )
+                    ),
                   ],
                 ),
               ),

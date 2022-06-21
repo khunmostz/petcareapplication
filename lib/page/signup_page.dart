@@ -147,7 +147,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ElevatedButton(
                       style: buttonStyle,
                       onPressed: () {
-                        Navigator.pushNamed(context, '/signup');
+                        Navigator.pushNamed(context, '/signin');
                       },
                       child: Text(
                         'Sign Up',
