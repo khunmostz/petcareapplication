@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:petcare_project/constant.dart';
 import 'package:petcare_project/data/menuData.dart';
+import 'package:petcare_project/data/recommendData.dart';
 
 import '../widget/search_bar.dart';
 
@@ -11,7 +13,21 @@ class ContentPage extends StatefulWidget {
   State<ContentPage> createState() => _ContentPageState();
 }
 
-class _ContentPageState extends State<ContentPage> {
+class _ContentPageState extends State<ContentPage>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
+    _controller.forward();
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -98,8 +114,8 @@ class _ContentPageState extends State<ContentPage> {
               width: size.width,
               height: size.height * 0.4,
               decoration: BoxDecoration(
-                border: Border.all(),
-              ),
+                  // border: Border.all(),
+                  ),
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: kDefualtPadding),
@@ -126,7 +142,63 @@ class _ContentPageState extends State<ContentPage> {
               ),
             ),
             // recommend
-            Text('recommend'),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: kDefualtPadding),
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Recommend",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      width: size.width,
+                      height: 160,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: recommendData.length,
+                        itemBuilder: (BuildContext context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: 200,
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    color: Colors.amber,
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(16),
+                                    child: Image.network(
+                                      "${recommendData[index].imageRecommend}",
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text("${recommendData[index].titleMenu}")
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+
             // Container(
             //   width: double.infinity,
             //   height: size.height,

@@ -13,13 +13,16 @@ class BeforePage extends StatefulWidget {
 class _BeforePageState extends State<BeforePage>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
+
+  late final Curve _curve = Curves.easeInOut;
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(seconds: 1),
       vsync: this,
+      duration: const Duration(seconds: 1),
     );
+    _controller.forward();
   }
 
   Widget build(BuildContext context) {
@@ -45,11 +48,9 @@ class _BeforePageState extends State<BeforePage>
           Spacer(),
           Lottie.asset(
             'assets/lottie/blackcat.json',
+            repeat: true,
             controller: _controller,
             frameRate: FrameRate(240),
-            onLoaded: (composition) {
-              _controller.repeat();
-            },
           ),
           Spacer(),
           // title
@@ -87,15 +88,21 @@ class _BeforePageState extends State<BeforePage>
                     height: 25,
                   ),
                   // Sign In button
-                  ElevatedButton(
-                    style: buttonStyle,
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/signin');
-                    },
-                    child: Text(
-                      "Sign In",
-                      style: TextStyle(
-                        fontSize: 18,
+                  FadeTransition(
+                    opacity: CurvedAnimation(
+                      parent: _controller,
+                      curve: Curves.easeInOut,
+                    ),
+                    child: ElevatedButton(
+                      style: buttonStyle,
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/signin');
+                      },
+                      child: Text(
+                        "Sign In",
+                        style: TextStyle(
+                          fontSize: 18,
+                        ),
                       ),
                     ),
                   ),
@@ -143,5 +150,12 @@ class _BeforePageState extends State<BeforePage>
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _controller.dispose();
   }
 }
