@@ -14,15 +14,14 @@ class _BeforePageState extends State<BeforePage>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
 
-  late final Curve _curve = Curves.easeInOut;
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 1),
-    );
-    _controller.forward();
+    // _controller = AnimationController(
+    //   vsync: this,
+    //   duration: const Duration(seconds: 1),
+    // );
+    // _controller.forward();
   }
 
   Widget build(BuildContext context) {
@@ -49,7 +48,7 @@ class _BeforePageState extends State<BeforePage>
           Lottie.asset(
             'assets/lottie/blackcat.json',
             repeat: true,
-            controller: _controller,
+            // controller: _controller,
             frameRate: FrameRate(240),
           ),
           Spacer(),
@@ -76,33 +75,40 @@ class _BeforePageState extends State<BeforePage>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "Do you want ?",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
+                  TweenAnimationBuilder(
+                    child: Text(
+                      "Do you want ?",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
+                    duration: Duration(seconds: 2),
+                    tween: Tween<double>(begin: 0, end: 1),
+                    builder: (BuildContext context, double _var, child) {
+                      return Opacity(
+                        opacity: _var,
+                        child: Padding(
+                          padding: EdgeInsets.only(top: _var * 20),
+                          child: child,
+                        ),
+                      );
+                    },
                   ),
                   SizedBox(
                     height: 25,
                   ),
                   // Sign In button
-                  FadeTransition(
-                    opacity: CurvedAnimation(
-                      parent: _controller,
-                      curve: Curves.easeInOut,
-                    ),
-                    child: ElevatedButton(
-                      style: buttonStyle,
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/signin');
-                      },
-                      child: Text(
-                        "Sign In",
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
+                  ElevatedButton(
+                    style: buttonStyle,
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/signin');
+                    },
+                    child: Text(
+                      "Sign In",
+                      style: TextStyle(
+                        fontSize: 18,
                       ),
                     ),
                   ),
@@ -156,6 +162,6 @@ class _BeforePageState extends State<BeforePage>
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    _controller.dispose();
+    // _controller.dispose();
   }
 }
