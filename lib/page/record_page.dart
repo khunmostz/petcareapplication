@@ -182,61 +182,67 @@ class _RecordPageState extends State<RecordPage>
                         onTap: () {
                           _tapSearch ? null : _showDatePicker();
                         },
-                        child: SingleChildScrollView(
-                          physics: NeverScrollableScrollPhysics(),
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 350),
-                            width: _tapSearch ? 48 : 200,
-                            height: 48,
-                            decoration: BoxDecoration(
-                              color: kDefualtColorMain,
-                              borderRadius: BorderRadius.circular(36),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black26,
-                                  spreadRadius: -10,
-                                  blurRadius: 10,
-                                  offset: Offset(0.0, 10),
-                                ),
-                              ],
-                            ),
-                            child: Row(
-                              mainAxisAlignment: _tapSearch
-                                  ? MainAxisAlignment.center
-                                  : MainAxisAlignment.spaceBetween,
-                              children: [
-                                SizedBox(
-                                  width: _tapSearch ? 0 : 10,
-                                ),
-                                _tapSearch
-                                    ? Container()
-                                    : Text(
-                                        "เลือกวันที่กด",
-                                        style: TextStyle(
-                                          fontSize: 14,
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 350),
+                          width: _tapSearch ? 48 : 200,
+                          height: 48,
+                          decoration: BoxDecoration(
+                            color: kDefualtColorMain,
+                            borderRadius: BorderRadius.circular(36),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black26,
+                                spreadRadius: -10,
+                                blurRadius: 10,
+                                offset: Offset(0.0, 10),
+                              ),
+                            ],
+                          ),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            physics: NeverScrollableScrollPhysics(),
+                            child: Container(
+                              width: _tapSearch ? 48 : 200,
+                              child: Row(
+                                mainAxisAlignment: _tapSearch
+                                    ? MainAxisAlignment.center
+                                    : MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(
+                                    width: _tapSearch ? 0 : 10,
+                                  ),
+                                  _tapSearch
+                                      ? Container()
+                                      : Text(
+                                          "เลือกวันที่กด",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                  GestureDetector(
+                                    onTap: () => setState(() {
+                                      _seachField();
+                                    }),
+                                    child: Padding(
+                                      padding: _tapSearch
+                                          ? EdgeInsets.only(right: 0)
+                                          : EdgeInsets.only(right: 20),
+                                      child: Align(
+                                        alignment: _tapSearch
+                                            ? Alignment.center
+                                            : Alignment.centerRight,
+                                        child: Icon(
+                                          _tapSearch
+                                              ? Icons.search
+                                              : Icons.close,
                                           color: Colors.white,
                                         ),
                                       ),
-                                GestureDetector(
-                                  onTap: () => setState(() {
-                                    _seachField();
-                                  }),
-                                  child: Padding(
-                                    padding: _tapSearch
-                                        ? EdgeInsets.only(right: 0)
-                                        : EdgeInsets.only(right: 20),
-                                    child: Align(
-                                      alignment: _tapSearch
-                                          ? Alignment.center
-                                          : Alignment.centerRight,
-                                      child: Icon(
-                                        _tapSearch ? Icons.search : Icons.close,
-                                        color: Colors.white,
-                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
