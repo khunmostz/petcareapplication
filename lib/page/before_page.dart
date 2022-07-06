@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-import '../constant.dart';
+import '../utils/constant.dart';
 
 class BeforePage extends StatefulWidget {
   const BeforePage({Key? key}) : super(key: key);

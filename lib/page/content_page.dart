@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:petcare_project/constant.dart';
+import 'package:petcare_project/page/profile_page.dart';
+import 'package:petcare_project/utils/constant.dart';
 import 'package:petcare_project/data/menuData.dart';
 import 'package:petcare_project/data/recommendData.dart';
 import 'package:petcare_project/page/maps_page.dart';
+import 'package:petcare_project/page/record_page.dart';
 
 import '../widget/search_bar.dart';
 
@@ -33,43 +35,8 @@ class _ContentPageState extends State<ContentPage>
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+
     return Scaffold(
-      bottomNavigationBar: Container(
-        color: kDefualtColorMain,
-        child: Padding(
-          padding: const EdgeInsets.all(kDefualtPadding),
-          child: GNav(
-            backgroundColor: kDefualtColorMain,
-            color: Colors.white,
-            activeColor: Colors.white,
-            tabBackgroundColor: Colors.black38,
-            gap: 8,
-            padding: EdgeInsets.all(16),
-            onTabChange: (index) {
-              print(index);
-              print(size.height);
-            },
-            tabs: const [
-              GButton(
-                icon: Icons.home,
-                text: "Home",
-              ),
-              GButton(
-                icon: Icons.favorite,
-                text: "Favorite",
-              ),
-              GButton(
-                icon: Icons.search,
-                text: "Search",
-              ),
-              GButton(
-                icon: Icons.settings,
-                text: "Setting",
-              ),
-            ],
-          ),
-        ),
-      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -77,7 +44,7 @@ class _ContentPageState extends State<ContentPage>
             Container(
               width: size.width,
               height:
-                  size.height >= 680 ? size.height * 0.4 : size.height * 0.3,
+                  size.height < 685 ? size.height * 0.4 : size.height * 0.35,
               decoration: BoxDecoration(
                   color: kDefualtColorMain,
                   borderRadius: BorderRadius.only(
@@ -254,14 +221,18 @@ class _ContentPageState extends State<ContentPage>
                                   width: 200,
                                   height: 100,
                                   decoration: BoxDecoration(
-                                      color: Colors.amber,
-                                      borderRadius: BorderRadius.circular(16),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black,
-                                          blurRadius: 5,
-                                        )
-                                      ]),
+                                    color: Colors.amber,
+                                    borderRadius: BorderRadius.circular(16),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color:
+                                            Color.fromARGB(255, 175, 175, 175),
+                                        spreadRadius: 0,
+                                        blurRadius: 5,
+                                        offset: Offset(-1, 5),
+                                      ),
+                                    ],
+                                  ),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(16),
                                     child: Image.network(

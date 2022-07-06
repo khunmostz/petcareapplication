@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constant.dart';
+import '../utils/constant.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -10,7 +10,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  List _dropdownValue = ['User', 'Admin', 'Doctor'];
+  List _dropdownValue = ['User', 'Doctor'];
   Object? _iniialValue = 'User';
 
   @override

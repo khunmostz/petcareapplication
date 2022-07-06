@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:petcare_project/constant.dart';
+import 'package:petcare_project/utils/constant.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
@@ -110,7 +110,7 @@ class _SignInPageState extends State<SignInPage>
                     ElevatedButton(
                       style: buttonStyle,
                       onPressed: () {
-                        Navigator.pushNamed(context, '/content');
+                        Navigator.pushNamed(context, '/route');
                       },
                       child: Text(
                         'Sign In',

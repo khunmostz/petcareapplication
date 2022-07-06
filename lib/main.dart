@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:petcare_project/page/before_page.dart';
 import 'package:petcare_project/page/content_page.dart';
+import 'package:petcare_project/page/mypet_page.dart';
+import 'package:petcare_project/page/profile_page.dart';
+import 'package:petcare_project/page/record_page.dart';
+import 'package:petcare_project/utils/constant.dart';
+import 'package:petcare_project/utils/route.dart';
 import 'package:petcare_project/page/signin_page.dart';
 import 'package:petcare_project/page/signup_page.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
@@ -17,6 +22,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSwatch(
+            primarySwatch: Colors.orange,
+          ),
+        ),
         home: SplashScreenView(
           navigateRoute: BeforePage(),
           duration: 3000,
@@ -27,7 +37,11 @@ class MyApp extends StatelessWidget {
         routes: {
           '/signin': (context) => SignInPage(),
           '/signup': (context) => SignUpPage(),
+          '/route': (context) => RoutePage(),
           '/content': (context) => ContentPage(),
+          '/record': (context) => RecordPage(),
+          '/mypet': (context) => MyPetPage(),
+          '/profile': (context) => ProfilePage(),
         });
   }
 }
