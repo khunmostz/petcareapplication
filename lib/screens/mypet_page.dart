@@ -13,12 +13,20 @@ class MyPetPage extends StatefulWidget {
 }
 
 class _MyPetPageState extends State<MyPetPage> {
-  bool _selected = true;
-  List<Pet> _checkData = [];
+  bool _selected = false;
+  var _selectId;
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
@@ -26,13 +34,14 @@ class _MyPetPageState extends State<MyPetPage> {
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: kDefualtPadding),
-                child: Column(
-                  children: [
-                    ...List.generate(6, (index) => popContainer(size)),
-                    ...petData.where((value) {
-                      return value.id == 1;
-                    }).map((data) => Text('${data.name}')),
-                  ],
+                child: Container(
+                  width: size.width,
+                  height: size.height,
+                  child: ListView.builder(
+                      itemCount: petData.length,
+                      itemBuilder: (context, index) {
+                        return popContainer(size, index, _selected);
+                      }),
                 ),
               ),
             ],
@@ -46,9 +55,7 @@ class _MyPetPageState extends State<MyPetPage> {
     );
   }
 
-  Widget popContainer(
-    Size size,
-  ) {
+  Widget popContainer(Size size, int index, bool isSelected) {
     return Column(
       children: [
         SizedBox(
@@ -76,22 +83,19 @@ class _MyPetPageState extends State<MyPetPage> {
               children: [
                 CircleAvatar(
                   backgroundImage: NetworkImage(
-                    "${petData[0].image}",
+                    "${petData[index].image}",
                   ),
                 ),
                 GestureDetector(
                   onTap: () {
+                    print("object");
                     setState(() {
-                      _selected = !_selected;
-                      print(_selected);
+                      _selected == !_selected;
                     });
                   },
-                  child: Text(
-                    '${petData[0].name}',
-                    style: GoogleFonts.mitr(
-                      fontSize: 16,
-                    ),
-                  ),
+                  child: _selected == true
+                      ? Icon(Icons.arrow_drop_down)
+                      : Icon(Icons.arrow_drop_up),
                 ),
               ],
             ),
@@ -105,7 +109,7 @@ class _MyPetPageState extends State<MyPetPage> {
                   height: 300,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(18),
-                    color: kDefualtColorMain,
+                    color: Color.fromARGB(255, 255, 150, 79),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black26,

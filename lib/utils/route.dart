@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:petcare_project/page/content_page.dart';
-import 'package:petcare_project/page/mypet_page.dart';
-import 'package:petcare_project/page/profile_page.dart';
-import 'package:petcare_project/page/record_page.dart';
+import 'package:petcare_project/screens/content_page.dart';
+import 'package:petcare_project/screens/mypet_page.dart';
+import 'package:petcare_project/screens/profile_page.dart';
+import 'package:petcare_project/screens/record_page.dart';
 import 'constant.dart';
 
 class RoutePage extends StatefulWidget {

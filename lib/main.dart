@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:petcare_project/page/before_page.dart';
-import 'package:petcare_project/page/content_page.dart';
-import 'package:petcare_project/page/mypet_page.dart';
-import 'package:petcare_project/page/profile_page.dart';
-import 'package:petcare_project/page/record_page.dart';
+import 'package:petcare_project/screens/before_page.dart';
+import 'package:petcare_project/screens/content_page.dart';
+import 'package:petcare_project/screens/mypet_page.dart';
+import 'package:petcare_project/screens/profile_page.dart';
+import 'package:petcare_project/screens/record_page.dart';
 import 'package:petcare_project/utils/constant.dart';
 import 'package:petcare_project/utils/route.dart';
-import 'package:petcare_project/page/signin_page.dart';
-import 'package:petcare_project/page/signup_page.dart';
+import 'package:petcare_project/screens/signin_page.dart';
+import 'package:petcare_project/screens/signup_page.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
 
 void main() {
