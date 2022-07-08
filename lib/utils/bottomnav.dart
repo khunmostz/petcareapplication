@@ -44,7 +44,7 @@ class _BottomNavState extends State<BottomNav> {
             padding: EdgeInsets.all(16),
             style: GnavStyle.google,
             onTabChange: (index) {
-              // print(index);
+              print(size.height);
               _controller.changIndex(index);
             },
             tabs: const [
@@ -62,7 +62,7 @@ class _BottomNavState extends State<BottomNav> {
               ),
               GButton(
                 icon: Icons.person,
-                text: "บัญชีผู้ใช้",
+                text: "ผู้ใช้",
               ),
             ],
           ),
