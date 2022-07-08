@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class Pet {
-  int? id;
-  String? name, description, image;
-  List<String>? listexpenses;
-  int expenses;
-  DateTime? date;
+  late int id;
+  late String name, description, image;
+  late List<String> listexpenses;
+  late int expenses;
+  late DateTime date;
 
   Pet({
     required this.id,

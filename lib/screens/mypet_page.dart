@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:petcare_project/controllers/mypet_controller.dart';
+import 'package:petcare_project/controllers/pet_controller.dart';
 import 'package:petcare_project/utils/constant.dart';
 import 'package:readmore/readmore.dart';
 
@@ -96,21 +96,22 @@ class _MyPetPageState extends State<MyPetPage> {
                   ),
                 ),
                 GestureDetector(
-                    onTap: () {
-                      _controller.toggleWidget(index.obs);
-                    },
-                    child: Obx(
-                      () => _controller.selectId?.value != index ||
-                              _controller.selected.value
-                          ? Icon(Icons.arrow_drop_down)
-                          : Icon(Icons.arrow_drop_up),
-                    )),
+                  onTap: () {
+                    _controller.toggleWidget(index.obs);
+                  },
+                  child: GetBuilder<PetController>(
+                    builder: (_) => _controller.selectId?.value != index ||
+                            _controller.selected.value
+                        ? Icon(Icons.arrow_drop_down)
+                        : Icon(Icons.arrow_drop_up),
+                  ),
+                ),
               ],
             ),
           ),
         ),
-        Obx(
-          () =>
+        GetBuilder<PetController>(
+          builder: (_) =>
               _controller.selectId?.value != index || _controller.selected.value
                   ? Container()
                   : TweenAnimationBuilder(

@@ -6,7 +6,7 @@ import 'package:petcare_project/screens/mypet_page.dart';
 import 'package:petcare_project/screens/profile_page.dart';
 import 'package:petcare_project/screens/record_page.dart';
 import 'package:petcare_project/utils/constant.dart';
-import 'package:petcare_project/utils/getroute.dart';
+import 'package:petcare_project/utils/routes.dart';
 import 'package:petcare_project/utils/bottomnav.dart';
 import 'package:petcare_project/screens/signin_page.dart';
 import 'package:petcare_project/screens/signup_page.dart';
@@ -14,6 +14,7 @@ import 'package:splash_screen_view/SplashScreenView.dart';
 
 void main() {
   runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
 }
 
 class MyApp extends StatelessWidget {
