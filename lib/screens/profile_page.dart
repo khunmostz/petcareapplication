@@ -47,7 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 //top container
                 Positioned(
-                  top: 90,
+                  top: 80,
                   right: 0,
                   left: 0,
                   child: Container(
