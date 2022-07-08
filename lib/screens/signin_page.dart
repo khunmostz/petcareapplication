@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:petcare_project/utils/constant.dart';
 
@@ -110,7 +111,7 @@ class _SignInPageState extends State<SignInPage>
                     ElevatedButton(
                       style: buttonStyle,
                       onPressed: () {
-                        Navigator.pushNamed(context, '/route');
+                        Get.toNamed('/bottomnav');
                       },
                       child: Text(
                         'Sign In',
@@ -149,7 +150,7 @@ class _SignInPageState extends State<SignInPage>
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context, '/signup');
+                            Get.toNamed('/signup');
                           },
                           child: Text(
                             'Sign Up',

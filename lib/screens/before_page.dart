@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
 import '../utils/constant.dart';
@@ -103,7 +104,7 @@ class _BeforePageState extends State<BeforePage>
                   ElevatedButton(
                     style: buttonStyle,
                     onPressed: () {
-                      Navigator.pushNamed(context, '/signin');
+                      Get.toNamed('/signin');
                     },
                     child: Text(
                       "Sign In",
@@ -119,7 +120,7 @@ class _BeforePageState extends State<BeforePage>
                   ElevatedButton(
                     style: buttonStyle,
                     onPressed: () {
-                      Navigator.pushNamed(context, '/signup');
+                      Get.toNamed('/signup');
                     },
                     child: Text(
                       "Sign Up",
@@ -141,10 +142,15 @@ class _BeforePageState extends State<BeforePage>
                         ),
                       ),
                       SizedBox(width: 10),
-                      Text(
-                        "Sign In",
-                        style: TextStyle(
-                          color: kDefualtColorMain,
+                      GestureDetector(
+                        onTap: () {
+                          Get.toNamed('/signin');
+                        },
+                        child: Text(
+                          "Sign In",
+                          style: TextStyle(
+                            color: kDefualtColorMain,
+                          ),
                         ),
                       ),
                     ],

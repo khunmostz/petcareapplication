@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:petcare_project/controllers/mypet_controller.dart';
 import 'package:petcare_project/utils/constant.dart';
 import 'package:readmore/readmore.dart';
 
@@ -15,7 +17,7 @@ class MyPetPage extends StatefulWidget {
 class _MyPetPageState extends State<MyPetPage> {
   bool _selected = false;
   int? _selectId;
-  List<Pet> _pet = petData;
+  final _controller = Get.put(PetController());
 
   @override
   void initState() {
@@ -94,54 +96,54 @@ class _MyPetPageState extends State<MyPetPage> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _selectId = index;
-                      print(_selected.toString());
-                      _selected = !_selected;
-                      print(_selected.toString());
-                      // print(_selectId);
-                    });
-                  },
-                  child: _selectId != index || _selected
-                      ? Icon(Icons.arrow_drop_down)
-                      : Icon(Icons.arrow_drop_up),
-                ),
+                    onTap: () {
+                      _controller.toggleWidget(index.obs);
+                    },
+                    child: Obx(
+                      () => _controller.selectId?.value != index ||
+                              _controller.selected.value
+                          ? Icon(Icons.arrow_drop_down)
+                          : Icon(Icons.arrow_drop_up),
+                    )),
               ],
             ),
           ),
         ),
-        _selectId != index || _selected
-            ? Container()
-            : TweenAnimationBuilder(
-                child: Container(
-                  width: size.width,
-                  height: 300,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(18),
-                    color: Color.fromARGB(255, 255, 150, 79),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black26,
-                        blurRadius: 10,
-                        spreadRadius: 1,
-                        offset: Offset(0, 5),
-                      )
-                    ],
-                  ),
-                ),
-                duration: Duration(seconds: 1),
-                tween: Tween<double>(begin: 0, end: 1),
-                builder: (BuildContext context, double _var, child) {
-                  return Opacity(
-                    opacity: _var,
-                    child: Padding(
-                      padding: EdgeInsets.only(top: _var * 20),
-                      child: child,
+        Obx(
+          () =>
+              _controller.selectId?.value != index || _controller.selected.value
+                  ? Container()
+                  : TweenAnimationBuilder(
+                      child: Container(
+                        width: size.width,
+                        height: 300,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(18),
+                          color: Color.fromARGB(255, 255, 150, 79),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black26,
+                              blurRadius: 10,
+                              spreadRadius: 1,
+                              offset: Offset(0, 5),
+                            )
+                          ],
+                        ),
+                      ),
+                      duration: Duration(seconds: 1),
+                      tween: Tween<double>(begin: 0, end: 1),
+                      curve: Curves.ease,
+                      builder: (BuildContext context, double _var, child) {
+                        return Opacity(
+                          opacity: _var,
+                          child: Padding(
+                            padding: EdgeInsets.only(top: _var * 20),
+                            child: child,
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
+        )
       ],
     );
   }
