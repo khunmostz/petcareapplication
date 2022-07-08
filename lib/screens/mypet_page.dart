@@ -14,7 +14,14 @@ class MyPetPage extends StatefulWidget {
 
 class _MyPetPageState extends State<MyPetPage> {
   bool _selected = false;
-  var _selectId;
+  int? _selectId;
+  List<Pet> _pet = petData;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -88,12 +95,15 @@ class _MyPetPageState extends State<MyPetPage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    print("object");
                     setState(() {
-                      _selected == !_selected;
+                      _selectId = index;
+                      print(_selected.toString());
+                      _selected = !_selected;
+                      print(_selected.toString());
+                      // print(_selectId);
                     });
                   },
-                  child: _selected == true
+                  child: _selectId != index || _selected
                       ? Icon(Icons.arrow_drop_down)
                       : Icon(Icons.arrow_drop_up),
                 ),
@@ -101,7 +111,7 @@ class _MyPetPageState extends State<MyPetPage> {
             ),
           ),
         ),
-        _selected == true
+        _selectId != index || _selected
             ? Container()
             : TweenAnimationBuilder(
                 child: Container(
