@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:petcare_project/controllers/routes_controller.dart';
 import 'package:petcare_project/screens/content_page.dart';
 import 'package:petcare_project/screens/mypet_page.dart';
 import 'package:petcare_project/screens/profile_page.dart';
 import 'package:petcare_project/screens/record_page.dart';
+import 'package:petcare_project/utils/getroute.dart';
 import 'constant.dart';
 
-class RoutePage extends StatefulWidget {
-  const RoutePage({Key? key}) : super(key: key);
+class BottomNav extends StatefulWidget {
+  const BottomNav({Key? key}) : super(key: key);
 
   @override
-  State<RoutePage> createState() => _RoutePageState();
+  State<BottomNav> createState() => _BottomNavState();
 }
 
-class _RoutePageState extends State<RoutePage> {
+class _BottomNavState extends State<BottomNav> {
   var _selectedIndex = 0;
-  final List screen = [
+  final BottomNavController _controller = Get.put(BottomNavController());
+  final screen = [
     ContentPage(),
     RecordPage(),
     MyPetPage(),
@@ -41,10 +45,7 @@ class _RoutePageState extends State<RoutePage> {
             style: GnavStyle.google,
             onTabChange: (index) {
               // print(index);
-              print(size.height);
-              setState(() {
-                _selectedIndex = index;
-              });
+              _controller.changIndex(index);
             },
             tabs: const [
               GButton(
@@ -67,7 +68,12 @@ class _RoutePageState extends State<RoutePage> {
           ),
         ),
       ),
-      body: screen[_selectedIndex],
+      body: Obx(
+        () => IndexedStack(
+          index: _controller.selectIndex.value,
+          children: screen,
+        ),
+      ),
     );
   }
 }
