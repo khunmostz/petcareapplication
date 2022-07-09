@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../GlobalWidget/custom_button.dart';
-import '../../../controllers/auth_controller.dart';
-import '../../../utils/constant.dart';
+import 'package:petcare_project/controllers/auth_controller.dart';
+import 'package:petcare_project/utils/constant.dart';
+import 'package:petcare_project/widget/custom_button.dart';
 import 'auth_textfield.dart';
 
-class SignInContainer extends StatelessWidget {
+class SignInContainer extends StatefulWidget {
+  @override
+  State<SignInContainer> createState() => _SignInContainerState();
+}
+
+class _SignInContainerState extends State<SignInContainer> {
   final AuthController _authController = Get.put(AuthController());
+
+  @override
+  void dispose() {
+    super.dispose();
+    _authController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +36,7 @@ class SignInContainer extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // username textfield
             Text(
               'Username',
               style: TextStyle(
@@ -35,23 +46,29 @@ class SignInContainer extends StatelessWidget {
             ),
             SizedBox(height: 10),
             AuthTextField(
-                hintText: 'example@gmail.com',
-                controller: _authController.emailController),
+              hintText: 'example@gmail.com',
+              controller: _authController.emailController,
+            ),
             SizedBox(height: 20),
-            Text('Password',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                )),
+            Text(
+              'Password',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             SizedBox(height: 10),
+            // password textfield
             AuthTextField(
-                obscureText: true,
-                hintText: '********',
-                controller: _authController.passwordController),
+              obscureText: true,
+              hintText: '********',
+              controller: _authController.passwordController,
+            ),
             SizedBox(height: 10),
             SizedBox(height: 25),
-            CustomButton(routeName: '/bottomnav', text: 'Sign'),
+            CustomButton(routeName: '/bottomnav', text: 'Sign In'),
             SizedBox(height: 20),
+            // forgot pass
             Align(
               alignment: Alignment.centerRight,
               child: Text(
@@ -62,6 +79,7 @@ class SignInContainer extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
+            // Don't have an account ?
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

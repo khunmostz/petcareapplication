@@ -5,9 +5,9 @@ import 'package:petcare_project/screens/Auth/before_page.dart';
 import 'package:petcare_project/utils/routes.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  Firebase.initializeApp();
   runApp(MyApp());
 }
 

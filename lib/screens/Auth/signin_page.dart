@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
-import 'package:petcare_project/controllers/auth_controller.dart';
 import 'package:petcare_project/screens/Auth/Widget/signin_container.dart';
 import 'package:petcare_project/utils/constant.dart';
-
-import '../../GlobalWidget/custom_button.dart';
-import 'Widget/auth_textfield.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);

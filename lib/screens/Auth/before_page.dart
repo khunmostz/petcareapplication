@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import '../../GlobalWidget/custom_button.dart';
+import 'package:petcare_project/widget/custom_button.dart';
+
 import '../../utils/constant.dart';
 
 class BeforePage extends StatefulWidget {
