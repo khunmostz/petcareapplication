@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:petcare_project/data/petData.dart';
 import 'package:petcare_project/data/recordData.dart';
-import '../utils/constant.dart';
+import '../../utils/constant.dart';
 
 class RecordPage extends StatefulWidget {
   const RecordPage({Key? key}) : super(key: key);

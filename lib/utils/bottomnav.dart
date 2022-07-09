@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:petcare_project/controllers/bottomnav_controller.dart';
-import 'package:petcare_project/screens/content_page.dart';
-import 'package:petcare_project/screens/mypet_page.dart';
-import 'package:petcare_project/screens/profile_page.dart';
-import 'package:petcare_project/screens/record_page.dart';
+import 'package:petcare_project/screens/Content/content_page.dart';
+import 'package:petcare_project/screens/Pet/mypet_page.dart';
+import 'package:petcare_project/screens/Profile/profile_page.dart';
+import 'package:petcare_project/screens/Record/record_page.dart';
 import 'package:petcare_project/utils/routes.dart';
 import 'constant.dart';
 

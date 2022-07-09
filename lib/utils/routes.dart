@@ -1,11 +1,12 @@
 import 'package:get/get.dart';
-import 'package:petcare_project/screens/before_page.dart';
-import 'package:petcare_project/screens/content_page.dart';
-import 'package:petcare_project/screens/mypet_page.dart';
-import 'package:petcare_project/screens/profile_page.dart';
-import 'package:petcare_project/screens/record_page.dart';
-import 'package:petcare_project/screens/signin_page.dart';
-import 'package:petcare_project/screens/signup_page.dart';
+import 'package:petcare_project/screens/Auth/before_page.dart';
+import 'package:petcare_project/screens/Auth/signin_page.dart';
+import 'package:petcare_project/screens/Auth/signup_page.dart';
+import 'package:petcare_project/screens/Content/content_page.dart';
+import 'package:petcare_project/screens/Pet/mypet_page.dart';
+import 'package:petcare_project/screens/Profile/profile_page.dart';
+import 'package:petcare_project/screens/Record/record_page.dart';
+
 import 'package:petcare_project/utils/bottomnav.dart';
 
 class Routes {

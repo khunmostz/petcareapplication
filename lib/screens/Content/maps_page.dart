@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:petcare_project/utils/constant.dart';
-import 'package:petcare_project/screens/detaillocation_page.dart';
+import 'package:petcare_project/screens/Content/detaillocation_page.dart';
 import 'package:petcare_project/widget/search_bar.dart';
 
 class MapsPage extends StatefulWidget {

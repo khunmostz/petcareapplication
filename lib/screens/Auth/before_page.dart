@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-
-import '../utils/constant.dart';
+import '../../GlobalWidget/custom_button.dart';
+import '../../utils/constant.dart';
 
 class BeforePage extends StatefulWidget {
   const BeforePage({Key? key}) : super(key: key);
@@ -18,38 +18,28 @@ class _BeforePageState extends State<BeforePage>
   @override
   void initState() {
     super.initState();
-    // _controller = AnimationController(
-    //   vsync: this,
-    //   duration: const Duration(seconds: 1),
-    // );
-    // _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    // _controller.dispose();
   }
 
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-    final ButtonStyle buttonStyle = ElevatedButton.styleFrom(
-      onPrimary: Colors.white,
-      primary: kDefualtColorMain,
-      minimumSize: Size(size.width, 50),
-      padding: EdgeInsets.symmetric(horizontal: 16),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(12)),
-      ),
-    );
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(
-            height: 20,
-          ),
+          SizedBox(height: 20),
           Spacer(),
           Lottie.asset(
             'assets/lottie/blackcat.json',
             repeat: true,
-            // controller: _controller,
             frameRate: FrameRate(240),
           ),
           Spacer(),
@@ -76,6 +66,7 @@ class _BeforePageState extends State<BeforePage>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  // Box
                   TweenAnimationBuilder(
                     child: Text(
                       "Do you want ?",
@@ -97,41 +88,14 @@ class _BeforePageState extends State<BeforePage>
                       );
                     },
                   ),
-                  SizedBox(
-                    height: 25,
-                  ),
+                  SizedBox(height: 25),
                   // Sign In button
-                  ElevatedButton(
-                    style: buttonStyle,
-                    onPressed: () {
-                      Get.toNamed('/signin');
-                    },
-                    child: Text(
-                      "Sign In",
-                      style: TextStyle(
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
+                  CustomButton(routeName: '/signin', text: 'Sign In'),
+                  SizedBox(height: 15),
                   // Sign Up button
-                  ElevatedButton(
-                    style: buttonStyle,
-                    onPressed: () {
-                      Get.toNamed('/signup');
-                    },
-                    child: Text(
-                      "Sign Up",
-                      style: TextStyle(
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
+                  CustomButton(routeName: '/signup', text: 'Sign Up'),
+                  SizedBox(height: 15),
+                  // Already a member ?
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -162,12 +126,5 @@ class _BeforePageState extends State<BeforePage>
         ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    // _controller.dispose();
   }
 }

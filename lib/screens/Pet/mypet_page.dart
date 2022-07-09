@@ -5,7 +5,7 @@ import 'package:petcare_project/controllers/pet_controller.dart';
 import 'package:petcare_project/utils/constant.dart';
 import 'package:readmore/readmore.dart';
 
-import '../data/petData.dart';
+import '../../data/petData.dart';
 
 class MyPetPage extends StatefulWidget {
   const MyPetPage({Key? key}) : super(key: key);
