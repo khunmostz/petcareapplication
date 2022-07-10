@@ -26,9 +26,11 @@ class AuthController extends GetxController {
 
   _authScreen(User? user) {
     if (user == null) {
-      print('login page');
+      // print('login page');
+      Get.offAllNamed('/signin');
     } else {
-      print('content page');
+      // print('content page');
+      Get.offAllNamed('/content');
     }
   }
 
@@ -37,14 +39,25 @@ class AuthController extends GetxController {
       return Get.snackbar(
         'แจ้งเตือน',
         'กรุณากรอกข้อมูลให้ครบ',
-        backgroundColor: Colors.red,
       );
+
+      // Get.defaultDialog(
+      //   title: 'เกิดข้อผิดพลาด',
+      //   content: Text('กรุณาลองใหม่อีกครั้ง'),
+      //   actions: [
+      //     FlatButton(
+      //       child: Text('ยืนยัน'),
+      //       onPressed: () => Get.back(),
+      //     ),
+      //   ],
+      // );
     } else {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
     }
+    // print(emailController.text);
   }
 
   Future signUp() async {

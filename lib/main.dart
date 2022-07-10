@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: SplashScreenView(
-        navigateRoute: AuthPage(),
+        navigateRoute: BeforePage(),
         duration: 3000,
         imageSize: 400,
         imageSrc: "assets/image/logo-petcare.png",

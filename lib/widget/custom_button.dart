@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:petcare_project/controllers/auth_controller.dart';
 import 'package:petcare_project/utils/constant.dart';
 
 class CustomButton extends StatelessWidget {
   final String routeName;
   final String text;
-  final Function? onPressed;
+  final Function()? onPressed;
   const CustomButton(
       {Key? key, required this.routeName, required this.text, this.onPressed})
       : super(key: key);
@@ -13,6 +14,7 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    final AuthController _authController = Get.put(AuthController());
     ButtonStyle buttonStyle = ElevatedButton.styleFrom(
       onPrimary: Colors.white,
       primary: kDefualtColorMain,
@@ -26,7 +28,8 @@ class CustomButton extends StatelessWidget {
       style: buttonStyle,
       onPressed: () {
         // Get.toNamed(routeName);
-        onPressed;
+        onPressed?.call();
+        // print(onPressed!());
       },
       child: Text(
         text,

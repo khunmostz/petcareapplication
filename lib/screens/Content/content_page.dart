@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:petcare_project/controllers/auth_controller.dart';
 import 'package:petcare_project/screens/Profile/profile_page.dart';
 import 'package:petcare_project/utils/constant.dart';
 import 'package:petcare_project/data/menuData.dart';
@@ -19,6 +21,7 @@ class ContentPage extends StatefulWidget {
 class _ContentPageState extends State<ContentPage>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
+  final AuthController _authController = Get.put(AuthController());
 
   @override
   void initState() {
@@ -67,10 +70,15 @@ class _ContentPageState extends State<ContentPage>
                           size: 25,
                         ),
                         Spacer(),
-                        Icon(
-                          Icons.person,
-                          size: 25,
-                        ),
+                        IconButton(
+                          onPressed: () {
+                            _authController.signOut();
+                          },
+                          icon: Icon(
+                            Icons.logout,
+                            size: 25,
+                          ),
+                        )
                       ],
                     ),
                     SizedBox(height: 10),
@@ -110,12 +118,7 @@ class _ContentPageState extends State<ContentPage>
                 ),
               ),
             ),
-            // SizedBox(
-            //   height: 20,
-            // ),
-            // grid menu list
-            // test
-            // Text('${menuTitleData[0].titleMenu}'),
+
             Container(
               width: size.width,
               height: size.height * 0.4,
