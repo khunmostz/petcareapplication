@@ -66,7 +66,13 @@ class _SignInContainerState extends State<SignInContainer> {
             ),
             SizedBox(height: 10),
             SizedBox(height: 25),
-            CustomButton(routeName: '/bottomnav', text: 'Sign In'),
+            CustomButton(
+              routeName: '/bottomnav',
+              text: 'Sign In',
+              onPressed: () {
+                _authController.signIn();
+              },
+            ),
             SizedBox(height: 20),
             // forgot pass
             Align(

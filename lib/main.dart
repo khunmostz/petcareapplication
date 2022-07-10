@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:petcare_project/screens/Auth/auth_page.dart';
 import 'package:petcare_project/screens/Auth/before_page.dart';
+import 'package:petcare_project/screens/Auth/signin_page.dart';
 import 'package:petcare_project/utils/routes.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
 
@@ -22,7 +24,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: SplashScreenView(
-        navigateRoute: BeforePage(),
+        navigateRoute: AuthPage(),
         duration: 3000,
         imageSize: 400,
         imageSrc: "assets/image/logo-petcare.png",

@@ -9,18 +9,57 @@ class AuthController extends GetxController {
 
   var isLogin = false;
 
+  late Rx<User?> _user;
+
+  @override
+  void onInit() {
+    super.onInit();
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    _user = Rx<User?>(FirebaseAuth.instance.currentUser);
+    _user.bindStream(FirebaseAuth.instance.userChanges());
+    ever(_user, _authScreen);
+  }
+
+  _authScreen(User? user) {
+    if (user == null) {
+      print('login page');
+    } else {
+      print('content page');
+    }
+  }
+
   Future signIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: emailController.text.trim(),
-      password: passwordController.text.trim(),
-    );
+    if (emailController.text.isEmpty || emailController.text.isEmpty) {
+      return Get.snackbar(
+        'แจ้งเตือน',
+        'กรุณากรอกข้อมูลให้ครบ',
+        backgroundColor: Colors.red,
+      );
+    } else {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+    }
   }
 
   Future signUp() async {
-    await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: emailController.text.trim(),
-      password: passwordController.text.trim(),
-    );
+    if (emailController.text.isEmpty || emailController.text.isEmpty) {
+      return Get.snackbar(
+        'แจ้งเตือน',
+        'กรุณากรอกข้อมูลให้ครบ',
+        backgroundColor: Colors.red,
+      );
+    } else {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+    }
   }
 
   Future signOut() async {

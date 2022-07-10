@@ -5,7 +5,9 @@ import 'package:petcare_project/utils/constant.dart';
 class CustomButton extends StatelessWidget {
   final String routeName;
   final String text;
-  const CustomButton({Key? key, required this.routeName, required this.text})
+  final Function? onPressed;
+  const CustomButton(
+      {Key? key, required this.routeName, required this.text, this.onPressed})
       : super(key: key);
 
   @override
@@ -23,7 +25,8 @@ class CustomButton extends StatelessWidget {
     return ElevatedButton(
       style: buttonStyle,
       onPressed: () {
-        Get.toNamed(routeName);
+        // Get.toNamed(routeName);
+        onPressed;
       },
       child: Text(
         text,
