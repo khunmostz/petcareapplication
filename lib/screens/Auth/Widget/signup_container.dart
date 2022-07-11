@@ -14,6 +14,7 @@ class _SignUpContainerState extends State<SignUpContainer> {
   final AuthController _authController = Get.put(AuthController());
   List _dropdownValue = ['User', 'Doctor'];
   Object? _iniialValue = 'User';
+  // String? dropdownValue;
 
   @override
   void dispose() {
@@ -50,6 +51,7 @@ class _SignUpContainerState extends State<SignUpContainer> {
               hintText: 'John Doe',
               controller: _authController.usernameController,
             ),
+            SizedBox(height: 10),
             Text(
               'Email',
               style: TextStyle(
@@ -80,6 +82,20 @@ class _SignUpContainerState extends State<SignUpContainer> {
             ),
             SizedBox(height: 10),
             Text(
+              'Confirm Password',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10),
+            AuthTextField(
+              obscureText: true,
+              hintText: '**************',
+              controller: _authController.confirmPasswordController,
+            ),
+            SizedBox(height: 10),
+            Text(
               'Types',
               style: TextStyle(
                 fontSize: 18,
@@ -105,7 +121,15 @@ class _SignUpContainerState extends State<SignUpContainer> {
               },
             ),
             SizedBox(height: 25),
-            CustomButton(routeName: '/signin', text: 'SignUp'),
+            CustomButton(
+              routeName: '/signin',
+              text: 'SignUp',
+              onPressed: () {
+                _authController.signUp(_iniialValue.toString());
+                // print(_authController.usernameController);
+                // print(_iniialValue.toString());
+              },
+            ),
             SizedBox(height: 20),
             // Forgot Password ?
             Align(
