@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:petcare_project/controllers/auth_controller.dart';
 import 'package:petcare_project/utils/constant.dart';
 
 class CustomButton extends StatelessWidget {
-  final String routeName;
-  final String text;
+  final String? routeName;
+  final String? text;
   final Function()? onPressed;
-  const CustomButton(
-      {Key? key, required this.routeName, required this.text, this.onPressed})
+  const CustomButton({Key? key, this.routeName, this.text, this.onPressed})
       : super(key: key);
 
   @override
@@ -32,9 +32,10 @@ class CustomButton extends StatelessWidget {
         // print(onPressed!());
       },
       child: Text(
-        text,
-        style: TextStyle(
+        text!,
+        style: GoogleFonts.mitr(
           fontSize: 18,
+          color: Colors.white,
         ),
       ),
     );

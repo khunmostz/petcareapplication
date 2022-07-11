@@ -39,7 +39,8 @@ class AuthController extends GetxController {
   }
 
   bool checkPassword() {
-    if (passwordController.text.trim() == confirmPasswordController) {
+    if (passwordController.text.trim() ==
+        confirmPasswordController.text.trim()) {
       return true;
     } else {
       return false;
@@ -57,51 +58,59 @@ class AuthController extends GetxController {
   }
 
   Future signIn() async {
-    if (emailController.text.isEmpty || emailController.text.isEmpty) {
-      return Get.snackbar(
-        'แจ้งเตือน',
-        'กรุณากรอกข้อมูลให้ครบ',
-      );
-
-      // Get.defaultDialog(
-      //   title: 'เกิดข้อผิดพลาด',
-      //   content: Text('กรุณาลองใหม่อีกครั้ง'),
-      //   actions: [
-      //     FlatButton(
-      //       child: Text('ยืนยัน'),
-      //       onPressed: () => Get.back(),
-      //     ),
-      //   ],
-      // );
-    } else {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
-      clearForm();
+    try {
+      if (emailController.text.isEmpty || emailController.text.isEmpty) {
+        return Get.snackbar(
+          'แจ้งเตือน',
+          'กรุณากรอกข้อมูลให้ครบ',
+        );
+      } else {
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim(),
+        );
+        clearForm();
+      }
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      Get.snackbar('เกิดข้อผิดพลาด', 'กรุณาลองใหม่อีกครั้ง');
     }
     // print(emailController.text);
   }
 
   Future signUp(String type) async {
-    if (checkPassword() && checkEmpty()) {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailController.text, password: passwordController.text);
-      addUserDetails(
-        usernameController.text.trim(),
-        emailController.text.trim(),
-        type,
-      );
-      clearForm();
+    try {
+      if (checkPassword() && checkEmpty()) {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+            email: emailController.text, password: passwordController.text);
+        addUserDetails(
+          usernameController.text.trim(),
+          emailController.text.trim(),
+          type,
+        );
+        clearForm();
+      } else if (checkEmpty()) {
+        Get.snackbar('แจ้งเตือน', 'กรุณากรอกรหัสผ่านให้ตรงกัน');
+      } else {
+        Get.snackbar('แจ้งเตือน', 'กรุณากรอกข้อมูลให้ครบ');
+      }
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      Get.snackbar('เกิดข้อผิดพลาด', 'กรุณาลองใหม่อีกครั้ง');
     }
   }
 
   Future addUserDetails(String username, String email, String type) async {
-    await FirebaseFirestore.instance.collection('users').add({
-      'username ': username,
-      'email': email,
-      'type': type,
-    });
+    try {
+      await FirebaseFirestore.instance.collection('users').add({
+        'username ': username,
+        'email': email,
+        'type': type,
+      });
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      Get.snackbar('เกิดข้อผิดพลาด', 'กรุณาลองใหม่อีกครั้ง');
+    }
   }
 
   clearForm() {
