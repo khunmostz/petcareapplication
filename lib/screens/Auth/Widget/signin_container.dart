@@ -12,12 +12,10 @@ class SignInContainer extends StatefulWidget {
 
 class _SignInContainerState extends State<SignInContainer> {
   final AuthController _authController = Get.put(AuthController());
-  
+
   @override
   void dispose() {
     super.dispose();
-
-    _authController.dispose();
   }
 
   @override

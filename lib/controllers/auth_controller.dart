@@ -41,9 +41,9 @@ class AuthController extends GetxController {
   bool checkPassword() {
     if (passwordController.text.trim() ==
         confirmPasswordController.text.trim()) {
-      return true;
-    } else {
       return false;
+    } else {
+      return true;
     }
   }
 
@@ -59,17 +59,17 @@ class AuthController extends GetxController {
 
   Future signIn() async {
     try {
-      if (emailController.text.isEmpty || emailController.text.isEmpty) {
-        return Get.snackbar(
-          'แจ้งเตือน',
-          'กรุณากรอกข้อมูลให้ครบ',
-        );
-      } else {
+      if (checkEmpty()) {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text.trim(),
           password: passwordController.text.trim(),
         );
         clearForm();
+      } else {
+        return Get.snackbar(
+          'แจ้งเตือน',
+          'กรุณากรอกข้อมูลให้ครบ',
+        );
       }
     } on FirebaseAuthException catch (e) {
       print(e);
@@ -80,7 +80,7 @@ class AuthController extends GetxController {
 
   Future signUp(String type) async {
     try {
-      if (checkPassword() && checkEmpty()) {
+      if (checkPassword() || checkEmpty()) {
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
             email: emailController.text, password: passwordController.text);
         addUserDetails(
