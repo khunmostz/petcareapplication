@@ -48,9 +48,7 @@ class AuthController extends GetxController {
   }
 
   bool checkEmpty() {
-    if (emailController.text.isEmpty ||
-        passwordController.text.isEmpty ||
-        usernameController.text.isEmpty) {
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
       return false;
     } else {
       return true;
@@ -65,17 +63,15 @@ class AuthController extends GetxController {
           password: passwordController.text.trim(),
         );
         clearForm();
-      } else {
+      } else if (!checkEmpty()) {
         return Get.snackbar(
           'แจ้งเตือน',
           'กรุณากรอกข้อมูลให้ครบ',
         );
       }
     } on FirebaseAuthException catch (e) {
-      print(e);
       Get.snackbar('เกิดข้อผิดพลาด', 'กรุณาลองใหม่อีกครั้ง');
     }
-    // print(emailController.text);
   }
 
   Future signUp(String type) async {
@@ -95,8 +91,12 @@ class AuthController extends GetxController {
         Get.snackbar('แจ้งเตือน', 'กรุณากรอกข้อมูลให้ครบ');
       }
     } on FirebaseAuthException catch (e) {
-      print(e);
-      Get.snackbar('เกิดข้อผิดพลาด', 'กรุณาลองใหม่อีกครั้ง');
+      switch (e.code) {
+        case "invalid-email":
+          return Get.snackbar(
+              'เกิดข้อผิดพลาด', 'อีเมลนี้เชื่อมโยงกับบัญชีอื่นแล้ว');
+          break;
+      }
     }
   }
 

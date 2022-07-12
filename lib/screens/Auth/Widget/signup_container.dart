@@ -19,7 +19,7 @@ class _SignUpContainerState extends State<SignUpContainer> {
   @override
   void dispose() {
     super.dispose();
-    _authController.dispose();
+    // _authController.dispose();
   }
 
   @override

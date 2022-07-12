@@ -1,6 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:petcare_project/controllers/profile_controller.dart';
 import 'package:petcare_project/data/petData.dart';
+import 'package:petcare_project/screens/Profile/Widget/profile_container.dart';
+import 'package:petcare_project/screens/Profile/Widget/profile_textfield.dart';
 import '../../utils/constant.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -12,6 +18,8 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   TextEditingController _usernameController = TextEditingController();
+  final ProfileController _profileController = Get.put(ProfileController());
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -27,7 +35,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   width: size.width,
                   height: size.height >= 920
                       ? size.height * 0.32
-                      : size.height * 0.45,
+                      : size.height * 0.35,
                   color: Colors.white,
                 ),
                 //backgroud linear
@@ -50,72 +58,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   top: 80,
                   right: 0,
                   left: 0,
-                  child: Container(
-                    margin:
-                        const EdgeInsets.symmetric(horizontal: kDefualtPadding),
-                    width: size.width,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(18),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 5,
-                          spreadRadius: 1,
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: kDefualtPadding,
-                              vertical: kDefualtPadding),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                width: 150,
-                                height: 150,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(200),
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                      '${petData[0].image}',
-                                    ),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    'พลอากาศเอกฟูฟู่',
-                                    style: GoogleFonts.mitr(
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    'แก้ไข',
-                                    style: GoogleFonts.mitr(
-                                      fontSize: 16,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  child: ProfileContainer(size: size),
                 ),
               ],
             ),
@@ -126,12 +69,9 @@ class _ProfilePageState extends State<ProfilePage> {
               color: Colors.white,
               width: size.width,
               height:
-                  size.height >= 920 ? size.height * 0.5 : size.height * 0.6,
+                  size.height >= 920 ? size.height * 0.6 : size.height * 0.5,
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: kDefualtPadding),
-                // width: size.width,
-                // height:
-                //     size.height < 685 ? size.height * 0.6 : size.height * 0.5,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(18),
@@ -143,50 +83,45 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ],
                 ),
-                child: Column(
-                  children: [
-                    SizedBox(height: 30),
-                    ProfileForm(size, _usernameController, 'Username'),
-                    SizedBox(height: 5),
-                    ProfileForm(size, _usernameController, 'Email'),
-                    SizedBox(height: 5),
-                    ProfileForm(size, _usernameController, 'Tel'),
-                    SizedBox(height: 5),
-                    ProfileForm(size, _usernameController, 'Address'),
-                  ],
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: kDefualtPadding),
+                  child: FutureBuilder(
+                      future: _profileController.getUserDetail(),
+                      builder: (context, snapshot) {
+                        return Column(
+                          children: [
+                            SizedBox(height: 30),
+                            ProfileTextField(
+                              hintText: 'Username',
+                              initialValue: _profileController.user['username ']
+                                  .toString(),
+                            ),
+                            SizedBox(height: 20),
+                            ProfileTextField(
+                              hintText: 'Email',
+                              initialValue:
+                                  _profileController.user['email'].toString(),
+                            ),
+                            SizedBox(height: 20),
+                            ProfileTextField(hintText: 'Tel'),
+                            SizedBox(height: 20),
+                            ProfileTextField(hintText: 'Address'),
+                            ElevatedButton(
+                              onPressed: () {
+                                _profileController.getUserDetail();
+                                // _profileController.getUserDocId();
+                              },
+                              child: Text('get'),
+                            )
+                          ],
+                        );
+                      }),
                 ),
               ),
             ),
             SizedBox(height: 10),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget ProfileForm(
-      Size size, TextEditingController _textcontroller, String label) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: kDefualtPadding,
-        vertical: kDefualtPadding,
-      ),
-      child: Container(
-        width: size.width,
-        height: 50,
-        decoration: BoxDecoration(
-          // border: Border.all(),
-          color: Colors.grey.shade300,
-          borderRadius: BorderRadius.circular(18),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: kDefualtPadding / 2),
-          child: TextFormField(
-            controller: _textcontroller,
-            // initialValue: initialValue,
-            decoration:
-                InputDecoration(border: InputBorder.none, label: Text(label)),
-          ),
         ),
       ),
     );
