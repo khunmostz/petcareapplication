@@ -94,26 +94,34 @@ class _ProfilePageState extends State<ProfilePage> {
                             SizedBox(height: 30),
                             ProfileTextField(
                               hintText: 'Username',
-                              initialValue: _profileController.user['username ']
-                                  .toString(),
+                              readOnly: true,
+                              initialValue:
+                                  _profileController.user['type'].toString(),
                             ),
                             SizedBox(height: 20),
                             ProfileTextField(
                               hintText: 'Email',
+                              readOnly: true,
                               initialValue:
                                   _profileController.user['email'].toString(),
                             ),
                             SizedBox(height: 20),
-                            ProfileTextField(hintText: 'Tel'),
+                            ProfileTextField(
+                              hintText: 'Tel',
+                              readOnly: true,
+                            ),
                             SizedBox(height: 20),
-                            ProfileTextField(hintText: 'Address'),
-                            ElevatedButton(
-                              onPressed: () {
-                                _profileController.getUserDetail();
-                                // _profileController.getUserDocId();
-                              },
-                              child: Text('get'),
-                            )
+                            ProfileTextField(
+                              hintText: 'Address',
+                              readOnly: true,
+                            ),
+                            // ElevatedButton(
+                            //   onPressed: () {
+                            //     _profileController.getUserDetail();
+                            //     // _profileController.getUserDocId();
+                            //   },
+                            //   child: Text('get'),
+                            // )
                           ],
                         );
                       }),

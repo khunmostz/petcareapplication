@@ -23,8 +23,10 @@ class ProfileController extends GetxController {
         .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
         .get()
         .then((snapshot) {
+      print(snapshot.docs[0].data());
       snapshot.docs.forEach((data) {
         user = data.data();
+        print(user['username']);
       });
     });
   }
