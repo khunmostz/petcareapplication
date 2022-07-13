@@ -104,7 +104,7 @@ class AuthController extends GetxController {
   Future addUserDetails(String username, String email, String type) async {
     try {
       await FirebaseFirestore.instance.collection('users').add({
-        'username ': username,
+        'username': username,
         'email': email,
         'type': type,
       });

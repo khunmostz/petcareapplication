@@ -94,7 +94,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             SizedBox(height: 30),
                             ProfileTextField(
                               hintText: 'Username',
-                              initialValue: _profileController.user['username ']
+                              initialValue: _profileController.user['username']
                                   .toString(),
                             ),
                             SizedBox(height: 20),
