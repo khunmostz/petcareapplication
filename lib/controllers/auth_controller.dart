@@ -70,6 +70,7 @@ class AuthController extends GetxController {
         );
       }
     } on FirebaseAuthException catch (e) {
+      print(e);
       Get.snackbar('เกิดข้อผิดพลาด', 'กรุณาลองใหม่อีกครั้ง');
     }
   }
