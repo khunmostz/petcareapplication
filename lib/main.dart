@@ -1,33 +1,33 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:petcare_project/page/before_page.dart';
-import 'package:petcare_project/page/content_page.dart';
-import 'package:petcare_project/page/signin_page.dart';
-import 'package:petcare_project/page/signup_page.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:petcare_project/screens/Auth/before_page.dart';
+import 'package:petcare_project/utils/routes.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: SplashScreenView(
-          navigateRoute: BeforePage(),
-          duration: 3000,
-          imageSize: 400,
-          imageSrc: "assets/image/logo-petcare.png",
-          backgroundColor: Colors.white,
-        ),
-        routes: {
-          '/signin': (context) => SignInPage(),
-          '/signup': (context) => SignUpPage(),
-          '/content': (context) => ContentPage(),
-        });
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.orange,
+      ),
+      home: SplashScreenView(
+        navigateRoute: BeforePage(),
+        duration: 3000,
+        imageSize: 400,
+        imageSrc: "assets/image/logo-petcare.png",
+        backgroundColor: Colors.white,
+      ),
+      getPages: Routes.allRoutes,
+    );
   }
 }
