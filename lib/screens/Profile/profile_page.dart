@@ -35,7 +35,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   width: size.width,
                   height: size.height >= 920
                       ? size.height * 0.32
-                      : size.height * 0.35,
+                      : size.height * 0.38,
                   color: Colors.white,
                 ),
                 //backgroud linear
@@ -69,7 +69,7 @@ class _ProfilePageState extends State<ProfilePage> {
               color: Colors.white,
               width: size.width,
               height:
-                  size.height >= 920 ? size.height * 0.6 : size.height * 0.5,
+                  size.height >= 920 ? size.height * 0.6 : size.height * 0.6,
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: kDefualtPadding),
                 decoration: BoxDecoration(
@@ -95,15 +95,15 @@ class _ProfilePageState extends State<ProfilePage> {
                             ProfileTextField(
                               hintText: 'Username',
                               readOnly: true,
-                              initialValue:
-                                  _profileController.user['type'].toString(),
+                              // initialValue: _profileController.user['username']
+                              //     .toString(),
                             ),
                             SizedBox(height: 20),
                             ProfileTextField(
                               hintText: 'Email',
                               readOnly: true,
-                              initialValue:
-                                  _profileController.user['email'].toString(),
+                              // initialValue:
+                              //     _profileController.user['email'].toString(),
                             ),
                             SizedBox(height: 20),
                             ProfileTextField(
@@ -115,13 +115,13 @@ class _ProfilePageState extends State<ProfilePage> {
                               hintText: 'Address',
                               readOnly: true,
                             ),
-                            // ElevatedButton(
-                            //   onPressed: () {
-                            //     _profileController.getUserDetail();
-                            //     // _profileController.getUserDocId();
-                            //   },
-                            //   child: Text('get'),
-                            // )
+                            ElevatedButton(
+                              onPressed: () {
+                                _profileController.getUserDetail();
+                                // _profileController.getUserDocId();
+                              },
+                              child: Text('get'),
+                            )
                           ],
                         );
                       }),

@@ -42,7 +42,7 @@ dependencies:
   geolocator: ^8.2.1
   readmore: ^2.1.0
   get: ^4.6.5
-  firebase_auth: ^3.4.2
+  firebase_auth: ^3.4.1
   firebase_core: ^1.19.1
   cloud_firestore: ^3.2.1
 
