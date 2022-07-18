@@ -113,7 +113,13 @@ class AuthController extends GetxController {
 
   Future addUserDetails(String username, String email, String type) async {
     try {
-      await FirebaseFirestore.instance.collection('users').add({
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(
+            FirebaseAuth.instance.currentUser!.uid,
+          )
+          .set({
+        'image': '',
         'username': username,
         'email': email,
         'type': type,

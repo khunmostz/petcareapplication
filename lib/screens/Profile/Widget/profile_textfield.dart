@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class ProfileTextField extends StatelessWidget {
   final int maxLines;
@@ -9,13 +8,14 @@ class ProfileTextField extends StatelessWidget {
   final String initialValue;
   final TextEditingController? controller;
 
-  const ProfileTextField(
-      {this.obscureText = false,
-      required this.hintText,
-      this.readOnly = false,
-      this.initialValue = '',
-      this.maxLines = 1,
-      this.controller});
+  const ProfileTextField({
+    this.obscureText = false,
+    required this.hintText,
+    this.readOnly = false,
+    this.initialValue = '',
+    this.maxLines = 1,
+    this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {

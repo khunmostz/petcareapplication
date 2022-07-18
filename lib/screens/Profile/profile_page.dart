@@ -66,7 +66,7 @@ class _ProfilePageState extends State<ProfilePage> {
               color: Colors.white,
               width: size.width,
               height:
-                  size.height >= 920 ? size.height * 0.6 : size.height * 0.6,
+                  size.height >= 920 ? size.height * 0.6 : size.height * 0.7,
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: kDefualtPadding),
                 decoration: BoxDecoration(
@@ -106,18 +106,16 @@ class _ProfilePageState extends State<ProfilePage> {
                             ProfileTextField(
                               hintText: 'Tel',
                               readOnly: true,
+                              initialValue:
+                                  _profileController.user['tel'].toString(),
                             ),
                             SizedBox(height: 20),
                             ProfileTextField(
                               hintText: 'Address',
                               readOnly: true,
                               maxLines: 8,
-                            ),
-                            SizedBox(height: 20),
-                            Spacer(),
-                            CustomButton(
-                              onPressed: () {},
-                              text: 'เพิ่มข้อมูล',
+                              initialValue:
+                                  _profileController.user['address'].toString(),
                             ),
                           ],
                         );

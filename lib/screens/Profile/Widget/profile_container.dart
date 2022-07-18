@@ -17,6 +17,7 @@ class ProfileContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ProfileController _profileController = Get.put(ProfileController());
+    // TextEditingController _testController = TextEditingController(text: 'test');
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: kDefualtPadding),
       width: size.width,
@@ -80,39 +81,42 @@ class ProfileContainer extends StatelessWidget {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: kDefualtPadding),
                                     child: Container(
-                                      // width: size.width * 0.5,
-                                      height: size.height * 0.6,
+                                      width: size.width,
+                                      height: size.height * 0.7,
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.stretch,
                                         children: [
-                                          ProfileTextField(
-                                            hintText: 'username',
-                                            initialValue: _profileController
-                                                .user['username']
-                                                .toString(),
+                                          ProfileEdit(
+                                            hintText: 'Username',
+                                            keyboardType: TextInputType.text,
+                                            controller: _profileController
+                                                .usernameController,
                                           ),
                                           SizedBox(height: 20),
-                                          ProfileTextField(
-                                            hintText: 'email',
-                                            initialValue: _profileController
-                                                .user['email']
-                                                .toString(),
+                                          ProfileEdit(
+                                            hintText: 'Email',
+                                            keyboardType:
+                                                TextInputType.emailAddress,
+                                            controller: _profileController
+                                                .emailController,
                                           ),
                                           SizedBox(height: 20),
-                                          ProfileTextField(
-                                            hintText: 'tel',
-                                            initialValue: _profileController
-                                                .user['tel']
-                                                .toString(),
+                                          ProfileEdit(
+                                            hintText: 'Tel',
+                                            keyboardType: TextInputType.phone,
+                                            controller: _profileController
+                                                .telController,
                                           ),
                                           SizedBox(height: 20),
-                                          ProfileTextField(
-                                            hintText: 'address',
-                                            maxLines: 8,
-                                            initialValue: _profileController
-                                                .user['address']
-                                                .toString(),
+                                          SingleChildScrollView(
+                                            child: ProfileEdit(
+                                              hintText: 'Address',
+                                              keyboardType: TextInputType.text,
+                                              maxLines: 8,
+                                              controller: _profileController
+                                                  .addressController,
+                                            ),
                                           ),
                                           SizedBox(height: 20),
                                           Row(
@@ -124,14 +128,21 @@ class ProfileContainer extends StatelessWidget {
                                                     onSurface: Colors.white,
                                                   ),
                                                   child: Text('ยกเลิก'),
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    Get.back();
+                                                  },
                                                 ),
                                               ),
                                               SizedBox(width: 10),
                                               Expanded(
                                                 child: ElevatedButton(
                                                   child: Text('ยืนยัน'),
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    _profileController
+                                                        .updateUser();
+                                                    FocusScope.of(context)
+                                                        .unfocus();
+                                                  },
                                                 ),
                                               ),
                                             ],
@@ -160,6 +171,46 @@ class ProfileContainer extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class ProfileEdit extends StatelessWidget {
+  final int maxLines;
+  final String hintText;
+  final TextInputType keyboardType;
+
+  final TextEditingController? controller;
+  const ProfileEdit({
+    Key? key,
+    this.maxLines = 1,
+    required this.hintText,
+    this.controller,
+    required this.keyboardType,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        border: Border.all(color: Colors.white),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: TextFormField(
+        controller: controller,
+        maxLines: maxLines,
+        keyboardType: keyboardType,
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.grey.shade200,
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          hintText: hintText,
+        ),
       ),
     );
   }

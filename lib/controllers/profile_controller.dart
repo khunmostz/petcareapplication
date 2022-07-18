@@ -4,12 +4,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 class ProfileController extends GetxController {
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController telController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
-
   var user;
+
+  late final TextEditingController usernameController =
+      TextEditingController(text: user['username'].toString());
+  late final TextEditingController emailController =
+      TextEditingController(text: user['email'].toString());
+  late final TextEditingController telController =
+      TextEditingController(text: user['tel'].toString());
+  late final TextEditingController addressController =
+      TextEditingController(text: user['address'].toString());
 
   Future<dynamic> getUserDetail() async {
     try {
@@ -30,14 +34,27 @@ class ProfileController extends GetxController {
 
   Future<void> updateUser() async {
     try {
-      await FirebaseFirestore.instance.collection('users').doc().update({
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .update({
         'username': usernameController.text.trim(),
         'email': emailController.text.trim(),
         'tel': telController.text.trim(),
         'address': addressController.text.trim(),
       });
+      Get.snackbar(
+        'แจ้งเตือน',
+        'อัปเดทข้อมูลสำเร็จ',
+      );
+      Get.back();
     } catch (e) {
       print(e);
+      Get.snackbar(
+        'แจ้งเตือน',
+        'เกิดข้อผิดพลาด',
+      );
     }
+    // print(FirebaseAuth.instance.currentUser!.);
   }
 }
