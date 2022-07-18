@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:petcare_project/controllers/profile_controller.dart';
 import 'package:petcare_project/data/petData.dart';
+import 'package:petcare_project/screens/Profile/Widget/profile_textfield.dart';
 import 'package:petcare_project/utils/constant.dart';
 
 class ProfileContainer extends StatelessWidget {
@@ -13,6 +16,7 @@ class ProfileContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ProfileController _profileController = Get.put(ProfileController());
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: kDefualtPadding),
       width: size.width,
@@ -37,18 +41,10 @@ class ProfileContainer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  width: 150,
-                  height: 150,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(200),
-                    image: DecorationImage(
-                      image: NetworkImage(
-                        '${petData[0].image}',
-                      ),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                CircleAvatar(
+                  radius: 50,
+                  backgroundColor: Colors.grey[200],
+                  backgroundImage: null,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -62,11 +58,100 @@ class ProfileContainer extends StatelessWidget {
                     SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      'แก้ไข',
-                      style: GoogleFonts.mitr(
-                        fontSize: 16,
-                        color: Colors.grey,
+                    GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return SingleChildScrollView(
+                              child: AlertDialog(
+                                title: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: kDefualtPadding),
+                                  child: Text(
+                                    'แก้ไขข้อมูลส่วนตัว',
+                                    style: GoogleFonts.mitr(
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ),
+                                actions: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: kDefualtPadding),
+                                    child: Container(
+                                      // width: size.width * 0.5,
+                                      height: size.height * 0.6,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        children: [
+                                          ProfileTextField(
+                                            hintText: 'username',
+                                            initialValue: _profileController
+                                                .user['username']
+                                                .toString(),
+                                          ),
+                                          SizedBox(height: 20),
+                                          ProfileTextField(
+                                            hintText: 'email',
+                                            initialValue: _profileController
+                                                .user['email']
+                                                .toString(),
+                                          ),
+                                          SizedBox(height: 20),
+                                          ProfileTextField(
+                                            hintText: 'tel',
+                                            initialValue: _profileController
+                                                .user['tel']
+                                                .toString(),
+                                          ),
+                                          SizedBox(height: 20),
+                                          ProfileTextField(
+                                            hintText: 'address',
+                                            maxLines: 8,
+                                            initialValue: _profileController
+                                                .user['address']
+                                                .toString(),
+                                          ),
+                                          SizedBox(height: 20),
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                child: ElevatedButton(
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    onSurface: Colors.white,
+                                                  ),
+                                                  child: Text('ยกเลิก'),
+                                                  onPressed: () {},
+                                                ),
+                                              ),
+                                              SizedBox(width: 10),
+                                              Expanded(
+                                                child: ElevatedButton(
+                                                  child: Text('ยืนยัน'),
+                                                  onPressed: () {},
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      child: Text(
+                        'แก้ไข',
+                        style: GoogleFonts.mitr(
+                          fontSize: 16,
+                          color: Colors.grey,
+                        ),
                       ),
                     ),
                   ],

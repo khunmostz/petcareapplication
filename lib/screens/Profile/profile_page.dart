@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:petcare_project/controllers/profile_controller.dart';
 import 'package:petcare_project/screens/Profile/Widget/profile_container.dart';
 import 'package:petcare_project/screens/Profile/Widget/profile_textfield.dart';
+import 'package:petcare_project/widget/custom_button.dart';
 import '../../utils/constant.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -110,14 +111,14 @@ class _ProfilePageState extends State<ProfilePage> {
                             ProfileTextField(
                               hintText: 'Address',
                               readOnly: true,
+                              maxLines: 8,
                             ),
-                            ElevatedButton(
-                              onPressed: () {
-                                _profileController.getUserDetail();
-                                // _profileController.getUserDocId();
-                              },
-                              child: Text('get'),
-                            )
+                            SizedBox(height: 20),
+                            Spacer(),
+                            CustomButton(
+                              onPressed: () {},
+                              text: 'เพิ่มข้อมูล',
+                            ),
                           ],
                         );
                       }),

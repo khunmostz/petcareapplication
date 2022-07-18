@@ -41,14 +41,24 @@ class AuthController extends GetxController {
   bool checkPassword() {
     if (passwordController.text.trim() ==
         confirmPasswordController.text.trim()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  bool checkEmptySigIn() {
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
       return false;
     } else {
       return true;
     }
   }
 
-  bool checkEmpty() {
-    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+  bool checkEmptySignUp() {
+    if (emailController.text.isEmpty ||
+        passwordController.text.isEmpty ||
+        usernameController.text.isEmpty) {
       return false;
     } else {
       return true;
@@ -57,13 +67,13 @@ class AuthController extends GetxController {
 
   Future signIn() async {
     try {
-      if (checkEmpty()) {
+      if (checkEmptySigIn()) {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text.trim(),
           password: passwordController.text.trim(),
         );
         clearForm();
-      } else if (!checkEmpty()) {
+      } else if (!checkEmptySigIn()) {
         return Get.snackbar(
           'แจ้งเตือน',
           'กรุณากรอกข้อมูลให้ครบ',
@@ -77,7 +87,7 @@ class AuthController extends GetxController {
 
   Future signUp(String type) async {
     try {
-      if (checkPassword() || checkEmpty()) {
+      if (checkPassword() && checkEmptySignUp()) {
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
             email: emailController.text, password: passwordController.text);
         addUserDetails(
@@ -86,7 +96,7 @@ class AuthController extends GetxController {
           type,
         );
         clearForm();
-      } else if (checkEmpty()) {
+      } else if (checkEmptySignUp()) {
         Get.snackbar('แจ้งเตือน', 'กรุณากรอกรหัสผ่านให้ตรงกัน');
       } else {
         Get.snackbar('แจ้งเตือน', 'กรุณากรอกข้อมูลให้ครบ');
@@ -107,6 +117,8 @@ class AuthController extends GetxController {
         'username': username,
         'email': email,
         'type': type,
+        'tel': '',
+        'address': '',
       });
     } on FirebaseAuthException catch (e) {
       print(e);
