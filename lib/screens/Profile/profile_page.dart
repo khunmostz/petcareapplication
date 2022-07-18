@@ -1,10 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:petcare_project/controllers/profile_controller.dart';
-import 'package:petcare_project/data/petData.dart';
 import 'package:petcare_project/screens/Profile/Widget/profile_container.dart';
 import 'package:petcare_project/screens/Profile/Widget/profile_textfield.dart';
 import '../../utils/constant.dart';
@@ -95,15 +91,15 @@ class _ProfilePageState extends State<ProfilePage> {
                             ProfileTextField(
                               hintText: 'Username',
                               readOnly: true,
-                              // initialValue: _profileController.user['username']
-                              //     .toString(),
+                              initialValue: _profileController.user['username']
+                                  .toString(),
                             ),
                             SizedBox(height: 20),
                             ProfileTextField(
                               hintText: 'Email',
                               readOnly: true,
-                              // initialValue:
-                              //     _profileController.user['email'].toString(),
+                              initialValue:
+                                  _profileController.user['email'].toString(),
                             ),
                             SizedBox(height: 20),
                             ProfileTextField(

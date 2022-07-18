@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -16,9 +15,9 @@ class ProfileController extends GetxController {
         print(snapshot.docs[0].data());
         snapshot.docs.forEach((data) {
           user = data.data();
-          // print(user.toString());
-          print('xxxxxzxczzxcxxxxxxxxxxxx');
-          print(FirebaseAuth.instance.currentUser!.email.toString());
+          print(user['username']);
+          // print('xxxxxzxczzxcxxxxxxxxxxxx');
+          // print(FirebaseAuth.instance.currentUser!.email.toString());
         });
       });
     } catch (e) {
