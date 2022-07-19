@@ -2,10 +2,14 @@
     package="com.example.petcare_project">
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
    <application
         android:label="petcare_project"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:requestLegacyExternalStorage="true"
+        >
 
         <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyAJxz4yLqqnj_Dq-GVBINpjqeO5G8ksOoI"/>

@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 
-class ProfileTextField extends StatelessWidget {
+class ProfileEdit extends StatelessWidget {
   final int maxLines;
   final String hintText;
-  final bool readOnly;
-  final bool obscureText;
-  final TextEditingController? controller;
+  final TextInputType keyboardType;
 
-  const ProfileTextField({
-    this.obscureText = false,
-    required this.hintText,
-    this.readOnly = false,
+  final TextEditingController? controller;
+  const ProfileEdit({
+    Key? key,
     this.maxLines = 1,
+    required this.hintText,
     this.controller,
-  });
+    required this.keyboardType,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +25,7 @@ class ProfileTextField extends StatelessWidget {
       child: TextFormField(
         controller: controller,
         maxLines: maxLines,
-        readOnly: readOnly,
-        obscureText: obscureText,
+        keyboardType: keyboardType,
         decoration: InputDecoration(
           filled: true,
           fillColor: Colors.grey.shade200,

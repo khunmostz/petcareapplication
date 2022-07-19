@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:petcare_project/controllers/profile_controller.dart';
 import 'package:petcare_project/screens/Profile/Widget/profile_container.dart';
 import 'package:petcare_project/screens/Profile/Widget/profile_textfield.dart';
-import 'package:petcare_project/widget/custom_button.dart';
 import '../../utils/constant.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -14,7 +13,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  TextEditingController _usernameController = TextEditingController();
   final ProfileController _profileController = Get.put(ProfileController());
 
   @override
@@ -83,41 +81,46 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: kDefualtPadding),
-                  child: FutureBuilder(
-                      future: _profileController.getUserDetail(),
+                  child: StreamBuilder<dynamic>(
+                      stream: _profileController.getUserDetail().asStream(),
                       builder: (context, snapshot) {
-                        return Column(
-                          children: [
-                            SizedBox(height: 30),
-                            ProfileTextField(
-                              hintText: 'Username',
-                              readOnly: true,
-                              initialValue: _profileController.user['username']
-                                  .toString(),
-                            ),
-                            SizedBox(height: 20),
-                            ProfileTextField(
-                              hintText: 'Email',
-                              readOnly: true,
-                              initialValue:
-                                  _profileController.user['email'].toString(),
-                            ),
-                            SizedBox(height: 20),
-                            ProfileTextField(
-                              hintText: 'Tel',
-                              readOnly: true,
-                              initialValue:
-                                  _profileController.user['tel'].toString(),
-                            ),
-                            SizedBox(height: 20),
-                            ProfileTextField(
-                              hintText: 'Address',
-                              readOnly: true,
-                              maxLines: 8,
-                              initialValue:
-                                  _profileController.user['address'].toString(),
-                            ),
-                          ],
+                        return GetBuilder<ProfileController>(
+                          id: 'getUserDetail',
+                          builder: (_) {
+                            return Column(
+                              children: [
+                                SizedBox(height: 30),
+                                ProfileTextField(
+                                  hintText: 'Username',
+                                  readOnly: true,
+                                  controller: _profileController
+                                      .usernameController.value,
+                                ),
+                                SizedBox(height: 20),
+                                ProfileTextField(
+                                  hintText: 'Email',
+                                  readOnly: true,
+                                  controller:
+                                      _profileController.emailController.value,
+                                ),
+                                SizedBox(height: 20),
+                                ProfileTextField(
+                                  hintText: 'Tel',
+                                  readOnly: true,
+                                  controller:
+                                      _profileController.telController.value,
+                                ),
+                                SizedBox(height: 20),
+                                ProfileTextField(
+                                  hintText: 'Address',
+                                  readOnly: true,
+                                  maxLines: 8,
+                                  controller: _profileController
+                                      .addressController.value,
+                                ),
+                              ],
+                            );
+                          },
                         );
                       }),
                 ),

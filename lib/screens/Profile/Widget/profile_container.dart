@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:petcare_project/controllers/profile_controller.dart';
 import 'package:petcare_project/data/petData.dart';
+import 'package:petcare_project/screens/Profile/Widget/Profile_edit.dart';
 import 'package:petcare_project/screens/Profile/Widget/profile_textfield.dart';
 import 'package:petcare_project/utils/constant.dart';
 
@@ -45,7 +46,24 @@ class ProfileContainer extends StatelessWidget {
                 CircleAvatar(
                   radius: 50,
                   backgroundColor: Colors.grey[200],
-                  backgroundImage: null,
+                  backgroundImage: _profileController.image != null
+                      ? FileImage(_profileController.image!)
+                      : null,
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: GestureDetector(
+                        onTap: () => _profileController.selectImageProfile(),
+                        child: Text(
+                          'เลือกรูป',
+                          style: GoogleFonts.mitr(
+                            fontSize: 10,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -59,99 +77,108 @@ class ProfileContainer extends StatelessWidget {
                     SizedBox(
                       height: 10,
                     ),
+                    //
                     GestureDetector(
                       onTap: () {
                         showDialog(
                           context: context,
                           builder: (context) {
                             return SingleChildScrollView(
-                              child: AlertDialog(
-                                title: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: kDefualtPadding),
-                                  child: Text(
-                                    'แก้ไขข้อมูลส่วนตัว',
-                                    style: GoogleFonts.mitr(
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                ),
-                                actions: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: kDefualtPadding),
-                                    child: Container(
-                                      width: size.width,
-                                      height: size.height * 0.7,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.stretch,
-                                        children: [
-                                          ProfileEdit(
-                                            hintText: 'Username',
-                                            keyboardType: TextInputType.text,
-                                            controller: _profileController
-                                                .usernameController,
-                                          ),
-                                          SizedBox(height: 20),
-                                          ProfileEdit(
-                                            hintText: 'Email',
-                                            keyboardType:
-                                                TextInputType.emailAddress,
-                                            controller: _profileController
-                                                .emailController,
-                                          ),
-                                          SizedBox(height: 20),
-                                          ProfileEdit(
-                                            hintText: 'Tel',
-                                            keyboardType: TextInputType.phone,
-                                            controller: _profileController
-                                                .telController,
-                                          ),
-                                          SizedBox(height: 20),
-                                          SingleChildScrollView(
-                                            child: ProfileEdit(
-                                              hintText: 'Address',
-                                              keyboardType: TextInputType.text,
-                                              maxLines: 8,
-                                              controller: _profileController
-                                                  .addressController,
-                                            ),
-                                          ),
-                                          SizedBox(height: 20),
-                                          Row(
-                                            children: [
-                                              Expanded(
-                                                child: ElevatedButton(
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                    onSurface: Colors.white,
-                                                  ),
-                                                  child: Text('ยกเลิก'),
-                                                  onPressed: () {
-                                                    Get.back();
-                                                  },
-                                                ),
-                                              ),
-                                              SizedBox(width: 10),
-                                              Expanded(
-                                                child: ElevatedButton(
-                                                  child: Text('ยืนยัน'),
-                                                  onPressed: () {
-                                                    _profileController
-                                                        .updateUser();
-                                                    FocusScope.of(context)
-                                                        .unfocus();
-                                                  },
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                        ],
+                              child: GetBuilder<ProfileController>(
+                                id: 'updateUser',
+                                builder: (_) {
+                                  return AlertDialog(
+                                    title: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: kDefualtPadding),
+                                      child: Text(
+                                        'แก้ไขข้อมูลส่วนตัว',
+                                        style: GoogleFonts.mitr(
+                                          fontSize: 18,
+                                        ),
                                       ),
                                     ),
-                                  )
-                                ],
+                                    actions: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: kDefualtPadding),
+                                        child: Container(
+                                          width: size.width,
+                                          height: size.height * 0.7,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.stretch,
+                                            children: [
+                                              ProfileEdit(
+                                                hintText: 'Username',
+                                                keyboardType:
+                                                    TextInputType.text,
+                                                controller: _profileController
+                                                    .usernameController.value,
+                                              ),
+                                              SizedBox(height: 20),
+                                              ProfileEdit(
+                                                hintText: 'Email',
+                                                keyboardType:
+                                                    TextInputType.emailAddress,
+                                                controller: _profileController
+                                                    .emailController.value,
+                                              ),
+                                              SizedBox(height: 20),
+                                              ProfileEdit(
+                                                hintText: 'Tel',
+                                                keyboardType:
+                                                    TextInputType.phone,
+                                                controller: _profileController
+                                                    .telController.value,
+                                              ),
+                                              SizedBox(height: 20),
+                                              SingleChildScrollView(
+                                                child: ProfileEdit(
+                                                  hintText: 'Address',
+                                                  keyboardType:
+                                                      TextInputType.text,
+                                                  maxLines: 8,
+                                                  controller: _profileController
+                                                      .addressController.value,
+                                                ),
+                                              ),
+                                              SizedBox(height: 20),
+                                              Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: ElevatedButton(
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        onSurface: Colors.white,
+                                                      ),
+                                                      child: Text('ยกเลิก'),
+                                                      onPressed: () {
+                                                        Get.back();
+                                                      },
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 10),
+                                                  Expanded(
+                                                    child: ElevatedButton(
+                                                      child: Text('ยืนยัน'),
+                                                      onPressed: () {
+                                                        _profileController
+                                                            .updateUser();
+                                                        FocusScope.of(context)
+                                                            .unfocus();
+                                                      },
+                                                    ),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  );
+                                },
                               ),
                             );
                           },
@@ -171,46 +198,6 @@ class ProfileContainer extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class ProfileEdit extends StatelessWidget {
-  final int maxLines;
-  final String hintText;
-  final TextInputType keyboardType;
-
-  final TextEditingController? controller;
-  const ProfileEdit({
-    Key? key,
-    this.maxLines = 1,
-    required this.hintText,
-    this.controller,
-    required this.keyboardType,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey[200],
-        border: Border.all(color: Colors.white),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: TextFormField(
-        controller: controller,
-        maxLines: maxLines,
-        keyboardType: keyboardType,
-        decoration: InputDecoration(
-          filled: true,
-          fillColor: Colors.grey.shade200,
-          border: OutlineInputBorder(
-            borderSide: BorderSide.none,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          hintText: hintText,
-        ),
       ),
     );
   }
