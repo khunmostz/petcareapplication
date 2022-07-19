@@ -22,7 +22,7 @@ class ProfileController extends GetxController {
   Future<void> selectImageProfile() async {
     final ImagePicker _picker = ImagePicker();
     final XFile? _pickedImage = await _picker.pickImage(
-      source: ImageSource.camera,
+      source: ImageSource.gallery,
       imageQuality: 50,
       maxHeight: 150,
       maxWidth: 150,
@@ -37,7 +37,7 @@ class ProfileController extends GetxController {
           .collection('users')
           .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
           .get()
-          .then((snapshot) {
+          .then((snapshot) async {
         print(snapshot.docs[0].data());
         snapshot.docs.forEach((data) {
           user = data.data();
