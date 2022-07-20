@@ -34,8 +34,8 @@ class ProfileController extends GetxController {
       image = imagePath;
     }
 
-    // uploadProfile(image!.path.toString());
-    update(['selectImage']);
+    uploadProfile(image!.path.toString());
+    // update(['selectImage']);
     print((image!.path));
   }
 
@@ -45,9 +45,13 @@ class ProfileController extends GetxController {
         .ref()
         .child('profile-image/${imagePath}');
     var uploadTask = firebaseRef.putFile(image!);
-    var taskSnapshot = await uploadTask.whenComplete(() {
+    var taskSnapshot = await uploadTask.whenComplete(() async {
       print('upload profile success');
       Get.snackbar('แจ้งเตือน', 'เปลี่ยนรูปภาพสำเร็จ');
+    }).then((value) async {
+      var imageUrl = await value.ref.getDownloadURL();
+      print(imageUrl.toString());
+      updateImageProfile(imageUrl.toString());
     });
   }
 
@@ -66,6 +70,23 @@ class ProfileController extends GetxController {
       update(['getUserDetail']);
     } catch (e) {
       print(e);
+    }
+  }
+
+  Future<void> updateImageProfile(String image) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .update({
+        'image': image,
+      });
+    } catch (e) {
+      print(e);
+      Get.snackbar(
+        'แจ้งเตือน',
+        'เกิดข้อผิดพลาด',
+      );
     }
   }
 

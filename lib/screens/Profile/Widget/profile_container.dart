@@ -16,7 +16,6 @@ class ProfileContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ProfileController _profileController = Get.put(ProfileController());
-    // TextEditingController _testController = TextEditingController(text: 'test');
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: kDefualtPadding),
       width: size.width,
@@ -47,8 +46,10 @@ class ProfileContainer extends StatelessWidget {
                     return CircleAvatar(
                       radius: 50,
                       backgroundColor: Colors.grey[200],
-                      backgroundImage: _profileController.image != null
-                          ? FileImage(_profileController.image!)
+                      backgroundImage: NetworkImage(
+                                  '${_profileController.user['image']}') !=
+                              null
+                          ? NetworkImage('${_profileController.user['image']}')
                           : null,
                       child: Align(
                         alignment: Alignment.bottomCenter,
@@ -171,6 +172,7 @@ class ProfileContainer extends StatelessWidget {
                                                       onPressed: () {
                                                         _profileController
                                                             .updateUser();
+                                                        Get.back();
                                                         FocusScope.of(context)
                                                             .unfocus();
                                                       },
