@@ -28,9 +28,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 //ปูพื้น
                 Container(
                   width: size.width,
-                  height: size.height >= 920
-                      ? size.height * 0.32
-                      : size.height * 0.38,
+                  height: size.height < 920
+                      ? size.height * 0.4
+                      : size.height * 0.33,
                   color: Colors.white,
                 ),
                 //backgroud linear
@@ -63,8 +63,7 @@ class _ProfilePageState extends State<ProfilePage> {
             Container(
               color: Colors.white,
               width: size.width,
-              height:
-                  size.height >= 920 ? size.height * 0.6 : size.height * 0.7,
+              height: size.height < 920 ? size.height * 0.7 : size.height * 0.6,
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: kDefualtPadding),
                 decoration: BoxDecoration(

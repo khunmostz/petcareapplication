@@ -35,6 +35,9 @@ class AuthController extends GetxController {
     } else {
       // print('content page');
       Get.offAllNamed('/bottomnav');
+      // Future.delayed(Duration(seconds: 300), () {
+
+      // });
     }
   }
 

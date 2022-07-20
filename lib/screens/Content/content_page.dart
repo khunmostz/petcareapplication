@@ -46,7 +46,7 @@ class _ContentPageState extends State<ContentPage>
             Container(
               width: size.width,
               height:
-                  size.height < 685 ? size.height * 0.4 : size.height * 0.35,
+                  size.height < 920 ? size.height * 0.45 : size.height * 0.35,
               decoration: BoxDecoration(
                   color: kDefualtColorMain,
                   borderRadius: BorderRadius.only(
@@ -59,7 +59,6 @@ class _ContentPageState extends State<ContentPage>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // header
-
                     SizedBox(
                       height: 50,
                     ),

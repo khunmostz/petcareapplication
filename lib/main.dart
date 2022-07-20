@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:petcare_project/controllers/profile_controller.dart';
 import 'package:petcare_project/screens/Auth/before_page.dart';
 import 'package:petcare_project/utils/routes.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
@@ -11,7 +12,20 @@ Future<void> main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final ProfileController _profileController = Get.put(ProfileController());
+
+  @override
+  void initState() {
+    super.initState();
+    _profileController.getUserDetail();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(

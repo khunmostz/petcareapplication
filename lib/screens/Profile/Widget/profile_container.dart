@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:petcare_project/controllers/profile_controller.dart';
-import 'package:petcare_project/data/petData.dart';
 import 'package:petcare_project/screens/Profile/Widget/Profile_edit.dart';
-import 'package:petcare_project/screens/Profile/Widget/profile_textfield.dart';
 import 'package:petcare_project/utils/constant.dart';
 
 class ProfileContainer extends StatelessWidget {
@@ -43,27 +41,33 @@ class ProfileContainer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CircleAvatar(
-                  radius: 50,
-                  backgroundColor: Colors.grey[200],
-                  backgroundImage: _profileController.image != null
-                      ? FileImage(_profileController.image!)
-                      : null,
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: GestureDetector(
-                        onTap: () => _profileController.selectImageProfile(),
-                        child: Text(
-                          'เลือกรูป',
-                          style: GoogleFonts.mitr(
-                            fontSize: 10,
+                GetBuilder<ProfileController>(
+                  id: 'selectImage',
+                  builder: (_) {
+                    return CircleAvatar(
+                      radius: 50,
+                      backgroundColor: Colors.grey[200],
+                      backgroundImage: _profileController.image != null
+                          ? FileImage(_profileController.image!)
+                          : null,
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: GestureDetector(
+                            onTap: () =>
+                                _profileController.uploadImageProfile(),
+                            child: Text(
+                              'เลือกรูป',
+                              style: GoogleFonts.mitr(
+                                fontSize: 10,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -104,7 +108,9 @@ class ProfileContainer extends StatelessWidget {
                                             horizontal: kDefualtPadding),
                                         child: Container(
                                           width: size.width,
-                                          height: size.height * 0.7,
+                                          height: size.height < 920
+                                              ? size.height * 0.7
+                                              : size.height * 0.6,
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.stretch,

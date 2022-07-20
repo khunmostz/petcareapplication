@@ -6,7 +6,6 @@ import 'package:petcare_project/screens/Content/content_page.dart';
 import 'package:petcare_project/screens/Pet/mypet_page.dart';
 import 'package:petcare_project/screens/Profile/profile_page.dart';
 import 'package:petcare_project/screens/Record/record_page.dart';
-
 import 'package:petcare_project/utils/bottomnav.dart';
 
 class Routes {

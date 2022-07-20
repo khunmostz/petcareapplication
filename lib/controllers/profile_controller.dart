@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class ProfileController extends GetxController {
   var user;
@@ -19,7 +21,7 @@ class ProfileController extends GetxController {
 
   File? image;
 
-  Future<void> selectImageProfile() async {
+  Future<void> uploadImageProfile() async {
     final ImagePicker _picker = ImagePicker();
     final XFile? _pickedImage = await _picker.pickImage(
       source: ImageSource.gallery,
@@ -27,8 +29,26 @@ class ProfileController extends GetxController {
       maxHeight: 150,
       maxWidth: 150,
     );
-    final ImageFile = File(_pickedImage!.path);
-    image = ImageFile;
+    if (_pickedImage != null) {
+      final imagePath = File(_pickedImage.path);
+      image = imagePath;
+    }
+
+    // uploadProfile(image!.path.toString());
+    update(['selectImage']);
+    print((image!.path));
+  }
+
+  // Work
+  Future<void> uploadProfile(String imagePath) async {
+    var firebaseRef = await FirebaseStorage.instance
+        .ref()
+        .child('profile-image/${imagePath}');
+    var uploadTask = firebaseRef.putFile(image!);
+    var taskSnapshot = await uploadTask.whenComplete(() {
+      print('upload profile success');
+      Get.snackbar('แจ้งเตือน', 'เปลี่ยนรูปภาพสำเร็จ');
+    });
   }
 
   Future<Stream<dynamic>?> getUserDetail() async {
@@ -73,6 +93,6 @@ class ProfileController extends GetxController {
         'เกิดข้อผิดพลาด',
       );
     }
-    print(FirebaseAuth.instance.currentUser!.uid);
+    // print(FirebaseAuth.instance.currentUser!.uid);
   }
 }
