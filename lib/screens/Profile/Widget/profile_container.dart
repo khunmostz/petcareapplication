@@ -62,32 +62,32 @@ class ProfileContainer extends StatelessWidget {
                                     const EdgeInsets.symmetric(vertical: 10),
                                 child: GestureDetector(
                                   onTap: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return AlertDialog(
-                                            content: Column(
-                                              children: [
-                                                Container(
-                                                  width: size.width,
-                                                  height: size.height * 0.5,
-                                                  child: CircleAvatar(
-                                                    radius: 50,
-                                                    backgroundColor:
-                                                        Colors.grey[200],
-                                                    backgroundImage: NetworkImage(
-                                                                '${_profileController.user['image']}') !=
-                                                            null
-                                                        ? NetworkImage(
-                                                            '${_profileController.user['image']}')
-                                                        : null,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          );
-                                        });
-                                    // _profileController.uploadImageProfile(),
+                                    // showDialog(
+                                    //     context: context,
+                                    //     builder: (context) {
+                                    //       return AlertDialog(
+                                    //         content: Column(
+                                    //           children: [
+                                    //             Container(
+                                    //               width: size.width,
+                                    //               height: size.height * 0.5,
+                                    //               child: CircleAvatar(
+                                    //                 radius: 50,
+                                    //                 backgroundColor:
+                                    //                     Colors.grey[200],
+                                    //                 backgroundImage: NetworkImage(
+                                    //                             '${_profileController.user['image']}') !=
+                                    //                         null
+                                    //                     ? NetworkImage(
+                                    //                         '${_profileController.user['image']}')
+                                    //                     : null,
+                                    //               ),
+                                    //             ),
+                                    //           ],
+                                    //         ),
+                                    //       );
+                                    //     });
+                                    _profileController.uploadImageProfile();
                                   },
                                   child: Text(
                                     'เลือกรูป',

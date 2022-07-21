@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:petcare_project/controllers/profile_controller.dart';
 
 class AuthController extends GetxController {
   final TextEditingController emailController = TextEditingController();
@@ -9,6 +10,8 @@ class AuthController extends GetxController {
   final TextEditingController confirmPasswordController =
       TextEditingController();
   final TextEditingController usernameController = TextEditingController();
+
+  var _profileController = Get.put(ProfileController());
 
   var isLogin = false;
   // bool isEmpty = false;
@@ -30,14 +33,12 @@ class AuthController extends GetxController {
 
   _authScreen(User? user) {
     if (user == null) {
-      // print('login page');
+      print('login page');
       Get.offAllNamed('/signin');
     } else {
-      // print('content page');
+      print('content page');
       Get.offAllNamed('/bottomnav');
-      // Future.delayed(Duration(seconds: 300), () {
-
-      // });
+      _profileController.getUserDetail();
     }
   }
 

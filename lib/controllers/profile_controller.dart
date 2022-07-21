@@ -52,6 +52,7 @@ class ProfileController extends GetxController {
     }).then((value) async {
       var imageUrl = await value.ref.getDownloadURL();
       print(imageUrl.toString());
+      user['image'] = imageUrl;
       updateImageProfile(imageUrl.toString());
     });
   }
@@ -67,6 +68,11 @@ class ProfileController extends GetxController {
         snapshot.docs.forEach((data) {
           user = data.data();
           print(user['email']);
+
+          usernameController.value.text = user['username'].toString();
+          emailController.value.text = user['email'].toString();
+          telController.value.text = user['tel'].toString();
+          addressController.value.text = user['address'].toString();
         });
       });
       update(['getUserDetail']);

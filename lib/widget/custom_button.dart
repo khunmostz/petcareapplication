@@ -27,7 +27,6 @@ class CustomButton extends StatelessWidget {
     return ElevatedButton(
       style: buttonStyle,
       onPressed: () {
-        Get.toNamed('${routeName}');
         onPressed?.call();
         // print(onPressed!());
       },
