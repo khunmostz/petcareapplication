@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:petcare_project/controllers/pet_controller.dart';
+import 'package:petcare_project/data/petData.dart';
 import 'package:petcare_project/utils/constant.dart';
-import 'package:readmore/readmore.dart';
-
-import '../../data/petData.dart';
 
 class MyPetPage extends StatefulWidget {
   const MyPetPage({Key? key}) : super(key: key);
@@ -15,137 +11,140 @@ class MyPetPage extends StatefulWidget {
 }
 
 class _MyPetPageState extends State<MyPetPage> {
-  bool _selected = false;
-  int? _selectId;
-  final _controller = Get.put(PetController());
+  double boxSize = 150.0;
+
+  final ScrollController _scrollController = ScrollController();
+
+  void onListen() {
+    setState(() {});
+    // print(_scrollController.offset);
+  }
 
   @override
   void initState() {
-    // TODO: implement initState
+    petData.addAll(List.from(petData));
+    _scrollController.addListener(onListen);
     super.initState();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    _scrollController.removeListener(onListen);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Column(
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: kDefualtPadding),
-                child: Container(
-                  width: size.width,
-                  height: size.height,
-                  child: ListView.builder(
-                      itemCount: petData.length,
-                      itemBuilder: (context, index) {
-                        return popContainer(size, index, _selected);
-                      }),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: CustomScrollView(
+            controller: _scrollController,
+            slivers: <Widget>[
+              SliverAppBar(
+                automaticallyImplyLeading: false,
+                title: Text(
+                  'My Pets',
+                  style: GoogleFonts.mitr(
+                    fontSize: 20,
+                    color: Colors.black,
+                  ),
                 ),
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                pinned: true,
               ),
-            ],
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.add),
-      ),
-    );
-  }
+              SliverToBoxAdapter(
+                child: SizedBox(height: 20),
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  childCount: petData.length,
+                  (context, index) {
+                    final pet = petData[index];
+                    final itemPositionOffset = index * boxSize / 2;
+                    final difference =
+                        _scrollController.offset - itemPositionOffset;
+                    final percent = 1 - (difference / boxSize / 2);
+                    // if (index == 0) print(percent);
 
-  Widget popContainer(Size size, int index, bool isSelected) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 10,
-        ),
-        Container(
-          width: size.width,
-          height: 70,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(18),
-            color: kDefualtColorMain,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black26,
-                blurRadius: 10,
-                spreadRadius: 1,
-                offset: Offset(0, 5),
+                    double opacity = percent;
+                    double scale = percent;
+                    if (opacity < 0) opacity = 0;
+                    if (opacity > 1.0) opacity = 1.0;
+                    if (scale > 1.0) scale = 1.0;
+
+                    return Align(
+                      heightFactor: 0.5,
+                      child: Opacity(
+                        opacity: opacity,
+                        child: Transform(
+                          alignment: Alignment.center,
+                          transform: Matrix4.identity()..scale(scale, 1.0),
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    topRight: Radius.circular(20))),
+                            color: kDefualtColorMain,
+                            child: SizedBox(
+                              height: boxSize,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(15),
+                                      child: Text(
+                                        pet.name,
+                                        style: GoogleFonts.mitr(
+                                          fontSize: 24,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Image.network(
+                                      pet.image,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
               )
             ],
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: kDefualtPadding),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    "${petData[index].image}",
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    _controller.toggleWidget(index.obs);
-                  },
-                  child: GetBuilder<PetController>(
-                    builder: (_) => _controller.selectId?.value != index ||
-                            _controller.selected.value
-                        ? Icon(Icons.arrow_drop_down)
-                        : Icon(Icons.arrow_drop_up),
-                  ),
-                ),
-              ],
-            ),
-          ),
         ),
-        GetBuilder<PetController>(
-          builder: (_) =>
-              _controller.selectId?.value != index || _controller.selected.value
-                  ? Container()
-                  : TweenAnimationBuilder(
-                      child: Container(
-                        width: size.width,
-                        height: 300,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(18),
-                          color: Color.fromARGB(255, 255, 150, 79),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black26,
-                              blurRadius: 10,
-                              spreadRadius: 1,
-                              offset: Offset(0, 5),
-                            )
-                          ],
-                        ),
-                      ),
-                      duration: Duration(seconds: 1),
-                      tween: Tween<double>(begin: 0, end: 1),
-                      curve: Curves.ease,
-                      builder: (BuildContext context, double _var, child) {
-                        return Opacity(
-                          opacity: _var,
-                          child: Padding(
-                            padding: EdgeInsets.only(top: _var * 20),
-                            child: child,
-                          ),
-                        );
-                      },
-                    ),
-        )
-      ],
+      ),
     );
   }
+}
+
+class myCustomHeader extends SliverPersistentHeaderDelegate {
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Text('My Pets');
+  }
+
+  @override
+  // TODO: implement maxExtent
+  double get maxExtent => 100;
+
+  @override
+  // TODO: implement minExtent
+  double get minExtent => 0;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
+      true;
 }
