@@ -35,6 +35,7 @@ class _MyPetPageState extends State<MyPetPage> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -99,7 +100,7 @@ class _MyPetPageState extends State<MyPetPage> {
                                       child: Text(
                                         pet.name,
                                         style: GoogleFonts.mitr(
-                                          fontSize: 24,
+                                          fontSize: 18,
                                           color: Colors.white,
                                         ),
                                       ),
@@ -107,9 +108,20 @@ class _MyPetPageState extends State<MyPetPage> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Image.network(
-                                      pet.image,
-                                      fit: BoxFit.cover,
+                                    child: Container(
+                                      width: size.width * 0.4,
+                                      height: size.height * 0.3 / 2,
+                                      decoration: BoxDecoration(
+                                        color: Colors.black,
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Image.network(
+                                          pet.image,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ],
