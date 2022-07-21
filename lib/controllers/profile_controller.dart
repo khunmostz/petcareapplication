@@ -65,6 +65,7 @@ class ProfileController extends GetxController {
         print(snapshot.docs[0].data());
         snapshot.docs.forEach((data) {
           user = data.data();
+          print(user['email']);
         });
       });
       update(['getUserDetail']);
