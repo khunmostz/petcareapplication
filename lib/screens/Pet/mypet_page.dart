@@ -75,6 +75,7 @@ class _MyPetPageState extends State<MyPetPage> {
                     if (opacity > 1.0) opacity = 1.0;
                     if (scale > 1.0) scale = 1.0;
 
+                    // Widget
                     return Align(
                       heightFactor: 0.5,
                       child: Opacity(
