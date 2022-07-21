@@ -4,6 +4,7 @@ import 'package:petcare_project/screens/Auth/signin_page.dart';
 import 'package:petcare_project/screens/Auth/signup_page.dart';
 import 'package:petcare_project/screens/Content/content_page.dart';
 import 'package:petcare_project/screens/Pet/mypet_page.dart';
+import 'package:petcare_project/screens/Pet/petdetail_page.dart';
 import 'package:petcare_project/screens/Profile/profile_page.dart';
 import 'package:petcare_project/screens/Record/record_page.dart';
 import 'package:petcare_project/utils/bottomnav.dart';
@@ -17,6 +18,7 @@ class Routes {
     GetPage(name: '/bottomnav', page: () => BottomNav()),
     GetPage(name: '/content', page: () => ContentPage()),
     GetPage(name: '/record', page: () => RecordPage()),
+    GetPage(name: '/petdetail', page: () => PetDetailPage()),
     GetPage(name: '/mypet', page: () => MyPetPage()),
     GetPage(name: '/profile', page: () => ProfilePage()),
   ];

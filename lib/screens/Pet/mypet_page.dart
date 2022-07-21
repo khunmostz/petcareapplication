@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:petcare_project/data/petData.dart';
 import 'package:petcare_project/utils/constant.dart';
@@ -84,47 +85,54 @@ class _MyPetPageState extends State<MyPetPage> {
                         child: Transform(
                           alignment: Alignment.center,
                           transform: Matrix4.identity()..scale(scale, 1.0),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(20),
-                                    topRight: Radius.circular(20))),
-                            color: kDefualtColorMain,
-                            child: SizedBox(
-                              height: boxSize,
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(15),
-                                      child: Text(
-                                        pet.name,
-                                        style: GoogleFonts.mitr(
-                                          fontSize: 18,
-                                          color: Colors.white,
+                          child: GestureDetector(
+                            onTap: (() {
+                              Get.toNamed('/petdetail');
+                            }),
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      topRight: Radius.circular(20))),
+                              color: kDefualtColorMain,
+                              child: SizedBox(
+                                height: boxSize,
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(15),
+                                        child: Text(
+                                          pet.name,
+                                          style: GoogleFonts.mitr(
+                                            fontSize: 18,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      width: size.width * 0.4,
-                                      height: size.height * 0.3 / 2,
-                                      decoration: BoxDecoration(
-                                        color: Colors.black,
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: Image.network(
-                                          pet.image,
-                                          fit: BoxFit.cover,
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        width: size.width * 0.4,
+                                        height: size.height * 0.3 / 2,
+                                        decoration: BoxDecoration(
+                                          color: Colors.black,
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          child: Image.network(
+                                            pet.image,
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
