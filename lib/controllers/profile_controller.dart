@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,28 +21,30 @@ class ProfileController extends GetxController {
   File? image;
 
   Future<void> uploadImageProfile() async {
-    final ImagePicker _picker = ImagePicker();
-    final XFile? _pickedImage = await _picker.pickImage(
-      source: ImageSource.gallery,
-      imageQuality: 50,
-      maxHeight: 150,
-      maxWidth: 150,
-    );
-    if (_pickedImage != null) {
-      final imagePath = File(_pickedImage.path);
-      image = imagePath;
-    }
+    try {
+      final ImagePicker _picker = ImagePicker();
+      final XFile? _pickedImage = await _picker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 50,
+        maxHeight: 150,
+        maxWidth: 150,
+      );
+      if (_pickedImage != null) {
+        final Rx<File> _imagePath = File(_pickedImage.path).obs;
+        image = _imagePath.value;
+      }
 
-    uploadProfile(image!.path.toString());
-    // update(['selectImage']);
-    print((image!.path));
+      uploadProfile(image!.path.toString());
+    } catch (e) {
+      print(e);
+    }
   }
 
   // Work
   Future<void> uploadProfile(String imagePath) async {
     var firebaseRef = await FirebaseStorage.instance
         .ref()
-        .child('profile-image/${imagePath}');
+        .child('profile-image/${imagePath.split('/').last}');
     var uploadTask = firebaseRef.putFile(image!);
     var taskSnapshot = await uploadTask.whenComplete(() async {
       print('upload profile success');
@@ -82,6 +83,7 @@ class ProfileController extends GetxController {
           .update({
         'image': image,
       });
+      update(['updateProfile']);
     } catch (e) {
       print(e);
       Get.snackbar(
