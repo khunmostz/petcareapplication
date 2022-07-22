@@ -18,27 +18,17 @@ class ContentPage extends StatefulWidget {
   State<ContentPage> createState() => _ContentPageState();
 }
 
-class _ContentPageState extends State<ContentPage>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _controller;
+class _ContentPageState extends State<ContentPage> {
   final AuthController _authController = Get.put(AuthController());
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 1),
-    );
-    _controller.forward();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
-    _controller.dispose();
   }
 
   @override
@@ -111,7 +101,7 @@ class _ContentPageState extends State<ContentPage>
                         color: Colors.white,
                         borderRadius: BorderRadius.all(Radius.circular(50)),
                         boxShadow: [
-                          BoxShadow(
+                        BoxShadow(
                             color: Colors.grey.shade50,
                             spreadRadius: 0.5,
                             blurRadius: 10,

@@ -38,7 +38,7 @@ class _SignInContainerState extends State<SignInContainer> {
           children: [
             // username textfield
             Text(
-              'Username',
+              'Email',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,

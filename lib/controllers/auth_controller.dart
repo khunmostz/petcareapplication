@@ -149,11 +149,15 @@ class AuthController extends GetxController {
     await FirebaseAuth.instance.signOut();
   }
 
-  Future passwordReset(BuildContext context) async {
+  Future passwordReset(String email) async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(
-        email: emailController.text.trim(),
+        email: email,
       );
+      Get.snackbar('แจ้งเตือน', 'โปรดช็คอีเมล');
+      print(email);
+      // forgotController.clear();
+      // Get.toNamed('/signin');
     } on FirebaseAuthException catch (e) {
       print(e);
       Get.snackbar('เกิดข้อผิดพลาด', 'กรุณาลองใหม่อีกครั้ง');

@@ -43,6 +43,7 @@ class _ForgotPageState extends State<ForgotPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  SizedBox(height: 10),
                   Text(
                     'Forgot Password',
                     style: GoogleFonts.mitr(
@@ -111,7 +112,9 @@ class _ForgotPageState extends State<ForgotPage> {
               padding: const EdgeInsets.symmetric(horizontal: kDefualtPadding),
               child: CustomButton(
                 text: 'Accepth',
-                // onPressed: () => _authController.signOut(),
+                onPressed: () => _authController.passwordReset(
+                  _authController.forgotController.text.trim(),
+                ),
               ),
             ),
           )
