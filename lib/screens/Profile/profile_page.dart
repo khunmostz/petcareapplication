@@ -16,6 +16,12 @@ class _ProfilePageState extends State<ProfilePage> {
   final ProfileController _profileController = Get.put(ProfileController());
 
   @override
+  void initState() {
+    super.initState();
+    _profileController.onInit();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(

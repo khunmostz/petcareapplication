@@ -11,6 +11,8 @@ class AuthController extends GetxController {
       TextEditingController();
   final TextEditingController usernameController = TextEditingController();
 
+  final TextEditingController forgotController = TextEditingController();
+
   var _profileController = Get.put(ProfileController());
 
   var isLogin = false;

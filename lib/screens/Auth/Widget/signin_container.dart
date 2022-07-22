@@ -69,7 +69,7 @@ class _SignInContainerState extends State<SignInContainer> {
             CustomButton(
               text: 'Sign In',
               onPressed: () async {
-               await _authController
+                await _authController
                     .signIn()
                     .then((value) => Get.offAllNamed('/bottomnav'));
               },
@@ -78,10 +78,13 @@ class _SignInContainerState extends State<SignInContainer> {
             // forgot pass
             Align(
               alignment: Alignment.centerRight,
-              child: Text(
-                'Forgot Password ?',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
+              child: GestureDetector(
+                onTap: () => Get.toNamed('/forgot'),
+                child: Text(
+                  'Forgot Password ?',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),

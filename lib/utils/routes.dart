@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:petcare_project/screens/Auth/before_page.dart';
+import 'package:petcare_project/screens/Auth/forgot_page.dart';
 import 'package:petcare_project/screens/Auth/signin_page.dart';
 import 'package:petcare_project/screens/Auth/signup_page.dart';
 import 'package:petcare_project/screens/Content/content_page.dart';
@@ -15,6 +16,7 @@ class Routes {
     GetPage(name: '/before', page: () => BeforePage()),
     GetPage(name: '/signin', page: () => SignInPage()),
     GetPage(name: '/signup', page: () => SignUpPage()),
+    GetPage(name: '/forgot', page: () => ForgotPage()),
     GetPage(name: '/bottomnav', page: () => BottomNav()),
     GetPage(name: '/content', page: () => ContentPage()),
     GetPage(name: '/record', page: () => RecordPage()),

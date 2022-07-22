@@ -19,6 +19,12 @@ class ProfileController extends GetxController {
       TextEditingController(text: user['address'].toString()).obs;
 
   File? image;
+  
+  @override
+  void onInit() async {
+    await getUserDetail();
+    print('pull data');
+  }
 
   Future<void> uploadImageProfile() async {
     try {
