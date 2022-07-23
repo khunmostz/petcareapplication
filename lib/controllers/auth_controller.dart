@@ -156,8 +156,8 @@ class AuthController extends GetxController {
       );
       Get.snackbar('แจ้งเตือน', 'โปรดช็คอีเมล');
       print(email);
-      // forgotController.clear();
-      // Get.toNamed('/signin');
+      forgotController.clear();
+      Get.toNamed('/signin');
     } on FirebaseAuthException catch (e) {
       print(e);
       Get.snackbar('เกิดข้อผิดพลาด', 'กรุณาลองใหม่อีกครั้ง');
