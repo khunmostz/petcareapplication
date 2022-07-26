@@ -9,19 +9,18 @@ import 'package:firebase_storage/firebase_storage.dart';
 class ProfileController extends GetxController {
   var user;
 
-  late final Rx<TextEditingController> usernameController =
-      TextEditingController(text: user['username'].toString()).obs;
-  late final Rx<TextEditingController> emailController =
-      TextEditingController(text: user['email'].toString()).obs;
-  late final Rx<TextEditingController> telController =
-      TextEditingController(text: user['tel'].toString()).obs;
-  late final Rx<TextEditingController> addressController =
-      TextEditingController(text: user['address'].toString()).obs;
+  final Rx<TextEditingController> usernameController =
+      TextEditingController().obs;
+  final Rx<TextEditingController> emailController = TextEditingController().obs;
+  final Rx<TextEditingController> telController = TextEditingController().obs;
+  final Rx<TextEditingController> addressController =
+      TextEditingController().obs;
 
   File? image;
-  
+
   @override
   void onInit() async {
+    super.onInit();
     await getUserDetail();
     print('pull data');
   }
@@ -46,7 +45,6 @@ class ProfileController extends GetxController {
     }
   }
 
-  // Work
   Future<void> uploadProfile(String imagePath) async {
     var firebaseRef = await FirebaseStorage.instance
         .ref()
@@ -73,8 +71,7 @@ class ProfileController extends GetxController {
         print(snapshot.docs[0].data());
         snapshot.docs.forEach((data) {
           user = data.data();
-          print(user['email']);
-
+          // print(user['email']);
           usernameController.value.text = user['username'].toString();
           emailController.value.text = user['email'].toString();
           telController.value.text = user['tel'].toString();
@@ -85,6 +82,7 @@ class ProfileController extends GetxController {
     } catch (e) {
       print(e);
     }
+    return null;
   }
 
   Future<void> updateImageProfile(String image) async {
@@ -120,8 +118,8 @@ class ProfileController extends GetxController {
         'แจ้งเตือน',
         'อัปเดทข้อมูลสำเร็จ',
       );
-      update(['updateUser']);
       Get.back();
+      update(['updateUser']);
     } catch (e) {
       print(e);
       Get.snackbar(

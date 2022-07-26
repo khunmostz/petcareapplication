@@ -12,6 +12,7 @@ class SignUpContainer extends StatefulWidget {
 
 class _SignUpContainerState extends State<SignUpContainer> {
   final AuthController _authController = Get.put(AuthController());
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   List _dropdownValue = ['User', 'Doctor'];
   Object? _iniialValue = 'User';
   // String? dropdownValue;
@@ -35,141 +36,161 @@ class _SignUpContainerState extends State<SignUpContainer> {
       ),
       child: Padding(
         padding: const EdgeInsets.all(kDefualtPadding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Username',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 10),
-            // username textfield
-            AuthTextField(
-              hintText: 'John Doe',
-              controller: _authController.usernameController,
-            ),
-            SizedBox(height: 10),
-            Text(
-              'Email',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 10),
-            // email textfield
-            AuthTextField(
-              hintText: 'example@gmail.com',
-              controller: _authController.emailController,
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Password',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 10),
-            // password textfield
-            AuthTextField(
-              obscureText: true,
-              hintText: '**************',
-              controller: _authController.passwordController,
-            ),
-            SizedBox(height: 10),
-            Text(
-              'Confirm Password',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 10),
-            AuthTextField(
-              obscureText: true,
-              hintText: '**************',
-              controller: _authController.confirmPasswordController,
-            ),
-            SizedBox(height: 10),
-            Text(
-              'Types',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 10),
-            // type dropdown
-            DropdownButton(
-              value: _iniialValue,
-              // isExpanded: true,
-              items: _dropdownValue.map((value) {
-                return DropdownMenuItem(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  _iniialValue = value as String;
-                  // print(_iniialValue);
-                });
-              },
-            ),
-            SizedBox(height: 25),
-            CustomButton(
-              text: 'SignUp',
-              onPressed: () async {
-                await _authController
-                    .signUp(_iniialValue.toString())
-                    .then((value) => Get.offAllNamed('/bottomnav'));
-                // print(_authController.usernameController);
-                // print(_iniialValue.toString());
-              },
-            ),
-            SizedBox(height: 20),
-            // Forgot Password ?
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                'Forgot Password ?',
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Username',
                 style: TextStyle(
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
-            SizedBox(height: 20),
-            // Already have an account ?
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Already have an account ?",
+              SizedBox(height: 10),
+              // username textfield
+              AuthTextField(
+                hintText: 'John Doe',
+                controller: _authController.usernameController,
+                validator: (value) {},
+                onSaved: (value) {
+                  _authController.usernameController.text = value!;
+                },
+              ),
+              SizedBox(height: 10),
+              Text(
+                'Email',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 10),
+              // email textfield
+              AuthTextField(
+                hintText: 'example@gmail.com',
+                controller: _authController.emailController,
+                validator: (value) {
+                  return _authController.EmailValidator(value!);
+                },
+                onSaved: (value) {
+                  _authController.emailController.text = value!;
+                },
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Password',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 10),
+              // password textfield
+              AuthTextField(
+                obscureText: true,
+                hintText: '**************',
+                controller: _authController.passwordController,
+                validator: (value) {
+                  return _authController.PasswordValidator(value!);
+                },
+                onSaved: (value) {
+                  _authController.passwordController.text = value!;
+                },
+              ),
+              SizedBox(height: 10),
+              Text(
+                'Confirm Password',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 10),
+              AuthTextField(
+                obscureText: true,
+                hintText: '**************',
+                controller: _authController.confirmPasswordController,
+                validator: (value) {
+                  return _authController.checkPassword(value!);
+                },
+                onSaved: (value) {},
+              ),
+              SizedBox(height: 10),
+              Text(
+                'Types',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 10),
+              // type dropdown
+              DropdownButton(
+                value: _iniialValue,
+                // isExpanded: true,
+                items: _dropdownValue.map((value) {
+                  return DropdownMenuItem(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _iniialValue = value as String;
+                    // print(_iniialValue);
+                  });
+                },
+              ),
+              SizedBox(height: 25),
+              CustomButton(
+                text: 'SignUp',
+                onPressed: () async {
+                  await _authController.signUp(
+                      _iniialValue.toString(), _formKey);
+                },
+              ),
+              SizedBox(height: 20),
+              // Forgot Password ?
+              Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  'Forgot Password ?',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(width: 5),
-                GestureDetector(
-                  onTap: () {
-                    Get.toNamed('/signin');
-                  },
-                  child: Text(
-                    'Sign In',
+              ),
+              SizedBox(height: 20),
+              // Already have an account ?
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Already have an account ?",
                     style: TextStyle(
-                      color: kDefualtColorMain,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                )
-              ],
-            ),
-            SizedBox(height: 10)
-          ],
+                  SizedBox(width: 5),
+                  GestureDetector(
+                    onTap: () {
+                      Get.toNamed('/signin');
+                    },
+                    child: Text(
+                      'Sign In',
+                      style: TextStyle(
+                        color: kDefualtColorMain,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(height: 10)
+            ],
+          ),
         ),
       ),
     );

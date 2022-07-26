@@ -25,7 +25,6 @@ class _RecordPageState extends State<RecordPage>
     with SingleTickerProviderStateMixin {
   var _selectedIndex = 0;
   bool _tapSearch = true;
-  bool _tapAdd = true;
 
   var date;
 
@@ -55,17 +54,6 @@ class _RecordPageState extends State<RecordPage>
     print(_tapSearch.toString());
   }
 
-  void _tapField() {
-    if (_tapAdd == false) {
-      _controller.forward();
-      _tapAdd = true;
-    } else {
-      _controller.reverse();
-      _tapAdd = false;
-    }
-    print(_tapAdd.toString());
-  }
-
   final ButtonStyle buttonStyle = ElevatedButton.styleFrom(
     onPrimary: Colors.white,
     primary: kDefualtColorMain,
@@ -78,7 +66,6 @@ class _RecordPageState extends State<RecordPage>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _controller = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 350));
@@ -86,7 +73,6 @@ class _RecordPageState extends State<RecordPage>
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _controller.dispose();
   }
@@ -123,7 +109,6 @@ class _RecordPageState extends State<RecordPage>
                     },
                     itemCount: petData.length,
                     itemBuilder: (context, index) {
-                      var slide = petData.length;
                       var _scale = _selectedIndex == index ? 1.0 : 0.8;
                       return TweenAnimationBuilder(
                         duration: const Duration(milliseconds: 350),
@@ -177,7 +162,6 @@ class _RecordPageState extends State<RecordPage>
                     children: [
                       GestureDetector(
                         onTap: () {
-                          // _tapSearch ? null : _showDatePicker();
                           showDialog(
                             context: context,
                             builder: (context) {
@@ -255,7 +239,7 @@ class _RecordPageState extends State<RecordPage>
                         },
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 350),
-                          width: _tapAdd ? 48 : 200,
+                          width: 48,
                           height: 48,
                           decoration: BoxDecoration(
                             color: kDefualtColorMain,
@@ -272,45 +256,18 @@ class _RecordPageState extends State<RecordPage>
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             physics: NeverScrollableScrollPhysics(),
-                            child: Container(
-                              width: _tapAdd ? 48 : 200,
-                              child: Row(
-                                mainAxisAlignment: _tapAdd
-                                    ? MainAxisAlignment.center
-                                    : MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SizedBox(
-                                    width: _tapAdd ? 0 : 10,
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 350),
+                              width: 48,
+                              child: Padding(
+                                padding: EdgeInsets.only(right: 0),
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Icon(
+                                    Icons.add,
+                                    color: Colors.white,
                                   ),
-                                  _tapAdd
-                                      ? Container()
-                                      : Text(
-                                          "กดเพื่อเพิ่มข้อมูล",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                  GestureDetector(
-                                    onTap: () => setState(() {
-                                      _tapField();
-                                    }),
-                                    child: Padding(
-                                      padding: _tapAdd
-                                          ? EdgeInsets.only(right: 0)
-                                          : EdgeInsets.only(right: 20),
-                                      child: Align(
-                                        alignment: _tapAdd
-                                            ? Alignment.center
-                                            : Alignment.centerRight,
-                                        child: Icon(
-                                          _tapAdd ? Icons.add : Icons.close,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
                             ),
                           ),

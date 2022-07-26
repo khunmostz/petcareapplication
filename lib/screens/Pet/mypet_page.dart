@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:petcare_project/data/petData.dart';
 import 'package:petcare_project/utils/constant.dart';
+import 'package:petcare_project/widget/custom_button.dart';
 
 class MyPetPage extends StatefulWidget {
   const MyPetPage({Key? key}) : super(key: key);
@@ -12,160 +12,228 @@ class MyPetPage extends StatefulWidget {
 }
 
 class _MyPetPageState extends State<MyPetPage> {
-  double boxSize = 150.0;
-
-  final ScrollController _scrollController = ScrollController();
-
-  void onListen() {
-    setState(() {});
-    // print(_scrollController.offset);
-  }
-
-  @override
-  void initState() {
-    petData.addAll(List.from(petData));
-    _scrollController.addListener(onListen);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _scrollController.removeListener(onListen);
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: CustomScrollView(
-            controller: _scrollController,
-            slivers: <Widget>[
-              SliverAppBar(
-                automaticallyImplyLeading: false,
-                title: Text(
-                  'My Pets',
-                  style: GoogleFonts.mitr(
-                    fontSize: 20,
-                    color: Colors.black,
-                  ),
-                ),
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                pinned: true,
+      backgroundColor: Colors.grey[300],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+              title: Text(
+                'เพิ่มข้อมูลสัตวเลี้ยง',
+                style: GoogleFonts.mitr(fontSize: 20),
               ),
-              SliverToBoxAdapter(
-                child: SizedBox(height: 20),
-              ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  childCount: petData.length,
-                  (context, index) {
-                    final pet = petData[index];
-                    final itemPositionOffset = index * boxSize / 2;
-                    final difference =
-                        _scrollController.offset - itemPositionOffset;
-                    final percent = 1 - (difference / boxSize / 2);
-                    // if (index == 0) print(percent);
-
-                    double opacity = percent;
-                    double scale = percent;
-                    if (opacity < 0) opacity = 0;
-                    if (opacity > 1.0) opacity = 1.0;
-                    if (scale > 1.0) scale = 1.0;
-
-                    // Widget
-                    return Align(
-                      heightFactor: 0.5,
-                      child: Opacity(
-                        opacity: opacity,
-                        child: Transform(
-                          alignment: Alignment.center,
-                          transform: Matrix4.identity()..scale(scale, 1.0),
-                          child: GestureDetector(
-                            onTap: (() {
-                              Get.toNamed('/petdetail');
-                            }),
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      topRight: Radius.circular(20))),
-                              color: kDefualtColorMain,
-                              child: SizedBox(
-                                height: boxSize,
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(15),
-                                        child: Text(
-                                          pet.name,
-                                          style: GoogleFonts.mitr(
-                                            fontSize: 18,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        width: size.width * 0.4,
-                                        height: size.height * 0.3 / 2,
-                                        decoration: BoxDecoration(
-                                          color: Colors.black,
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          child: Image.network(
-                                            pet.image,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+              content: Container(
+                width: size.width,
+                height: size.height,
+                child: Column(
+                  children: [
+                    CircleAvatar(
+                      radius: 50,
+                      backgroundColor: Colors.grey[300],
+                      backgroundImage: null,
+                      child: Icon(Icons.photo),
+                    ),
+                    SizedBox(height: 10),
+                    Text('เลือกรูปภาพ'),
+                    SizedBox(height: 20),
+                    PetDialog(size: size, petName: 'ชื่อสัตว์เลี้ยง'),
+                    SizedBox(height: 10),
+                    PetDialog(size: size, petName: 'ประเภท'),
+                    SizedBox(height: 10),
+                    PetDialog(size: size, petName: 'อาหารสัตว์'),
+                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            width: size.width,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              border: Border.all(color: Colors.white),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 20),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'น้ำหนัก',
+                                  style: TextStyle(color: Colors.black54),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    );
-                  },
+                        Expanded(
+                          child: Container(
+                            width: size.width,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              border: Border.all(color: Colors.white),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 20),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'เพศ',
+                                  style: TextStyle(color: Colors.black54),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            width: size.width,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              border: Border.all(color: Colors.white),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 20),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'วันเกิด',
+                                  style: TextStyle(color: Colors.black54),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Container(
+                            width: size.width,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              border: Border.all(color: Colors.white),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 20),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'ตารางวัคซีน',
+                                  style: TextStyle(color: Colors.black54),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 30),
+                    CustomButton(
+                      text: 'ยืนยัน',
+                      onPressed: () {},
+                    ),
+                  ],
                 ),
-              )
-            ],
-          ),
-        ),
+              ),
+            ),
+          );
+        },
+        child: Icon(Icons.add),
+      ),
+      body: ListView.builder(
+        itemCount: petData.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: kDefualtPadding, vertical: kDefualtPadding / 2),
+            child: Container(
+              width: size.width,
+              height: size.height * 0.2,
+              decoration: BoxDecoration(
+                // border: Border.all(),
+                borderRadius: BorderRadius.circular(12),
+                color: Colors.grey[300],
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.white,
+                    blurRadius: 15,
+                    spreadRadius: 1,
+                    offset: Offset(-4, -4),
+                  ),
+                  BoxShadow(
+                    color: Colors.grey.shade500,
+                    blurRadius: 15,
+                    spreadRadius: 1,
+                    offset: Offset(4, 4),
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(kDefualtPadding),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: size.width / 3,
+                      height: size.height * 0.3,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    Text('data'),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
 }
 
-class myCustomHeader extends SliverPersistentHeaderDelegate {
+class PetDialog extends StatelessWidget {
+  final String petName;
+  const PetDialog({
+    Key? key,
+    required this.size,
+    required this.petName,
+  }) : super(key: key);
+
+  final Size size;
+
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Text('My Pets');
+  Widget build(BuildContext context) {
+    return Container(
+      width: size.width,
+      decoration: BoxDecoration(
+        color: Colors.grey[300],
+        border: Border.all(color: Colors.white),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Padding(
+        padding: EdgeInsets.only(left: 20),
+        child: TextFormField(
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            labelText: petName,
+          ),
+        ),
+      ),
+    );
   }
-
-  @override
-  // TODO: implement maxExtent
-  double get maxExtent => 100;
-
-  @override
-  // TODO: implement minExtent
-  double get minExtent => 0;
-
-  @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
-      true;
 }

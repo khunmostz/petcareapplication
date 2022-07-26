@@ -16,14 +16,8 @@ class AuthController extends GetxController {
   var _profileController = Get.put(ProfileController());
 
   var isLogin = false;
-  // bool isEmpty = false;
 
   late Rx<User?> _user;
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
   @override
   void onReady() {
@@ -33,67 +27,56 @@ class AuthController extends GetxController {
     ever(_user, _authScreen);
   }
 
+  void onClose() {
+    super.onClose();
+    usernameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    forgotController.dispose();
+  }
+
   _authScreen(User? user) {
     if (user == null) {
       print('login page');
       Get.offAllNamed('/signin');
     } else {
       print('content page');
-      Get.offAllNamed('/bottomnav');
       _profileController.getUserDetail();
+      Future.delayed(
+          Duration(milliseconds: 350), (() => Get.offAllNamed('/bottomroute')));
     }
   }
 
-  bool checkPassword() {
-    if (passwordController.text.trim() ==
-        confirmPasswordController.text.trim()) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  bool checkEmptySigIn() {
-    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  bool checkEmptySignUp() {
-    if (emailController.text.isEmpty ||
-        passwordController.text.isEmpty ||
-        usernameController.text.isEmpty) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  Future signIn() async {
+  Future signIn(GlobalKey<FormState> key) async {
     try {
-      if (checkEmptySigIn()) {
+      if (!key.currentState!.validate()) {
+        return;
+      } else {
+        key.currentState!.save();
         await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text.trim(),
           password: passwordController.text.trim(),
         );
         clearForm();
-      } else if (!checkEmptySigIn()) {
-        return Get.snackbar(
-          'แจ้งเตือน',
-          'กรุณากรอกข้อมูลให้ครบ',
-        );
+        Get.offAllNamed('/bottomnav');
       }
+      return;
     } on FirebaseAuthException catch (e) {
-      print(e);
-      Get.snackbar('เกิดข้อผิดพลาด', 'กรุณาลองใหม่อีกครั้ง');
+      print(e.code);
+      switch (e.code) {
+        case "user-not-found":
+          return Get.snackbar('เกิดข้อผิดพลาด', 'ไม่พบข้อมูลในระบบ');
+        default:
+      }
     }
   }
 
-  Future signUp(String type) async {
+  Future signUp(String type, GlobalKey<FormState> key) async {
     try {
-      if (checkPassword() && checkEmptySignUp()) {
+      if (!key.currentState!.validate()) {
+        return;
+      } else {
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
             email: emailController.text, password: passwordController.text);
         addUserDetails(
@@ -102,17 +85,13 @@ class AuthController extends GetxController {
           type,
         );
         clearForm();
-      } else if (checkEmptySignUp()) {
-        Get.snackbar('แจ้งเตือน', 'กรุณากรอกรหัสผ่านให้ตรงกัน');
-      } else {
-        Get.snackbar('แจ้งเตือน', 'กรุณากรอกข้อมูลให้ครบ');
+        Get.offAllNamed('/bottomnav');
       }
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case "invalid-email":
           return Get.snackbar(
               'เกิดข้อผิดพลาด', 'อีเมลนี้เชื่อมโยงกับบัญชีอื่นแล้ว');
-          break;
       }
     }
   }
@@ -133,16 +112,14 @@ class AuthController extends GetxController {
         'address': '',
       });
     } on FirebaseAuthException catch (e) {
-      print(e);
-      Get.snackbar('เกิดข้อผิดพลาด', 'กรุณาลองใหม่อีกครั้ง');
+      print(e.email);
+      // switch (e.email) {
+      //   case "invalid-email":
+      //     return print('xxx');
+      //     break;
+      //   default:
+      // }
     }
-  }
-
-  clearForm() {
-    emailController.clear();
-    passwordController.clear();
-    confirmPasswordController.clear();
-    usernameController.clear();
   }
 
   Future signOut() async {
@@ -162,5 +139,35 @@ class AuthController extends GetxController {
       print(e);
       Get.snackbar('เกิดข้อผิดพลาด', 'กรุณาลองใหม่อีกครั้ง');
     }
+  }
+
+  clearForm() {
+    emailController.clear();
+    passwordController.clear();
+    confirmPasswordController.clear();
+    usernameController.clear();
+  }
+
+  // ----------------- validator ------------------//
+
+  EmailValidator(String value) {
+    if (!GetUtils.isEmail(value)) {
+      return "กรุณากรอกรูปแบบอีเมล์ให้ถูกต้อง";
+    }
+    return null;
+  }
+
+  PasswordValidator(String value) {
+    if (value.length < 8) {
+      return "กรุณากรอกรหัสผ่าน 8 ตัวขึ้นไป";
+    }
+    return null;
+  }
+
+  checkPassword(String value) {
+    if (value != passwordController.text.trim()) {
+      return "กรุณากรอกรหัสผ่านให้ตรงกัน";
+    }
+    return null;
   }
 }

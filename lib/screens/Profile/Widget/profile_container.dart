@@ -43,64 +43,68 @@ class ProfileContainer extends StatelessWidget {
                 StreamBuilder<dynamic>(
                     stream: _profileController.getUserDetail().asStream(),
                     builder: (context, snapshot) {
-                      return GetBuilder<ProfileController>(
-                        id: 'updateProfile',
-                        builder: (_) {
-                          return CircleAvatar(
-                            radius: 50,
-                            backgroundColor: Colors.grey[200],
-                            backgroundImage: NetworkImage(
-                                        '${_profileController.user['image']}') !=
-                                    null
-                                ? NetworkImage(
-                                    '${_profileController.user['image']}')
-                                : null,
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    // showDialog(
-                                    //     context: context,
-                                    //     builder: (context) {
-                                    //       return AlertDialog(
-                                    //         content: Column(
-                                    //           children: [
-                                    //             Container(
-                                    //               width: size.width,
-                                    //               height: size.height * 0.5,
-                                    //               child: CircleAvatar(
-                                    //                 radius: 50,
-                                    //                 backgroundColor:
-                                    //                     Colors.grey[200],
-                                    //                 backgroundImage: NetworkImage(
-                                    //                             '${_profileController.user['image']}') !=
-                                    //                         null
-                                    //                     ? NetworkImage(
-                                    //                         '${_profileController.user['image']}')
-                                    //                     : null,
-                                    //               ),
-                                    //             ),
-                                    //           ],
-                                    //         ),
-                                    //       );
-                                    //     });
-                                    _profileController.uploadImageProfile();
-                                  },
-                                  child: Text(
-                                    'เลือกรูป',
-                                    style: GoogleFonts.mitr(
-                                      fontSize: 10,
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      } else {
+                        return GetBuilder<ProfileController>(
+                          id: 'updateProfile',
+                          builder: (_) {
+                            return CircleAvatar(
+                              radius: 50,
+                              backgroundColor: Colors.grey[200],
+                              backgroundImage: NetworkImage(
+                                          '${_profileController.user['image']}') !=
+                                      null
+                                  ? NetworkImage(
+                                      '${_profileController.user['image']}')
+                                  : null,
+                              child: Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 10),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      // showDialog(
+                                      //     context: context,
+                                      //     builder: (context) {
+                                      //       return AlertDialog(
+                                      //         content: Column(
+                                      //           children: [
+                                      //             Container(
+                                      //               width: size.width,
+                                      //               height: size.height * 0.5,
+                                      //               child: CircleAvatar(
+                                      //                 radius: 50,
+                                      //                 backgroundColor:
+                                      //                     Colors.grey[200],
+                                      //                 backgroundImage: NetworkImage(
+                                      //                             '${_profileController.user['image']}') !=
+                                      //                         null
+                                      //                     ? NetworkImage(
+                                      //                         '${_profileController.user['image']}')
+                                      //                     : null,
+                                      //               ),
+                                      //             ),
+                                      //           ],
+                                      //         ),
+                                      //       );
+                                      //     });
+                                      _profileController.uploadImageProfile();
+                                    },
+                                    child: Text(
+                                      'เลือกรูป',
+                                      style: GoogleFonts.mitr(
+                                        fontSize: 10,
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
-                      );
+                            );
+                          },
+                        );
+                      }
                     }),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,

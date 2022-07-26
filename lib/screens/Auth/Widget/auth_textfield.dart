@@ -4,11 +4,15 @@ class AuthTextField extends StatelessWidget {
   final String hintText;
   final bool obscureText;
   final TextEditingController controller;
+  final String? Function(String?)? validator;
+  final void Function(String?)? onSaved;
 
   const AuthTextField({
     this.obscureText = false,
     required this.hintText,
     required this.controller,
+    required this.validator,
+    required this.onSaved,
   });
   @override
   Widget build(BuildContext context) {
@@ -30,6 +34,9 @@ class AuthTextField extends StatelessWidget {
           ),
           hintText: hintText,
         ),
+        validator: validator,
+        onSaved: onSaved,
+        textInputAction: TextInputAction.next,
       ),
     );
   }
