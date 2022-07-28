@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:petcare_project/widget/custom_button.dart';
 
@@ -30,6 +31,16 @@ class _BeforePageState extends State<BeforePage>
 
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+
+    ButtonStyle buttonStyle = ElevatedButton.styleFrom(
+      onPrimary: Colors.white,
+      primary: kDefualtColorMain,
+      minimumSize: Size(size.width, 50),
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(12)),
+      ),
+    );
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -91,10 +102,34 @@ class _BeforePageState extends State<BeforePage>
                   ),
                   SizedBox(height: 25),
                   // Sign In button
-                  CustomButton(routeName: '/signin', text: 'Sign In'),
+                  ElevatedButton(
+                    style: buttonStyle,
+                    onPressed: () {
+                      Get.toNamed('/signin');
+                    },
+                    child: Text(
+                      'Sign In',
+                      style: GoogleFonts.mitr(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                   SizedBox(height: 15),
                   // Sign Up button
-                  CustomButton(routeName: '/signup', text: 'Sign Up'),
+                  ElevatedButton(
+                    style: buttonStyle,
+                    onPressed: () {
+                      Get.toNamed('/signup');
+                    },
+                    child: Text(
+                      'Sign Up',
+                      style: GoogleFonts.mitr(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                   SizedBox(height: 15),
                   // Already a member ?
                   Row(
