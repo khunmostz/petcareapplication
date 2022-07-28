@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+<<<<<<< HEAD
 import 'package:lottie/lottie.dart';
 import 'package:petcare_project/widget/custom_button.dart';
+=======
+import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
+import 'package:petcare_project/controllers/auth_controller.dart';
+import 'package:petcare_project/widget/custom_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+>>>>>>> forgotpage
 
 import '../../utils/constant.dart';
 
@@ -14,23 +22,51 @@ class BeforePage extends StatefulWidget {
 
 class _BeforePageState extends State<BeforePage>
     with SingleTickerProviderStateMixin {
+<<<<<<< HEAD
   late final AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
+=======
+  late AnimationController _controller;
+  // var _authController = Get.put(AuthController());
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+        vsync: this, duration: Duration(microseconds: 10000));
+>>>>>>> forgotpage
   }
 
   @override
   void dispose() {
+<<<<<<< HEAD
     // TODO: implement dispose
     super.dispose();
     // _controller.dispose();
+=======
+    _controller.dispose();
+    super.dispose();
+>>>>>>> forgotpage
   }
 
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
+<<<<<<< HEAD
+=======
+    ButtonStyle buttonStyle = ElevatedButton.styleFrom(
+      onPrimary: Colors.white,
+      primary: kDefualtColorMain,
+      minimumSize: Size(size.width, 50),
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(12)),
+      ),
+    );
+
+>>>>>>> forgotpage
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -42,6 +78,10 @@ class _BeforePageState extends State<BeforePage>
             'assets/lottie/blackcat.json',
             repeat: true,
             frameRate: FrameRate(240),
+<<<<<<< HEAD
+=======
+            controller: _controller,
+>>>>>>> forgotpage
           ),
           Spacer(),
           // title
@@ -91,10 +131,47 @@ class _BeforePageState extends State<BeforePage>
                   ),
                   SizedBox(height: 25),
                   // Sign In button
+<<<<<<< HEAD
                   CustomButton(routeName: '/signin', text: 'Sign In'),
                   SizedBox(height: 15),
                   // Sign Up button
                   CustomButton(routeName: '/signup', text: 'Sign Up'),
+=======
+                  ElevatedButton(
+                    style: buttonStyle,
+                    onPressed: () async {
+                      SharedPreferences myPrefs =
+                          await SharedPreferences.getInstance();
+                      await myPrefs.setBool('isFirstRun', false);
+                      Get.toNamed('/signin');
+                    },
+                    child: Text(
+                      'Sign In',
+                      style: GoogleFonts.mitr(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                  // Sign Up button
+                  ElevatedButton(
+                    style: buttonStyle,
+                    onPressed: () async {
+                      SharedPreferences myPrefs =
+                          await SharedPreferences.getInstance();
+                      await myPrefs.setBool('isFirstRun', false);
+                      Get.toNamed('/signup');
+                    },
+                    child: Text(
+                      'Sign Up',
+                      style: GoogleFonts.mitr(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+>>>>>>> forgotpage
                   SizedBox(height: 15),
                   // Already a member ?
                   Row(

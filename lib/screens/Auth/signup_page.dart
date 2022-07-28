@@ -15,6 +15,7 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
+<<<<<<< HEAD
     final ButtonStyle buttonStyle = ElevatedButton.styleFrom(
       onPrimary: Colors.white,
       primary: kDefualtColorMain,
@@ -25,6 +26,8 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
 
+=======
+>>>>>>> forgotpage
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       backgroundColor: kDefualtColorMain,

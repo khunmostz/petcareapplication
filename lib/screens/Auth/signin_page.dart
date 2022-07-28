@@ -9,12 +9,17 @@ class SignInPage extends StatefulWidget {
   State<SignInPage> createState() => _SignInPageState();
 }
 
+<<<<<<< HEAD
 class _SignInPageState extends State<SignInPage>
     with SingleTickerProviderStateMixin {
+=======
+class _SignInPageState extends State<SignInPage> {
+>>>>>>> forgotpage
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
+<<<<<<< HEAD
     AnimationController? _controller;
 
     void initState() {
@@ -25,6 +30,8 @@ class _SignInPageState extends State<SignInPage>
       );
     }
 
+=======
+>>>>>>> forgotpage
     return Scaffold(
       backgroundColor: kDefualtColorMain,
       body: SingleChildScrollView(

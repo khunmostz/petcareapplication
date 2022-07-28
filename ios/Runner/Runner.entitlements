@@ -3,6 +3,12 @@
 <plist version="1.0">
 <dict>
 	<key>keychain-access-groups</key>
+<<<<<<< HEAD
 	<array/>
+=======
+	<array>
+		<string>$(AppIdentifierPrefix)com.pet.careproject</string>
+	</array>
+>>>>>>> forgotpage
 </dict>
 </plist>

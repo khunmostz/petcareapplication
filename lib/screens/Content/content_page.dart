@@ -3,12 +3,19 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:petcare_project/controllers/auth_controller.dart';
+<<<<<<< HEAD
 import 'package:petcare_project/screens/Profile/profile_page.dart';
 import 'package:petcare_project/utils/constant.dart';
 import 'package:petcare_project/data/menuData.dart';
 import 'package:petcare_project/data/recommendData.dart';
 import 'package:petcare_project/screens/Content/maps_page.dart';
 import 'package:petcare_project/screens/Record/record_page.dart';
+=======
+import 'package:petcare_project/screens/Content/maps_demo.dart';
+import 'package:petcare_project/utils/constant.dart';
+import 'package:petcare_project/data/menuData.dart';
+import 'package:petcare_project/data/recommendData.dart';
+>>>>>>> forgotpage
 import 'package:petcare_project/widget/search_bar.dart';
 
 class ContentPage extends StatefulWidget {
@@ -18,6 +25,7 @@ class ContentPage extends StatefulWidget {
   State<ContentPage> createState() => _ContentPageState();
 }
 
+<<<<<<< HEAD
 class _ContentPageState extends State<ContentPage>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
@@ -32,6 +40,14 @@ class _ContentPageState extends State<ContentPage>
       duration: const Duration(seconds: 1),
     );
     _controller.forward();
+=======
+class _ContentPageState extends State<ContentPage> {
+  final AuthController _authController = Get.find<AuthController>();
+
+  @override
+  void initState() {
+    super.initState();
+>>>>>>> forgotpage
   }
 
   @override
@@ -46,7 +62,11 @@ class _ContentPageState extends State<ContentPage>
             Container(
               width: size.width,
               height:
+<<<<<<< HEAD
                   size.height < 685 ? size.height * 0.4 : size.height * 0.35,
+=======
+                  size.height < 920 ? size.height * 0.45 : size.height * 0.35,
+>>>>>>> forgotpage
               decoration: BoxDecoration(
                   color: kDefualtColorMain,
                   borderRadius: BorderRadius.only(
@@ -59,7 +79,10 @@ class _ContentPageState extends State<ContentPage>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // header
+<<<<<<< HEAD
 
+=======
+>>>>>>> forgotpage
                     SizedBox(
                       height: 50,
                     ),
@@ -143,7 +166,11 @@ class _ContentPageState extends State<ContentPage>
                         Navigator.push(
                           context,
                           MaterialPageRoute(
+<<<<<<< HEAD
                             builder: (context) => MapsPage(),
+=======
+                            builder: (context) => MapsDemo(),
+>>>>>>> forgotpage
                           ),
                         );
                       }),

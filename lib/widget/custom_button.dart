@@ -14,7 +14,10 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+<<<<<<< HEAD
     final AuthController _authController = Get.put(AuthController());
+=======
+>>>>>>> forgotpage
     ButtonStyle buttonStyle = ElevatedButton.styleFrom(
       onPrimary: Colors.white,
       primary: kDefualtColorMain,
@@ -27,7 +30,10 @@ class CustomButton extends StatelessWidget {
     return ElevatedButton(
       style: buttonStyle,
       onPressed: () {
+<<<<<<< HEAD
         // Get.toNamed(routeName);
+=======
+>>>>>>> forgotpage
         onPressed?.call();
         // print(onPressed!());
       },
