@@ -11,7 +11,7 @@ class SignUpContainer extends StatefulWidget {
 }
 
 class _SignUpContainerState extends State<SignUpContainer> {
-  final AuthController _authController = Get.put(AuthController());
+ final AuthController _authController = Get.find<AuthController>();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   List _dropdownValue = ['User', 'Doctor'];
   Object? _iniialValue = 'User';

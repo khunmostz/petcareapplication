@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:petcare_project/controllers/profile_controller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController extends GetxController {
   final TextEditingController emailController = TextEditingController();
@@ -17,26 +18,35 @@ class AuthController extends GetxController {
 
   var isLogin = false;
 
-  late Rx<User?> _user;
+  late Rx<User?> user;
 
   @override
   void onReady() {
     super.onReady();
-    _user = Rx<User?>(FirebaseAuth.instance.currentUser);
-    _user.bindStream(FirebaseAuth.instance.userChanges());
-    ever(_user, _authScreen);
+    user = Rx<User?>(FirebaseAuth.instance.currentUser);
+    user.bindStream(FirebaseAuth.instance.userChanges());
+    ever(user, _authScreen);
   }
 
-  _authScreen(User? user) {
+  _authScreen(User? user) async {
     if (user == null) {
-      print('login page');
-      Get.offAllNamed('/signin');
+      SharedPreferences myPrefs = await SharedPreferences.getInstance();
+      bool? checkPage = myPrefs.getBool("isFirstRun");
+      if (checkPage == null || checkPage == true) {
+        print('iffffffffffffffff');
+        Get.toNamed("/before");
+      } else {
+        print('eeeeeeeeeeeeeeeeffffffffffffffff');
+        Get.toNamed("/signin");
+      }
+
+      print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
     } else {
       print('content page');
       _profileController.getUserDetail();
       Get.offAllNamed('/bottomnav');
-      //   Future.delayed(
-      //       Duration(milliseconds: 350), () => );
+      // Future.delayed(
+      //     Duration(milliseconds: 350), () => );
     }
   }
 

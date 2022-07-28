@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:petcare_project/controllers/auth_controller.dart';
 import 'package:petcare_project/widget/custom_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../utils/constant.dart';
 
@@ -16,17 +18,18 @@ class BeforePage extends StatefulWidget {
 class _BeforePageState extends State<BeforePage>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
+  // var _authController = Get.put(AuthController());
   @override
   void initState() {
     super.initState();
-    _controller =
-        AnimationController(vsync: this, duration: Duration(microseconds: 300));
+    _controller = AnimationController(
+        vsync: this, duration: Duration(microseconds: 10000));
   }
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 
   Widget build(BuildContext context) {
@@ -53,7 +56,7 @@ class _BeforePageState extends State<BeforePage>
             'assets/lottie/blackcat.json',
             repeat: true,
             frameRate: FrameRate(240),
-            // controller: _controller,
+            controller: _controller,
           ),
           Spacer(),
           // title
@@ -105,7 +108,10 @@ class _BeforePageState extends State<BeforePage>
                   // Sign In button
                   ElevatedButton(
                     style: buttonStyle,
-                    onPressed: () {
+                    onPressed: () async {
+                      SharedPreferences myPrefs =
+                          await SharedPreferences.getInstance();
+                      await myPrefs.setBool('isFirstRun', false);
                       Get.toNamed('/signin');
                     },
                     child: Text(
@@ -120,7 +126,10 @@ class _BeforePageState extends State<BeforePage>
                   // Sign Up button
                   ElevatedButton(
                     style: buttonStyle,
-                    onPressed: () {
+                    onPressed: () async {
+                      SharedPreferences myPrefs =
+                          await SharedPreferences.getInstance();
+                      await myPrefs.setBool('isFirstRun', false);
                       Get.toNamed('/signup');
                     },
                     child: Text(

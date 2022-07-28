@@ -14,7 +14,6 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    final AuthController _authController = Get.put(AuthController());
     ButtonStyle buttonStyle = ElevatedButton.styleFrom(
       onPrimary: Colors.white,
       primary: kDefualtColorMain,

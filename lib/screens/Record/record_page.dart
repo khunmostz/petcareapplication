@@ -18,14 +18,13 @@ class RecordPage extends StatefulWidget {
   State<RecordPage> createState() => _RecordPageState();
 }
 
-class _RecordPageState extends State<RecordPage>
-    with SingleTickerProviderStateMixin {
+class _RecordPageState extends State<RecordPage> {
   var _selectedIndex = 0;
   bool _tapSearch = true;
 
   var date;
 
-  late final AnimationController _controller;
+  // late final AnimationController _controller;
   final RecordController _recordController = Get.put(RecordController());
 
   void _showDatePicker() {
@@ -42,10 +41,10 @@ class _RecordPageState extends State<RecordPage>
 
   void _seachField() {
     if (_tapSearch == false) {
-      _controller.forward();
+      // _controller.forward();
       _tapSearch = true;
     } else {
-      _controller.reverse();
+      // _controller.reverse();
       _tapSearch = false;
     }
     print(_tapSearch.toString());
@@ -69,7 +68,7 @@ class _RecordPageState extends State<RecordPage>
   @override
   void dispose() {
     super.dispose();
-    _controller.dispose();
+    // _controller.dispose();
   }
 
   @override

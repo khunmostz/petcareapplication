@@ -11,7 +11,7 @@ class SignInContainer extends StatefulWidget {
 }
 
 class _SignInContainerState extends State<SignInContainer> {
-  final AuthController _authController = Get.put(AuthController());
+  final AuthController _authController = Get.find<AuthController>();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
