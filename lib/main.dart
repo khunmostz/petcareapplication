@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:petcare_project/controllers/auth_controller.dart';
 import 'package:petcare_project/controllers/profile_controller.dart';
 import 'package:petcare_project/screens/Auth/before_page.dart';
 import 'package:petcare_project/utils/routes.dart';
@@ -18,12 +19,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final ProfileController _profileController = Get.put(ProfileController());
+  var _authController = Get.put(AuthController());
 
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
-    _profileController.getUserDetail();
   }
 
   @override

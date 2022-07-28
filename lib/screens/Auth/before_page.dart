@@ -15,18 +15,18 @@ class BeforePage extends StatefulWidget {
 
 class _BeforePageState extends State<BeforePage>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _controller;
-
+  late AnimationController _controller;
   @override
   void initState() {
     super.initState();
+    _controller =
+        AnimationController(vsync: this, duration: Duration(microseconds: 300));
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
-    // _controller.dispose();
+    _controller.dispose();
   }
 
   Widget build(BuildContext context) {
@@ -53,6 +53,7 @@ class _BeforePageState extends State<BeforePage>
             'assets/lottie/blackcat.json',
             repeat: true,
             frameRate: FrameRate(240),
+            // controller: _controller,
           ),
           Spacer(),
           // title

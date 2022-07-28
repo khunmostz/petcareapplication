@@ -9,21 +9,10 @@ class SignInPage extends StatefulWidget {
   State<SignInPage> createState() => _SignInPageState();
 }
 
-class _SignInPageState extends State<SignInPage>
-    with SingleTickerProviderStateMixin {
+class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-
-    AnimationController? _controller;
-
-    void initState() {
-      super.initState();
-      _controller = AnimationController(
-        duration: const Duration(seconds: 1),
-        vsync: this,
-      );
-    }
 
     return Scaffold(
       backgroundColor: kDefualtColorMain,

@@ -27,15 +27,6 @@ class AuthController extends GetxController {
     ever(_user, _authScreen);
   }
 
-  void onClose() {
-    super.onClose();
-    usernameController.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-    confirmPasswordController.dispose();
-    forgotController.dispose();
-  }
-
   _authScreen(User? user) {
     if (user == null) {
       print('login page');
@@ -43,8 +34,9 @@ class AuthController extends GetxController {
     } else {
       print('content page');
       _profileController.getUserDetail();
-      Future.delayed(
-          Duration(milliseconds: 350), (() => Get.offAllNamed('/bottomroute')));
+      Get.offAllNamed('/bottomnav');
+      //   Future.delayed(
+      //       Duration(milliseconds: 350), () => );
     }
   }
 
@@ -67,6 +59,8 @@ class AuthController extends GetxController {
       switch (e.code) {
         case "user-not-found":
           return Get.snackbar('เกิดข้อผิดพลาด', 'ไม่พบข้อมูลในระบบ');
+        case "wrong-password":
+          return Get.snackbar('เกิดข้อผิดพลาด', 'บัญชีหรือรหัสผ่านผิดพลาด');
         default:
       }
     }

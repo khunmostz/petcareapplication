@@ -18,12 +18,12 @@ class ProfileController extends GetxController {
 
   File? image;
 
-  @override
-  void onInit() async {
-    super.onInit();
-    await getUserDetail();
-    print('pull data');
-  }
+  // @override
+  // void onInit() async {
+  //   super.onInit();
+  //   await getUserDetail();
+  //   print('pull data');
+  // }
 
   Future<void> uploadImageProfile() async {
     try {

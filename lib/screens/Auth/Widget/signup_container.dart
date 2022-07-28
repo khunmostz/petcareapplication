@@ -18,12 +18,6 @@ class _SignUpContainerState extends State<SignUpContainer> {
   // String? dropdownValue;
 
   @override
-  void dispose() {
-    super.dispose();
-    // _authController.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(

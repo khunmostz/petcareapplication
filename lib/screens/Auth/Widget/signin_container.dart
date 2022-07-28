@@ -15,12 +15,6 @@ class _SignInContainerState extends State<SignInContainer> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
-  void dispose() {
-    super.dispose();
-    // _authController.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Container(

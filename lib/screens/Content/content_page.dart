@@ -3,12 +3,10 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:petcare_project/controllers/auth_controller.dart';
-import 'package:petcare_project/screens/Profile/profile_page.dart';
+import 'package:petcare_project/screens/Content/maps_demo.dart';
 import 'package:petcare_project/utils/constant.dart';
 import 'package:petcare_project/data/menuData.dart';
 import 'package:petcare_project/data/recommendData.dart';
-import 'package:petcare_project/screens/Content/maps_page.dart';
-import 'package:petcare_project/screens/Record/record_page.dart';
 import 'package:petcare_project/widget/search_bar.dart';
 
 class ContentPage extends StatefulWidget {
@@ -24,11 +22,6 @@ class _ContentPageState extends State<ContentPage> {
   @override
   void initState() {
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
@@ -101,7 +94,7 @@ class _ContentPageState extends State<ContentPage> {
                         color: Colors.white,
                         borderRadius: BorderRadius.all(Radius.circular(50)),
                         boxShadow: [
-                        BoxShadow(
+                          BoxShadow(
                             color: Colors.grey.shade50,
                             spreadRadius: 0.5,
                             blurRadius: 10,
@@ -139,7 +132,7 @@ class _ContentPageState extends State<ContentPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => MapsPage(),
+                            builder: (context) => MapsDemo(),
                           ),
                         );
                       }),

@@ -72,34 +72,20 @@ class _ForgotPageState extends State<ForgotPage> {
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: kDefualtPadding),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      // border: Border.all(),
-                      borderRadius: BorderRadius.circular(18),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.white,
-                          spreadRadius: 0.3,
-                          blurRadius: 3,
-                          offset: Offset(0, -5),
-                        ),
-                        BoxShadow(
-                          color: kDefualtColorMain,
-                          offset: Offset(0, 5),
-                          spreadRadius: 0.3,
-                          blurRadius: 3,
-                        ),
-                      ]),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: TextFormField(
-                      controller: _authController.forgotController,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                      ),
+                child: TextFormField(
+                  controller: _authController.forgotController,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.grey.shade200,
+                    hintText: 'example@test.com',
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(12),
                     ),
                   ),
+                  validator: ((value) {
+                    _authController.EmailValidator(value!);
+                  }),
                 ),
               )),
 

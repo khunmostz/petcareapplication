@@ -1,11 +1,8 @@
-import 'dart:ui';
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:petcare_project/controllers/record_controller.dart';
 import 'package:petcare_project/data/petData.dart';
-import 'package:petcare_project/data/recordData.dart';
 import 'package:petcare_project/screens/Record/Widget/blur_backgroud.dart';
 import 'package:petcare_project/screens/Record/Widget/indicator.dart';
 import 'package:petcare_project/screens/Record/Widget/petslide.dart';
@@ -67,8 +64,6 @@ class _RecordPageState extends State<RecordPage>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 350));
   }
 
   @override

@@ -28,7 +28,7 @@ class _MyPetPageState extends State<MyPetPage> {
               ),
               content: Container(
                 width: size.width,
-                height: size.height,
+                height: size.height * 0.7,
                 child: Column(
                   children: [
                     CircleAvatar(
@@ -164,7 +164,7 @@ class _MyPetPageState extends State<MyPetPage> {
               decoration: BoxDecoration(
                 // border: Border.all(),
                 borderRadius: BorderRadius.circular(12),
-                color: Colors.grey[300],
+                color: kDefualtColorMain,
                 boxShadow: [
                   BoxShadow(
                     color: Colors.white,
@@ -173,7 +173,7 @@ class _MyPetPageState extends State<MyPetPage> {
                     offset: Offset(-4, -4),
                   ),
                   BoxShadow(
-                    color: Colors.grey.shade500,
+                    color: kDefualtColorMain,
                     blurRadius: 15,
                     spreadRadius: 1,
                     offset: Offset(4, 4),
