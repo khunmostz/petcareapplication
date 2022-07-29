@@ -2,11 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-<<<<<<< HEAD
-=======
 import 'package:petcare_project/controllers/profile_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
->>>>>>> forgotpage
 
 class AuthController extends GetxController {
   final TextEditingController emailController = TextEditingController();
@@ -15,17 +12,6 @@ class AuthController extends GetxController {
       TextEditingController();
   final TextEditingController usernameController = TextEditingController();
 
-<<<<<<< HEAD
-  var isLogin = false;
-  // bool isEmpty = false;
-
-  late Rx<User?> _user;
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
-=======
   final TextEditingController forgotController = TextEditingController();
 
   var _profileController = Get.put(ProfileController());
@@ -33,48 +19,10 @@ class AuthController extends GetxController {
   var isLogin = false;
 
   late Rx<User?> user;
->>>>>>> forgotpage
 
   @override
   void onReady() {
     super.onReady();
-<<<<<<< HEAD
-    _user = Rx<User?>(FirebaseAuth.instance.currentUser);
-    _user.bindStream(FirebaseAuth.instance.userChanges());
-    ever(_user, _authScreen);
-  }
-
-  _authScreen(User? user) {
-    if (user == null) {
-      // print('login page');
-      Get.offAllNamed('/signin');
-    } else {
-      // print('content page');
-      Get.offAllNamed('/bottomnav');
-    }
-  }
-
-  bool checkPassword() {
-    if (passwordController.text.trim() ==
-        confirmPasswordController.text.trim()) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  bool checkEmpty() {
-    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  Future signIn() async {
-    try {
-      if (checkEmpty()) {
-=======
     user = Rx<User?>(FirebaseAuth.instance.currentUser);
     user.bindStream(FirebaseAuth.instance.userChanges());
     ever(user, _authScreen);
@@ -108,29 +56,11 @@ class AuthController extends GetxController {
         return;
       } else {
         key.currentState!.save();
->>>>>>> forgotpage
         await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text.trim(),
           password: passwordController.text.trim(),
         );
         clearForm();
-<<<<<<< HEAD
-      } else if (!checkEmpty()) {
-        return Get.snackbar(
-          'แจ้งเตือน',
-          'กรุณากรอกข้อมูลให้ครบ',
-        );
-      }
-    } on FirebaseAuthException catch (e) {
-      print(e);
-      Get.snackbar('เกิดข้อผิดพลาด', 'กรุณาลองใหม่อีกครั้ง');
-    }
-  }
-
-  Future signUp(String type) async {
-    try {
-      if (checkPassword() || checkEmpty()) {
-=======
         Get.offAllNamed('/bottomnav');
       }
       return;
@@ -151,7 +81,6 @@ class AuthController extends GetxController {
       if (!key.currentState!.validate()) {
         return;
       } else {
->>>>>>> forgotpage
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
             email: emailController.text, password: passwordController.text);
         addUserDetails(
@@ -160,38 +89,19 @@ class AuthController extends GetxController {
           type,
         );
         clearForm();
-<<<<<<< HEAD
-      } else if (checkEmpty()) {
-        Get.snackbar('แจ้งเตือน', 'กรุณากรอกรหัสผ่านให้ตรงกัน');
-      } else {
-        Get.snackbar('แจ้งเตือน', 'กรุณากรอกข้อมูลให้ครบ');
-=======
         Get.offAllNamed('/bottomnav');
->>>>>>> forgotpage
       }
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case "invalid-email":
           return Get.snackbar(
               'เกิดข้อผิดพลาด', 'อีเมลนี้เชื่อมโยงกับบัญชีอื่นแล้ว');
-<<<<<<< HEAD
-          break;
-=======
->>>>>>> forgotpage
       }
     }
   }
 
   Future addUserDetails(String username, String email, String type) async {
     try {
-<<<<<<< HEAD
-      await FirebaseFirestore.instance.collection('users').add({
-        'username': username,
-        'email': email,
-        'type': type,
-      });
-    } on FirebaseAuthException catch (e) {
-=======
       await FirebaseFirestore.instance
           .collection('users')
           .doc(
@@ -230,7 +140,6 @@ class AuthController extends GetxController {
       forgotController.clear();
       Get.toNamed('/signin');
     } on FirebaseAuthException catch (e) {
->>>>>>> forgotpage
       print(e);
       Get.snackbar('เกิดข้อผิดพลาด', 'กรุณาลองใหม่อีกครั้ง');
     }
@@ -243,21 +152,6 @@ class AuthController extends GetxController {
     usernameController.clear();
   }
 
-<<<<<<< HEAD
-  Future signOut() async {
-    await FirebaseAuth.instance.signOut();
-  }
-
-  Future passwordReset(BuildContext context) async {
-    try {
-      await FirebaseAuth.instance.sendPasswordResetEmail(
-        email: emailController.text.trim(),
-      );
-    } on FirebaseAuthException catch (e) {
-      print(e);
-      Get.snackbar('เกิดข้อผิดพลาด', 'กรุณาลองใหม่อีกครั้ง');
-    }
-=======
   // ----------------- validator ------------------//
 
   EmailValidator(String value) {
@@ -279,6 +173,5 @@ class AuthController extends GetxController {
       return "กรุณากรอกรหัสผ่านให้ตรงกัน";
     }
     return null;
->>>>>>> forgotpage
   }
 }

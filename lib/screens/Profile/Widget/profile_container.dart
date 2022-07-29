@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-import 'package:google_fonts/google_fonts.dart';
-import 'package:petcare_project/data/petData.dart';
-=======
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:petcare_project/controllers/profile_controller.dart';
 import 'package:petcare_project/screens/Profile/Widget/Profile_edit.dart';
->>>>>>> forgotpage
 import 'package:petcare_project/utils/constant.dart';
 
 class ProfileContainer extends StatelessWidget {
@@ -20,10 +15,7 @@ class ProfileContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-=======
     final ProfileController _profileController = Get.put(ProfileController());
->>>>>>> forgotpage
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: kDefualtPadding),
       width: size.width,
@@ -48,21 +40,6 @@ class ProfileContainer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-<<<<<<< HEAD
-                Container(
-                  width: 150,
-                  height: 150,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(200),
-                    image: DecorationImage(
-                      image: NetworkImage(
-                        '${petData[0].image}',
-                      ),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-=======
                 StreamBuilder<dynamic>(
                     stream: _profileController.getUserDetail().asStream(),
                     builder: (context, snapshot) {
@@ -129,7 +106,6 @@ class ProfileContainer extends StatelessWidget {
                         );
                       }
                     }),
->>>>>>> forgotpage
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -142,13 +118,6 @@ class ProfileContainer extends StatelessWidget {
                     SizedBox(
                       height: 10,
                     ),
-<<<<<<< HEAD
-                    Text(
-                      'แก้ไข',
-                      style: GoogleFonts.mitr(
-                        fontSize: 16,
-                        color: Colors.grey,
-=======
                     //
                     GestureDetector(
                       onTap: () {
@@ -266,7 +235,6 @@ class ProfileContainer extends StatelessWidget {
                           fontSize: 16,
                           color: Colors.grey,
                         ),
->>>>>>> forgotpage
                       ),
                     ),
                   ],

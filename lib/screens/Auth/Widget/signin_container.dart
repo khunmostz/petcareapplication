@@ -11,18 +11,8 @@ class SignInContainer extends StatefulWidget {
 }
 
 class _SignInContainerState extends State<SignInContainer> {
-<<<<<<< HEAD
-  final AuthController _authController = Get.put(AuthController());
-
-  @override
-  void dispose() {
-    super.dispose();
-    // _authController.dispose();
-  }
-=======
   final AuthController _authController = Get.find<AuthController>();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
->>>>>>> forgotpage
 
   @override
   Widget build(BuildContext context) {
@@ -38,87 +28,6 @@ class _SignInContainerState extends State<SignInContainer> {
       ),
       child: Padding(
         padding: const EdgeInsets.all(kDefualtPadding),
-<<<<<<< HEAD
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // username textfield
-            Text(
-              'Username',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 10),
-            AuthTextField(
-              hintText: 'example@gmail.com',
-              controller: _authController.emailController,
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Password',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 10),
-            // password textfield
-            AuthTextField(
-              obscureText: true,
-              hintText: '********',
-              controller: _authController.passwordController,
-            ),
-            SizedBox(height: 10),
-            SizedBox(height: 25),
-            CustomButton(
-              routeName: '/bottomnav',
-              text: 'Sign In',
-              onPressed: () {
-                _authController.signIn();
-              },
-            ),
-            SizedBox(height: 20),
-            // forgot pass
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                'Forgot Password ?',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            SizedBox(height: 20),
-            // Don't have an account ?
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Don't have an account ?",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                GestureDetector(
-                  onTap: () => Get.toNamed('/signup'),
-                  child: Text(
-                    'Sign Up',
-                    style: TextStyle(
-                      color: kDefualtColorMain,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                )
-              ],
-            ),
-            SizedBox(height: 10),
-          ],
-=======
         child: Form(
           key: _formKey,
           autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -216,7 +125,6 @@ class _SignInContainerState extends State<SignInContainer> {
               SizedBox(height: 10),
             ],
           ),
->>>>>>> forgotpage
         ),
       ),
     );

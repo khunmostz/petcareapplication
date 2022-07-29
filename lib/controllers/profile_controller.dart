@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:get/get.dart';
-=======
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,26 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
->>>>>>> forgotpage
 
 class ProfileController extends GetxController {
   var user;
 
-<<<<<<< HEAD
-  Future<dynamic> getUserDetail() async {
-    await FirebaseFirestore.instance
-        .collection('users')
-        .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
-        .get()
-        .then((snapshot) {
-      print(snapshot.docs[0].data());
-      snapshot.docs.forEach((data) {
-        user = data.data();
-        print(user['username']);
-      });
-    });
-  }
-=======
   final Rx<TextEditingController> usernameController =
       TextEditingController().obs;
   final Rx<TextEditingController> emailController = TextEditingController().obs;
@@ -150,5 +129,4 @@ class ProfileController extends GetxController {
     }
     // print(FirebaseAuth.instance.currentUser!.uid);
   }
->>>>>>> forgotpage
 }

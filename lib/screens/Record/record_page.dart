@@ -1,17 +1,8 @@
-<<<<<<< HEAD
-import 'dart:ui';
-import 'package:animations/animations.dart';
-=======
->>>>>>> forgotpage
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:petcare_project/controllers/record_controller.dart';
 import 'package:petcare_project/data/petData.dart';
-<<<<<<< HEAD
-import 'package:petcare_project/data/recordData.dart';
-=======
->>>>>>> forgotpage
 import 'package:petcare_project/screens/Record/Widget/blur_backgroud.dart';
 import 'package:petcare_project/screens/Record/Widget/indicator.dart';
 import 'package:petcare_project/screens/Record/Widget/petslide.dart';
@@ -27,17 +18,6 @@ class RecordPage extends StatefulWidget {
   State<RecordPage> createState() => _RecordPageState();
 }
 
-<<<<<<< HEAD
-class _RecordPageState extends State<RecordPage>
-    with SingleTickerProviderStateMixin {
-  var _selectedIndex = 0;
-  bool _tapSearch = true;
-  bool _tapAdd = true;
-
-  var date;
-
-  late final AnimationController _controller;
-=======
 class _RecordPageState extends State<RecordPage> {
   var _selectedIndex = 0;
   bool _tapSearch = true;
@@ -45,7 +25,6 @@ class _RecordPageState extends State<RecordPage> {
   var date;
 
   // late final AnimationController _controller;
->>>>>>> forgotpage
   final RecordController _recordController = Get.put(RecordController());
 
   void _showDatePicker() {
@@ -62,36 +41,15 @@ class _RecordPageState extends State<RecordPage> {
 
   void _seachField() {
     if (_tapSearch == false) {
-<<<<<<< HEAD
-      _controller.forward();
-      _tapSearch = true;
-    } else {
-      _controller.reverse();
-=======
       // _controller.forward();
       _tapSearch = true;
     } else {
       // _controller.reverse();
->>>>>>> forgotpage
       _tapSearch = false;
     }
     print(_tapSearch.toString());
   }
 
-<<<<<<< HEAD
-  void _tapField() {
-    if (_tapAdd == false) {
-      _controller.forward();
-      _tapAdd = true;
-    } else {
-      _controller.reverse();
-      _tapAdd = false;
-    }
-    print(_tapAdd.toString());
-  }
-
-=======
->>>>>>> forgotpage
   final ButtonStyle buttonStyle = ElevatedButton.styleFrom(
     onPrimary: Colors.white,
     primary: kDefualtColorMain,
@@ -104,26 +62,13 @@ class _RecordPageState extends State<RecordPage> {
 
   @override
   void initState() {
-<<<<<<< HEAD
-    // TODO: implement initState
     super.initState();
-    _controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 350));
-=======
-    super.initState();
->>>>>>> forgotpage
   }
 
   @override
   void dispose() {
-<<<<<<< HEAD
-    // TODO: implement dispose
-    super.dispose();
-    _controller.dispose();
-=======
     super.dispose();
     // _controller.dispose();
->>>>>>> forgotpage
   }
 
   @override
@@ -158,10 +103,6 @@ class _RecordPageState extends State<RecordPage> {
                     },
                     itemCount: petData.length,
                     itemBuilder: (context, index) {
-<<<<<<< HEAD
-                      var slide = petData.length;
-=======
->>>>>>> forgotpage
                       var _scale = _selectedIndex == index ? 1.0 : 0.8;
                       return TweenAnimationBuilder(
                         duration: const Duration(milliseconds: 350),
@@ -215,10 +156,6 @@ class _RecordPageState extends State<RecordPage> {
                     children: [
                       GestureDetector(
                         onTap: () {
-<<<<<<< HEAD
-                          // _tapSearch ? null : _showDatePicker();
-=======
->>>>>>> forgotpage
                           showDialog(
                             context: context,
                             builder: (context) {
@@ -296,11 +233,7 @@ class _RecordPageState extends State<RecordPage> {
                         },
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 350),
-<<<<<<< HEAD
-                          width: _tapAdd ? 48 : 200,
-=======
                           width: 48,
->>>>>>> forgotpage
                           height: 48,
                           decoration: BoxDecoration(
                             color: kDefualtColorMain,
@@ -317,47 +250,6 @@ class _RecordPageState extends State<RecordPage> {
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             physics: NeverScrollableScrollPhysics(),
-<<<<<<< HEAD
-                            child: Container(
-                              width: _tapAdd ? 48 : 200,
-                              child: Row(
-                                mainAxisAlignment: _tapAdd
-                                    ? MainAxisAlignment.center
-                                    : MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SizedBox(
-                                    width: _tapAdd ? 0 : 10,
-                                  ),
-                                  _tapAdd
-                                      ? Container()
-                                      : Text(
-                                          "กดเพื่อเพิ่มข้อมูล",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                  GestureDetector(
-                                    onTap: () => setState(() {
-                                      _tapField();
-                                    }),
-                                    child: Padding(
-                                      padding: _tapAdd
-                                          ? EdgeInsets.only(right: 0)
-                                          : EdgeInsets.only(right: 20),
-                                      child: Align(
-                                        alignment: _tapAdd
-                                            ? Alignment.center
-                                            : Alignment.centerRight,
-                                        child: Icon(
-                                          _tapAdd ? Icons.add : Icons.close,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-=======
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 350),
                               width: 48,
@@ -370,7 +262,6 @@ class _RecordPageState extends State<RecordPage> {
                                     color: Colors.white,
                                   ),
                                 ),
->>>>>>> forgotpage
                               ),
                             ),
                           ),

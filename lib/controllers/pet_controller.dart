@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-import 'package:get/get.dart';
-
-class PetController extends GetxController {
-  RxBool selected = true.obs;
-  RxInt? selectId;
-  void toggleWidget(RxInt? index) {
-    selected.value = !selected.value;
-    selectId = index;
-    print(selected.toString());
-    print(selectId);
-    update();
-=======
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -55,6 +42,5 @@ class PetController extends GetxController {
         'เกิดข้อผิดพลาด',
       );
     }
->>>>>>> forgotpage
   }
 }

@@ -39,9 +39,6 @@ List<Pet> petData = [
   ),
   Pet(
     id: 3,
-<<<<<<< HEAD
-    name: "Alice",
-=======
     name: "Alice 1",
     description: "พลอากาศเอก",
     image: "https://thestandard.co/wp-content/uploads/2020/02/25-1.jpg",
@@ -88,7 +85,6 @@ List<Pet> petData = [
   Pet(
     id: 5,
     name: "Alice 3",
->>>>>>> forgotpage
     description: "พลอากาศเอก",
     image: "https://thestandard.co/wp-content/uploads/2020/02/25-1.jpg",
     listexpenses: ['ค่าเครื่องแบบ'],

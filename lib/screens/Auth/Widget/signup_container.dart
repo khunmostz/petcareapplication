@@ -11,26 +11,13 @@ class SignUpContainer extends StatefulWidget {
 }
 
 class _SignUpContainerState extends State<SignUpContainer> {
-<<<<<<< HEAD
-  final AuthController _authController = Get.put(AuthController());
-=======
  final AuthController _authController = Get.find<AuthController>();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
->>>>>>> forgotpage
   List _dropdownValue = ['User', 'Doctor'];
   Object? _iniialValue = 'User';
   // String? dropdownValue;
 
   @override
-<<<<<<< HEAD
-  void dispose() {
-    super.dispose();
-    // _authController.dispose();
-  }
-
-  @override
-=======
->>>>>>> forgotpage
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -43,121 +30,6 @@ class _SignUpContainerState extends State<SignUpContainer> {
       ),
       child: Padding(
         padding: const EdgeInsets.all(kDefualtPadding),
-<<<<<<< HEAD
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Username',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 10),
-            // username textfield
-            AuthTextField(
-              hintText: 'John Doe',
-              controller: _authController.usernameController,
-            ),
-            SizedBox(height: 10),
-            Text(
-              'Email',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 10),
-            // email textfield
-            AuthTextField(
-              hintText: 'example@gmail.com',
-              controller: _authController.emailController,
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Password',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 10),
-            // password textfield
-            AuthTextField(
-              obscureText: true,
-              hintText: '**************',
-              controller: _authController.passwordController,
-            ),
-            SizedBox(height: 10),
-            Text(
-              'Confirm Password',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 10),
-            AuthTextField(
-              obscureText: true,
-              hintText: '**************',
-              controller: _authController.confirmPasswordController,
-            ),
-            SizedBox(height: 10),
-            Text(
-              'Types',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 10),
-            // type dropdown
-            DropdownButton(
-              value: _iniialValue,
-              // isExpanded: true,
-              items: _dropdownValue.map((value) {
-                return DropdownMenuItem(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  _iniialValue = value as String;
-                  // print(_iniialValue);
-                });
-              },
-            ),
-            SizedBox(height: 25),
-            CustomButton(
-              routeName: '/signin',
-              text: 'SignUp',
-              onPressed: () {
-                _authController.signUp(_iniialValue.toString());
-                // print(_authController.usernameController);
-                // print(_iniialValue.toString());
-              },
-            ),
-            SizedBox(height: 20),
-            // Forgot Password ?
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                'Forgot Password ?',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            SizedBox(height: 20),
-            // Already have an account ?
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Already have an account ?",
-=======
         child: Form(
           key: _formKey,
           child: Column(
@@ -279,30 +151,10 @@ class _SignUpContainerState extends State<SignUpContainer> {
                 alignment: Alignment.centerRight,
                 child: Text(
                   'Forgot Password ?',
->>>>>>> forgotpage
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-<<<<<<< HEAD
-                SizedBox(width: 5),
-                GestureDetector(
-                  onTap: () {
-                    Get.toNamed('/signin');
-                  },
-                  child: Text(
-                    'Sign In',
-                    style: TextStyle(
-                      color: kDefualtColorMain,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                )
-              ],
-            ),
-            SizedBox(height: 10)
-          ],
-=======
               ),
               SizedBox(height: 20),
               // Already have an account ?
@@ -333,7 +185,6 @@ class _SignUpContainerState extends State<SignUpContainer> {
               SizedBox(height: 10)
             ],
           ),
->>>>>>> forgotpage
         ),
       ),
     );
