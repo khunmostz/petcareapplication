@@ -22,8 +22,9 @@ class _BeforePageState extends State<BeforePage>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-        vsync: this, duration: Duration(microseconds: 10000));
+    _controller =
+        AnimationController(vsync: this, duration: Duration(seconds: 3));
+    _controller.forward();
   }
 
   @override

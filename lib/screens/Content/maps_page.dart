@@ -1,11 +1,10 @@
 import 'dart:async';
-
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:petcare_project/utils/constant.dart';
-import 'package:petcare_project/screens/Content/detaillocation_page.dart';
-import 'package:petcare_project/widget/search_bar.dart';
+import 'package:lottie/lottie.dart' as lotties;
+import 'package:petcare_project/controllers/map_controller.dart';
 
 class MapsPage extends StatefulWidget {
   const MapsPage({Key? key}) : super(key: key);
@@ -14,170 +13,88 @@ class MapsPage extends StatefulWidget {
   State<MapsPage> createState() => _MapsPageState();
 }
 
-class _MapsPageState extends State<MapsPage> {
-  Position? userLocation;
-  Completer<GoogleMapController> _mapController = Completer();
-  late LatLng _latLng = LatLng(13.803960, 100.739408);
-  late CameraPosition _cameraPosition =
-      CameraPosition(target: _latLng, zoom: 15);
+class _MapsPageState extends State<MapsPage>
+    with SingleTickerProviderStateMixin {
+  final MapController _mapController = Get.put(MapController());
+  late AnimationController _animationController;
+  Completer<GoogleMapController> _controller = Completer();
 
-  Marker _markerRed = Marker(
-    markerId: MarkerId('Kasembundit'),
-    infoWindow: InfoWindow(title: "Kasembundit Universe"),
-    icon: BitmapDescriptor.defaultMarker,
-    position: LatLng(13.803960, 100.739408),
-  );
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Platform.isIOS ? Duration(seconds: 6) : Duration(seconds: 5),
+    );
+    _animationController.forward();
+  }
 
-  Marker _markerBlue = Marker(
-    markerId: MarkerId('ตลาดทองร่มเกล้า'),
-    infoWindow: InfoWindow(title: "ตลาดทองร่มเกล้า"),
-    icon: BitmapDescriptor.defaultMarker,
-    position: LatLng(13.800507, 100.744112),
-  );
-
-  Polyline _polyline = Polyline(
-    polylineId: PolylineId('polyline'),
-    points: [
-      LatLng(13.803960, 100.739408),
-      LatLng(13.800507, 100.744112),
-    ],
-    width: 5,
-  );
-
-  Polygon _polygon = Polygon(
-    polygonId: PolygonId('polygon'),
-    points: [
-      LatLng(13.803960, 100.739408),
-      LatLng(13.800507, 100.744112),
-      LatLng(13.799, 100.740),
-      LatLng(13.834, 100.740),
-    ],
-    strokeWidth: 5,
-    fillColor: Colors.transparent,
-  );
-
-  Future<Position?> _getLocation() async {
-    try {
-      userLocation = await Geolocator.getCurrentPosition(
-        // กำหนดค่าความแม่นยำ
-        desiredAccuracy: LocationAccuracy.best,
-      );
-    } catch (e) {
-      userLocation = null;
-    }
-    return userLocation; // return ตำแหน่งปัจจุบันออกไป
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
-        body: Stack(
-      children: [
-        FutureBuilder(
-          future: _getLocation(),
+      appBar: AppBar(title: const Text('GoogleMaps examples')),
+      body: StreamBuilder(
+          stream: _mapController.getUserPosition().asStream(),
           builder: (context, snapshot) {
-            if (!snapshot.hasData) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircularProgressIndicator(),
-                  ],
+                child: lotties.Lottie.asset(
+                  'assets/lottie/progress-loading.json',
+                  repeat: true,
+                  frameRate: lotties.FrameRate(240),
+                  controller: _animationController,
                 ),
               );
             } else {
-              return Container(
-                width: size.width,
-                height: size.height,
-                child: GoogleMap(
-                  myLocationButtonEnabled: false,
-                  markers: {
-                    _markerRed,
-                    _markerBlue,
-                  },
-                  polylines: {_polyline},
-                  polygons: {_polygon},
-                  mapType: MapType.normal,
-                  onMapCreated: (GoogleMapController controller) {
-                    _mapController.complete(controller);
-                  },
-                  myLocationEnabled: true,
-                  initialCameraPosition: CameraPosition(
-                    target: _latLng,
-                    zoom: 15,
-                  ),
-                ),
-              );
-            }
-          },
-        ),
-        Positioned(
-          top: 80,
-          left: 30,
-          right: 30,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(50)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.shade50,
-                  spreadRadius: 0.5,
-                  blurRadius: 10,
-                )
-              ],
-            ),
-            child: SearchField(),
-          ),
-        ),
-        Positioned(
-          bottom: 30,
-          left: 30,
-          right: 30,
-          child: Container(
-            width: size.width,
-            height: 200,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DetailLocationPage(),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      width: 200,
-                      height: 200,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
-                        border: Border.all(color: Colors.white),
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.white,
-                            blurRadius: 8,
-                            spreadRadius: 5,
-                            offset: Offset(0.1, 0.3),
-                          )
-                        ],
-                      ),
+              return GoogleMap(
+                mapType: MapType.normal,
+                // zoomControlsEnabled: false,
+                myLocationButtonEnabled: false,
+                initialCameraPosition: CameraPosition(
+                    target: LatLng(
+                      _mapController.userPosition.latitude,
+                      _mapController.userPosition.longitude,
+                    ),
+                    zoom: 14.5),
+                markers: {
+                  Marker(
+                    markerId: MarkerId('User'),
+                    infoWindow: InfoWindow(
+                      title: 'User',
+                    ),
+                    icon: BitmapDescriptor.defaultMarker,
+                    position: LatLng(
+                      _mapController.userPosition.latitude,
+                      _mapController.userPosition.longitude,
                     ),
                   ),
-                );
-              },
-            ),
-          ),
-        ),
-      ],
-    ));
+                },
+                circles: Set.from(
+                  [
+                    Circle(
+                      circleId: CircleId('currentCircle'),
+                      center: LatLng(_mapController.userPosition.latitude,
+                          _mapController.userPosition.longitude),
+                      radius: 2500,
+                      fillColor: Colors.orangeAccent.shade100.withOpacity(0.5),
+                      strokeColor: Colors.orange,
+                      strokeWidth: 1,
+                    ),
+                  ],
+                ),
+                onMapCreated: (GoogleMapController controller) {
+                  _controller.complete(controller);
+                },
+              );
+            }
+          }),
+    );
   }
 }

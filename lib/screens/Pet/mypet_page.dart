@@ -28,7 +28,8 @@ class _MyPetPageState extends State<MyPetPage> {
               ),
               content: Container(
                 width: size.width,
-                height: size.height * 0.7,
+                height:
+                    size.height >= 790 ? size.height * 0.9 : size.height * 0.8,
                 child: Column(
                   children: [
                     CircleAvatar(
@@ -142,7 +143,9 @@ class _MyPetPageState extends State<MyPetPage> {
                     SizedBox(height: 30),
                     CustomButton(
                       text: 'ยืนยัน',
-                      onPressed: () {},
+                      onPressed: () {
+                        print(size.height);
+                      },
                     ),
                   ],
                 ),

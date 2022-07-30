@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:petcare_project/controllers/auth_controller.dart';
-import 'package:petcare_project/screens/Content/maps_demo.dart';
+import 'package:petcare_project/screens/Content/maps_page.dart';
 import 'package:petcare_project/utils/constant.dart';
 import 'package:petcare_project/data/menuData.dart';
 import 'package:petcare_project/data/recommendData.dart';
@@ -132,7 +130,7 @@ class _ContentPageState extends State<ContentPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => MapsDemo(),
+                            builder: (context) => MapsPage(),
                           ),
                         );
                       }),
