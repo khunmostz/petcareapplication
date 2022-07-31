@@ -1,17 +1,18 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:petcare_project/services/api_url.dart';
+import 'package:petcare_project/services/services.dart';
 
 class MapController extends GetxController {
   var userPosition;
 
   void onInit() {
     super.onInit();
-    _determinePosition();
-    print(userPosition.toString());
+    getUserPosition();
   }
 
-  Future<Position> _determinePosition() async {
+  Future getUserPosition() async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -32,14 +33,12 @@ class MapController extends GetxController {
       return Future.error(
           'Location permissions are permanently denied, we cannot request permissions.');
     }
-
-    return Geolocator.getCurrentPosition();
-  }
-
-  Future getUserPosition() async {
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
         .then((currentLo) {
       userPosition = currentLo;
+      print('--------------------------------------');
+      getRequest(path: API_URL.hostName, userPosition: userPosition);
+      
     });
   }
 }

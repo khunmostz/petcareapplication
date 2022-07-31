@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lottie/lottie.dart' as lotties;
 import 'package:petcare_project/controllers/map_controller.dart';
+import 'package:petcare_project/services/services.dart';
 
 class MapsPage extends StatefulWidget {
   const MapsPage({Key? key}) : super(key: key);
@@ -18,7 +19,6 @@ class _MapsPageState extends State<MapsPage>
   final MapController _mapController = Get.put(MapController());
   late AnimationController _animationController;
   Completer<GoogleMapController> _controller = Completer();
-
   @override
   void initState() {
     // TODO: implement initState
@@ -63,19 +63,7 @@ class _MapsPageState extends State<MapsPage>
                       _mapController.userPosition.longitude,
                     ),
                     zoom: 14.5),
-                markers: {
-                  Marker(
-                    markerId: MarkerId('User'),
-                    infoWindow: InfoWindow(
-                      title: 'User',
-                    ),
-                    icon: BitmapDescriptor.defaultMarker,
-                    position: LatLng(
-                      _mapController.userPosition.latitude,
-                      _mapController.userPosition.longitude,
-                    ),
-                  ),
-                },
+                markers: placeKM.map((e) => e).toSet(),
                 circles: Set.from(
                   [
                     Circle(
