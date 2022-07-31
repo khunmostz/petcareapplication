@@ -34,11 +34,10 @@ class MapController extends GetxController {
           'Location permissions are permanently denied, we cannot request permissions.');
     }
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-        .then((currentLo) {
+        .then((currentLo) async {
       userPosition = currentLo;
       print('--------------------------------------');
-      getRequest(path: API_URL.hostName, userPosition: userPosition);
-      
+      await getRequest(path: API_URL.hostName, userPosition: userPosition);
     });
   }
 }

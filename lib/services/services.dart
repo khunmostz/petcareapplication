@@ -30,7 +30,7 @@ Future<dynamic> getRequest(
     );
     print(
         'current location user: ${_mapController.userPosition.latitude.toString()}');
-    data.forEach((place) {
+     data.forEach((place) {
       double distancKm = calcDistance(
           userPosition.latitude,
           userPosition.longitude,
@@ -44,7 +44,7 @@ Future<dynamic> getRequest(
           infoWindow: InfoWindow(
             title: 'User',
           ),
-          icon: userMarker,
+          icon: BitmapDescriptor.defaultMarker,
           position: LatLng(
             _mapController.userPosition.latitude,
             _mapController.userPosition.longitude,
@@ -55,7 +55,7 @@ Future<dynamic> getRequest(
           infoWindow: InfoWindow(
             title: place.locationName,
           ),
-          icon: hospitalMarker,
+          icon: BitmapDescriptor.defaultMarkerWithHue(10),
           position: LatLng(
             double.parse(place.locationLat),
             double.parse(place.locationLong),

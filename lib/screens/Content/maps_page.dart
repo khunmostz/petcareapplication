@@ -64,6 +64,7 @@ class _MapsPageState extends State<MapsPage>
                     ),
                     zoom: 14.5),
                 markers: placeKM.map((e) => e).toSet(),
+
                 circles: Set.from(
                   [
                     Circle(
