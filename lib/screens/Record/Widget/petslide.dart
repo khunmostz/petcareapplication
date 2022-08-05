@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:petcare_project/data/petData.dart';
+import 'package:petcare_project/controllers/record_controller.dart';
 import 'package:petcare_project/utils/constant.dart';
 
 class PetSlide extends StatelessWidget {
-  final Pet pet;
+  final String pet;
   const PetSlide({
     Key? key,
     required this.pet,
@@ -25,7 +25,7 @@ class PetSlide extends StatelessWidget {
         ],
         image: DecorationImage(
           image: NetworkImage(
-            '${pet.image}',
+            '${pet}',
             scale: 0.5,
           ),
           fit: BoxFit.cover,

@@ -20,6 +20,7 @@ class Routes {
     GetPage(name: '/bottomnav', page: () => BottomNav()),
     GetPage(name: '/content', page: () => ContentPage()),
     GetPage(name: '/record', page: () => RecordPage()),
+    // GetPage(name: '/checkdatarecord', page: () => checkDataRecord()),
     GetPage(name: '/petdetail', page: () => PetDetailPage()),
     GetPage(name: '/mypet', page: () => MyPetPage()),
     GetPage(name: '/profile', page: () => ProfilePage()),

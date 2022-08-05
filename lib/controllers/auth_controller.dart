@@ -33,14 +33,12 @@ class AuthController extends GetxController {
       SharedPreferences myPrefs = await SharedPreferences.getInstance();
       bool? checkPage = myPrefs.getBool("isFirstRun");
       if (checkPage == null || checkPage == true) {
-        print('iffffffffffffffff');
+        print('first run');
         Get.toNamed("/before");
       } else {
-        print('eeeeeeeeeeeeeeeeffffffffffffffff');
+        print('many run');
         Get.toNamed("/signin");
       }
-
-      print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
     } else {
       print('content page');
       _profileController.getUserDetail();

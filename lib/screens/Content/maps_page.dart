@@ -71,7 +71,7 @@ class _MapsPageState extends State<MapsPage>
                       circleId: CircleId('currentCircle'),
                       center: LatLng(_mapController.userPosition.latitude,
                           _mapController.userPosition.longitude),
-                      radius: 2500,
+                      radius: 5000,
                       fillColor: Colors.orangeAccent.shade100.withOpacity(0.5),
                       strokeColor: Colors.orange,
                       strokeWidth: 1,

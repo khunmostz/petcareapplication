@@ -16,20 +16,15 @@ class ProfileController extends GetxController {
   final Rx<TextEditingController> addressController =
       TextEditingController().obs;
 
+  RxString profileName = ''.obs;
+
   File? image;
 
-  // @override
-  // void onInit() async {
-  //   super.onInit();
-  //   await getUserDetail();
-  //   print('pull data');
-  // }
-
-  Future<void> uploadImageProfile() async {
+  Future<void> uploadImageProfile({required ImageSource imageSource}) async {
     try {
       final ImagePicker _picker = ImagePicker();
       final XFile? _pickedImage = await _picker.pickImage(
-        source: ImageSource.gallery,
+        source: imageSource,
         imageQuality: 50,
         maxHeight: 150,
         maxWidth: 150,
@@ -68,7 +63,7 @@ class ProfileController extends GetxController {
           .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
           .get()
           .then((snapshot) async {
-        print(snapshot.docs[0].data());
+        // print(snapshot.docs[0].data());
         snapshot.docs.forEach((data) {
           user = data.data();
           // print(user['email']);
@@ -76,6 +71,7 @@ class ProfileController extends GetxController {
           emailController.value.text = user['email'].toString();
           telController.value.text = user['tel'].toString();
           addressController.value.text = user['address'].toString();
+          profileName = user['username'].toString().obs;
         });
       });
       update(['getUserDetail']);

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:petcare_project/controllers/record_controller.dart';
-import 'package:petcare_project/data/petData.dart';
-import 'package:petcare_project/screens/Record/Widget/blur_backgroud.dart';
 import 'package:petcare_project/screens/Record/Widget/indicator.dart';
 import 'package:petcare_project/screens/Record/Widget/petslide.dart';
 import 'package:petcare_project/screens/Record/Widget/record_dialog.dart';
@@ -66,12 +64,6 @@ class _RecordPageState extends State<RecordPage> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-    // _controller.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
@@ -87,40 +79,51 @@ class _RecordPageState extends State<RecordPage> {
                   height: 300,
                   color: Colors.white,
                 ),
-                //backgroud
-                BlurBackGroud(size: size, selectedIndex: _selectedIndex),
-                // Pet Slide
-                Positioned(
-                  top: size.height < 685 ? 80 : 50,
+
+                Container(
                   width: size.width,
-                  height: size.height / 4,
-                  child: PageView.builder(
-                    controller: PageController(viewportFraction: 0.7),
-                    onPageChanged: (index) {
-                      setState(() {
-                        _selectedIndex = index;
-                      });
-                    },
-                    itemCount: petData.length,
-                    itemBuilder: (context, index) {
-                      var _scale = _selectedIndex == index ? 1.0 : 0.8;
-                      return TweenAnimationBuilder(
-                        duration: const Duration(milliseconds: 350),
-                        tween: Tween(begin: _scale, end: _scale),
-                        curve: Curves.ease,
-                        child: PetSlide(
-                          pet: petData[index],
-                        ),
-                        builder: (context, double value, child) {
-                          return Transform.scale(
-                            scale: value,
-                            child: child,
-                          );
-                        },
-                      );
-                    },
+                  height: 200,
+                  decoration: BoxDecoration(
+                    color: kDefualtColorMain,
                   ),
                 ),
+                // Pet Slide
+                GetBuilder<RecordController>(
+                    id: 'getPets',
+                    builder: (_) {
+                      return Positioned(
+                        top: size.height < 685 ? 80 : 50,
+                        width: size.width,
+                        height: size.height / 4,
+                        child: PageView.builder(
+                          controller: PageController(viewportFraction: 0.7),
+                          onPageChanged: (index) {
+                            setState(() {
+                              _selectedIndex = index;
+                              print('after:' + _selectedIndex.toString());
+                            });
+                          },
+                          itemCount: _recordController.docLength.value,
+                          itemBuilder: (context, index) {
+                            var _scale = _selectedIndex == index ? 1.0 : 0.8;
+                            return TweenAnimationBuilder(
+                              duration: const Duration(milliseconds: 350),
+                              tween: Tween(begin: _scale, end: _scale),
+                              curve: Curves.ease,
+                              child: PetSlide(
+                                pet: _recordController.petImage[index],
+                              ),
+                              builder: (context, double value, child) {
+                                return Transform.scale(
+                                  scale: value,
+                                  child: child,
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      );
+                    }),
                 // Indicator
                 Positioned(
                   top: 280,
@@ -130,7 +133,7 @@ class _RecordPageState extends State<RecordPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ...List.generate(
-                        petData.length,
+                        _recordController.docLength.value,
                         (index) => Indicator(
                             isActive: _selectedIndex == index ? true : false),
                       ),
@@ -166,65 +169,76 @@ class _RecordPageState extends State<RecordPage> {
                                     fontSize: 20,
                                   ),
                                 ),
-                                content: Container(
-                                  width: size.width,
-                                  height: size.height * 0.5,
-                                  child: Column(
-                                    children: [
-                                      RecordDialog(
-                                        title: 'รายการ',
-                                        hinText: 'รายการ',
-                                        keyboardType: TextInputType.text,
-                                        controller: _recordController
-                                            .particularController,
-                                      ),
-                                      SizedBox(height: 20),
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            child: RecordDialog(
-                                              title: 'ค่าใช้จ่าย',
-                                              hinText: 'ค่าใช้จ่าย',
-                                              keyboardType:
-                                                  TextInputType.number,
-                                              controller: _recordController
-                                                  .payController,
+                                content: SingleChildScrollView(
+                                  child: Container(
+                                    width: size.width,
+                                    height: size.height * 0.5,
+                                    child: Column(
+                                      children: [
+                                        RecordDialog(
+                                          title: 'ชื่อสัตว์เลี้ยง',
+                                          hinText: 'ชื่อสัตว์เลี้ยง',
+                                          keyboardType: TextInputType.text,
+                                          controller: _recordController
+                                              .petNameController,
+                                        ),
+                                        SizedBox(height: 10),
+                                        RecordDialog(
+                                          title: 'รายการ',
+                                          hinText: 'รายการ',
+                                          keyboardType: TextInputType.text,
+                                          controller: _recordController
+                                              .particularController,
+                                        ),
+                                        SizedBox(height: 10),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: RecordDialog(
+                                                title: 'ค่าใช้จ่าย',
+                                                hinText: 'ค่าใช้จ่าย',
+                                                keyboardType:
+                                                    TextInputType.number,
+                                                controller: _recordController
+                                                    .payController,
+                                              ),
                                             ),
-                                          ),
-                                          Expanded(
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                _showDatePicker();
-                                              },
-                                              child: Container(
-                                                margin:
-                                                    EdgeInsets.only(top: 37),
-                                                height: 65,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.grey[200],
-                                                  border: Border.all(
-                                                      color: Colors.white),
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                ),
-                                                child: Icon(
-                                                  Icons.date_range,
-                                                  size: 30,
+                                            Expanded(
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  _showDatePicker();
+                                                },
+                                                child: Container(
+                                                  margin:
+                                                      EdgeInsets.only(top: 37),
+                                                  height: 65,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.grey[200],
+                                                    border: Border.all(
+                                                        color: Colors.white),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12),
+                                                  ),
+                                                  child: Icon(
+                                                    Icons.date_range,
+                                                    size: 30,
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      Spacer(),
-                                      CustomButton(
-                                        onPressed: () {
-                                          _recordController
-                                              .addRecord(date.toString());
-                                        },
-                                        text: 'เพิ่มข้อมูล',
-                                      ),
-                                    ],
+                                          ],
+                                        ),
+                                        Spacer(),
+                                        CustomButton(
+                                          onPressed: () {
+                                            _recordController
+                                                .addRecord(date.toString());
+                                          },
+                                          text: 'เพิ่มข้อมูล',
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               );
@@ -346,7 +360,15 @@ class _RecordPageState extends State<RecordPage> {
             ),
             SizedBox(height: 30),
             // แสดงรายรับรายจ่าย
-            RecordTable(size: size),
+            GetBuilder<RecordController>(
+              id: 'updateRecord',
+              builder: (_) {
+                return RecordTable(
+                  size: size,
+                  indexSelect: '${_recordController.petName[_selectedIndex]}',
+                );
+              },
+            ),
             SizedBox(height: 20),
           ],
         ),
@@ -354,3 +376,31 @@ class _RecordPageState extends State<RecordPage> {
     );
   }
 }
+
+// class checkDataRecord extends StatefulWidget {
+//   const checkDataRecord({Key? key}) : super(key: key);
+
+//   @override
+//   State<checkDataRecord> createState() => _checkDataRecordState();
+// }
+
+// class _checkDataRecordState extends State<checkDataRecord> {
+//   final RecordController _recordController = Get.find<RecordController>();
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: StreamBuilder<dynamic>(
+//         stream: _recordController.getPet().asStream(),
+//         builder: (context, snapshot) {
+//           if (_recordController.petName == null) {
+//             return Center(
+//               child: AlertDialog(),
+//             );
+//           } else {
+//             return RecordPage();
+//           }
+//         },
+//       ),
+//     );
+//   }
+// }

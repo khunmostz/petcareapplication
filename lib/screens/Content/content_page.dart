@@ -197,7 +197,7 @@ class _ContentPageState extends State<ContentPage> {
 
                     Container(
                       width: size.width,
-                      height: 160,
+                      height: size.height * 0.3,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: recommendData.length,
@@ -208,7 +208,7 @@ class _ContentPageState extends State<ContentPage> {
                               children: [
                                 Container(
                                   width: 200,
-                                  height: 100,
+                                  height: 150,
                                   decoration: BoxDecoration(
                                     color: Colors.amber,
                                     borderRadius: BorderRadius.circular(16),
@@ -230,10 +230,9 @@ class _ContentPageState extends State<ContentPage> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text("${recommendData[index].titleMenu}")
+                                SizedBox(height: 10),
+                                Text("${recommendData[index].titleMenu}"),
+                                SizedBox(height: 20),
                               ],
                             ),
                           );
@@ -241,11 +240,11 @@ class _ContentPageState extends State<ContentPage> {
                       ),
                     ),
                     // dummy container
-                    Container(
-                      width: double.infinity,
-                      height: 500,
-                      color: Colors.green,
-                    )
+                    // Container(
+                    //   width: double.infinity,
+                    //   height: 500,
+                    //   color: Colors.green,
+                    // )
                   ],
                 ),
               ),

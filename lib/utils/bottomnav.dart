@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:petcare_project/controllers/bottomnav_controller.dart';
 import 'package:petcare_project/screens/Content/content_page.dart';
 import 'package:petcare_project/screens/Pet/mypet_page.dart';
 import 'package:petcare_project/screens/Profile/profile_page.dart';
 import 'package:petcare_project/screens/Record/record_page.dart';
-import 'package:petcare_project/utils/routes.dart';
 import 'constant.dart';
 
 class BottomNav extends StatefulWidget {
@@ -23,6 +21,7 @@ class _BottomNavState extends State<BottomNav> {
   final screen = [
     ContentPage(),
     RecordPage(),
+    // checkDataRecord(),
     MyPetPage(),
     ProfilePage(),
   ];
@@ -62,7 +61,7 @@ class _BottomNavState extends State<BottomNav> {
               ),
               GButton(
                 icon: Icons.person,
-                text: "บัญชีผู้ใช้",
+                text: "บัญชี",
               ),
             ],
           ),
