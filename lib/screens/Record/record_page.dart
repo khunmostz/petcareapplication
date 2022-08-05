@@ -59,11 +59,6 @@ class _RecordPageState extends State<RecordPage> {
   );
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
@@ -129,15 +124,21 @@ class _RecordPageState extends State<RecordPage> {
                   top: 280,
                   right: 0,
                   left: 0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ...List.generate(
-                        _recordController.docLength.value,
-                        (index) => Indicator(
-                            isActive: _selectedIndex == index ? true : false),
-                      ),
-                    ],
+                  child: GetBuilder<RecordController>(
+                    id: 'getPets',
+                    builder: (_) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ...List.generate(
+                            _recordController.docLength.value,
+                            (index) => Indicator(
+                                isActive:
+                                    _selectedIndex == index ? true : false),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ),
               ],
@@ -361,11 +362,13 @@ class _RecordPageState extends State<RecordPage> {
             SizedBox(height: 30),
             // แสดงรายรับรายจ่าย
             GetBuilder<RecordController>(
-              id: 'updateRecord',
+              id: 'getPets',
               builder: (_) {
                 return RecordTable(
                   size: size,
-                  indexSelect: '${_recordController.petName[_selectedIndex]}',
+                  indexSelect: _recordController.petName.length > 0
+                      ? '${_recordController.petName[_selectedIndex]}'
+                      : '',
                 );
               },
             ),

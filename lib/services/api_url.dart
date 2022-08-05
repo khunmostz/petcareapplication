@@ -3,5 +3,5 @@ class API_URL {
 // 10.29.0.91 Kasembundit
 // 192.168.1.111 Most
   static String hostName =
-      'http://192.168.1.111:8000/api/v1/petcare/get/location';
+      'http://10.29.2.191:8000/api/v1/petcare/get/location';
 }

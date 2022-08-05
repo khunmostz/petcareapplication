@@ -23,10 +23,9 @@ class RecordController extends GetxController {
   final TextEditingController particularController = TextEditingController();
   final TextEditingController payController = TextEditingController();
 
-  void onReady() async {
-    super.onReady();
+  void onInit() async {
+    super.onInit();
     await getPet();
-    print(docLength);
   }
 
   Future<dynamic> getPet() async {
@@ -39,7 +38,7 @@ class RecordController extends GetxController {
           .get()
           .then((value) async {
         docLength = value.docs.length.obs;
-        print(docLength.toString());
+        // print(docLength.toString());
         value.docs.forEach((pet) {
           pets = pet.data();
           petImage.add(pets['image']);
@@ -72,8 +71,9 @@ class RecordController extends GetxController {
         value.docs.forEach((id) {
           recordDataId.add(id);
         });
-        update();
       });
+
+      update(['getPetId']);
     } catch (e) {}
   }
 
