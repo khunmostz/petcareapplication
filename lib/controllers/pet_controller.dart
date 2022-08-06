@@ -13,14 +13,14 @@ class PetController extends GetxController {
 
   List data = [];
 
-  List petName = [].obs;
-  List petType = [].obs;
-  List petSpecies = [].obs;
-  List petGender = [].obs;
-  List petBday = [].obs;
-  List petVday = [].obs;
-  List petImage = [].obs;
-  List petWeight = [].obs;
+  RxList petName = [].obs;
+  RxList petType = [].obs;
+  RxList petSpecies = [].obs;
+  RxList petGender = [].obs;
+  RxList petBday = [].obs;
+  RxList petVday = [].obs;
+  RxList petImage = [].obs;
+  RxList petWeight = [].obs;
 
   final TextEditingController idController = TextEditingController();
   final TextEditingController petNameController = TextEditingController();
@@ -112,7 +112,7 @@ class PetController extends GetxController {
   }
 
   Future<dynamic> getPet() async {
-    petName = []; // กันมันแสดง index ตัวแรก
+    petName = [].obs; // กันมันแสดง index ตัวแรก
 
     try {
       await FirebaseFirestore.instance
@@ -139,7 +139,7 @@ class PetController extends GetxController {
           // petName.refresh();
         });
         print('pet controller' + petName.toString());
-        update(['getMyPet']);
+        update(['getMyPets']);
 
         // print(data.toString());
       });
@@ -166,7 +166,7 @@ class PetController extends GetxController {
           'เพิ่มข้อมูลสำเร็จ',
         );
         print(petName.length);
-        update();
+        update(['addPets']);
       });
     } catch (e) {
       print(e);
