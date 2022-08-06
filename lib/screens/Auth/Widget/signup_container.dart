@@ -11,7 +11,7 @@ class SignUpContainer extends StatefulWidget {
 }
 
 class _SignUpContainerState extends State<SignUpContainer> {
- final AuthController _authController = Get.find<AuthController>();
+  final AuthController _authController = Get.find<AuthController>();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   List _dropdownValue = ['User', 'Doctor'];
   Object? _iniialValue = 'User';
@@ -123,7 +123,7 @@ class _SignUpContainerState extends State<SignUpContainer> {
               // type dropdown
               DropdownButton(
                 value: _iniialValue,
-                // isExpanded: true,
+                isExpanded: true,
                 items: _dropdownValue.map((value) {
                   return DropdownMenuItem(
                     value: value,

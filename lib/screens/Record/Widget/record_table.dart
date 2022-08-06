@@ -9,7 +9,7 @@ class RecordTable extends StatelessWidget {
     Key? key,
     required this.size,
     required this.indexSelect,
-  }) : super(key: key);
+  });
 
   final Size size;
   final String indexSelect;
@@ -20,79 +20,76 @@ class RecordTable extends StatelessWidget {
     print('xxxxxxxxxxx: ${indexSelect.toString()}');
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: kDefualtPadding),
-      child: Container(
-        width: size.width,
-        height: size.height * 0.45,
-        decoration: BoxDecoration(
-          border: Border.all(),
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(18),
-        ),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: StreamBuilder(
-              stream: _recordController
-                  .getRecordByName(
-                    indexSelect.toString(),
-                  )
-                  .asStream(),
-              builder: (context, snapshot) {
-                return DataTable(
-                  columns: [
-                    DataColumn(
-                      label: Text(
-                        'รายการ',
-                        style: GoogleFonts.mitr(
-                          fontSize: 18,
-                        ),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: StreamBuilder<dynamic>(
+            stream: _recordController
+                .getRecordByName(
+                  indexSelect.toString(),
+                )
+                .asStream(),
+            builder: (context, snapshot) {
+              return DataTable(
+                columnSpacing: 80,
+                columns: [
+                  DataColumn(
+                    label: Text(
+                      'รายการ',
+                      style: GoogleFonts.mitr(
+                        fontSize: 18,
                       ),
                     ),
-                    DataColumn(
-                      label: Text(
-                        'ค่าใช้จ่าย',
-                        style: GoogleFonts.mitr(
-                          fontSize: 18,
-                        ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      'ค่าใช้จ่าย',
+                      style: GoogleFonts.mitr(
+                        fontSize: 18,
                       ),
                     ),
-                    DataColumn(
-                      label: Text(
-                        'วันเวลา',
-                        style: GoogleFonts.mitr(
-                          fontSize: 18,
-                        ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      'วันเวลา',
+                      style: GoogleFonts.mitr(
+                        fontSize: 18,
                       ),
                     ),
-                  ],
-                  rows: _recordController.recordDataId
-                      .map(
-                        (record) => DataRow(cells: [
-                          DataCell(Text(
-                            '${record['particular']}',
-                            style: GoogleFonts.mitr(
-                              fontSize: 14,
-                            ),
-                          )),
-                          DataCell(Text(
-                            '${record['pay']}',
-                            style: GoogleFonts.mitr(
-                              fontSize: 14,
-                            ),
-                          )),
-                          DataCell(
-                            Text(
-                              '${record['date']}'.toString().substring(0, 10),
+                  ),
+                ],
+                rows: _recordController.recordDataId
+                    .map(
+                      (record) => DataRow(cells: [
+                        DataCell(
+                          ConstrainedBox(
+                            constraints: BoxConstraints(maxWidth: 60),
+                            child: Text(
+                              '${record['particular']}',
                               style: GoogleFonts.mitr(
-                                fontSize: 12,
+                                fontSize: 14,
                               ),
                             ),
                           ),
-                        ]),
-                      )
-                      .toList(),
-                );
-              }),
-        ),
+                        ),
+                        DataCell(Text(
+                          '${record['pay']}',
+                          style: GoogleFonts.mitr(
+                            fontSize: 14,
+                          ),
+                        )),
+                        DataCell(
+                          Text(
+                            '${record['date']}'.toString().substring(0, 10),
+                            style: GoogleFonts.mitr(
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ]),
+                    )
+                    .toList(),
+              );
+            }),
       ),
     );
   }
