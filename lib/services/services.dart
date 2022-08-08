@@ -9,6 +9,9 @@ import 'package:petcare_project/models/location.dart';
 import 'package:petcare_project/utils/distance.dart';
 
 List<Marker> placeKM = [];
+List placeName = [];
+List placeImage = [];
+List placeDesc = [];
 
 final MapController _mapController = Get.find<MapController>();
 
@@ -64,6 +67,13 @@ Future<dynamic> getRequest(
         );
         placeKM.add(userLocation);
         placeKM.add(hospitalLocation);
+
+        var locationName = place.locationName.toString();
+        var locationImage = place.locationImage.toString();
+        var locationDesc = place.locationDesc.toString();
+        placeName.add(locationName);
+        placeImage.add(locationImage);
+        placeDesc.add(locationDesc);
       }
     });
   } on DioError catch (e) {

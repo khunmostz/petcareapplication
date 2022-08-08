@@ -10,7 +10,8 @@
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:requestLegacyExternalStorage="true"
-        >
+        android:allowBackup="false">
+        
 
         <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyAJxz4yLqqnj_Dq-GVBINpjqeO5G8ksOoI"/>

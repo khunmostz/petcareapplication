@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 class PetController extends GetxController {
   var pets;
   var docLength;
+  var test = 1;
 
   List data = [];
 
@@ -36,14 +37,19 @@ class PetController extends GetxController {
   RxString vaccine = ''.obs;
   String? pathImageStore;
 
-  var image;
+  File? image;
+
+  void testFunc() {
+    test++;
+    update(['test']);
+  }
 
   Future<void> uploadImageProfile({required ImageSource imageSource}) async {
     try {
       final ImagePicker _picker = ImagePicker();
       final XFile? _pickedImage = await _picker.pickImage(
         source: imageSource,
-        imageQuality: 50,
+        imageQuality: 100,
         maxHeight: 150,
         maxWidth: 150,
       );
@@ -120,12 +126,8 @@ class PetController extends GetxController {
           .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
           .get()
           .then((value) async {
-        docLength = value.docs.length;
         value.docs.forEach((pet) {
           pets = pet.data();
-          // print(pets);
-          // data.add(pets);
-          // print(data[].toString());
 
           petImage.add(pets['image']);
           petName.add(pets['petName']);
@@ -138,8 +140,10 @@ class PetController extends GetxController {
 
           // petName.refresh();
         });
-        print('pet controller' + petName.toString());
-        update(['getMyPets']);
+        print('pet controller' + petName.length.toString());
+        docLength = value.docs.length;
+        print(petType.length.toString());
+        update(['getPets']);
 
         // print(data.toString());
       });
@@ -160,13 +164,25 @@ class PetController extends GetxController {
         'birdthday': birdthday.substring(0, 10),
         'vaccine': vaccine.substring(0, 10),
       }).then((value) {
+        petName.add(petNameController.text.trim());
+        petImage.add(image);
+        petType.add(typeController.text.trim());
+        petSpecies.add(speciesController.text.trim());
+        petWeight.add(weightController.text.trim());
+        petGender.add(genderController.text.trim());
+        petBday.add(pets['birdthday']);
+        petVday.add(pets['vaccine']);
+
+        docLength++;
+
+        this.image = null;
+
+        update(['addPets']);
         Get.back();
         Get.snackbar(
           'แจ้งเตือน',
           'เพิ่มข้อมูลสำเร็จ',
         );
-        print(petName.length);
-        update(['addPets']);
       });
     } catch (e) {
       print(e);

@@ -379,31 +379,3 @@ class _RecordPageState extends State<RecordPage> {
     );
   }
 }
-
-// class checkDataRecord extends StatefulWidget {
-//   const checkDataRecord({Key? key}) : super(key: key);
-
-//   @override
-//   State<checkDataRecord> createState() => _checkDataRecordState();
-// }
-
-// class _checkDataRecordState extends State<checkDataRecord> {
-//   final RecordController _recordController = Get.find<RecordController>();
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: StreamBuilder<dynamic>(
-//         stream: _recordController.getPet().asStream(),
-//         builder: (context, snapshot) {
-//           if (_recordController.petName == null) {
-//             return Center(
-//               child: AlertDialog(),
-//             );
-//           } else {
-//             return RecordPage();
-//           }
-//         },
-//       ),
-//     );
-//   }
-// }

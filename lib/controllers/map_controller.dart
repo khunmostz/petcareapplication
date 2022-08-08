@@ -1,15 +1,14 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:petcare_project/services/api_url.dart';
 import 'package:petcare_project/services/services.dart';
 
 class MapController extends GetxController {
   var userPosition;
 
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    getUserPosition();
+    await getUserPosition();
   }
 
   Future getUserPosition() async {
@@ -39,5 +38,6 @@ class MapController extends GetxController {
       print('--------------------------------------');
       await getRequest(path: API_URL.hostName, userPosition: userPosition);
     });
+    update();
   }
 }
