@@ -364,12 +364,10 @@ class _RecordPageState extends State<RecordPage> {
             GetBuilder<RecordController>(
               id: 'getPets',
               builder: (_) {
-                return RecordTable(
-                  size: size,
-                  indexSelect: _recordController.petName.length > 0
-                      ? '${_recordController.petName[_selectedIndex]}'
-                      : '',
-                );
+                return recordTable(
+                    indexSelect: _recordController.petName.length > 0
+                        ? _recordController.petName[_selectedIndex]
+                        : '');
               },
             ),
             SizedBox(height: 20),
@@ -377,5 +375,80 @@ class _RecordPageState extends State<RecordPage> {
         ),
       ),
     );
+  }
+
+  Widget recordTable({required String indexSelect}) {
+    return GetBuilder<RecordController>(
+        id: 'updateRecord',
+        builder: (_) {
+          return StreamBuilder<dynamic>(
+              stream: _recordController
+                  .getRecordByName(
+                    indexSelect.toString(),
+                  )
+                  .asStream(),
+              builder: (context, snapshot) {
+                return DataTable(
+                  columnSpacing: 80,
+                  columns: [
+                    DataColumn(
+                      label: Text(
+                        'รายการ',
+                        style: GoogleFonts.mitr(
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        'ค่าใช้จ่าย',
+                        style: GoogleFonts.mitr(
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        'วันเวลา',
+                        style: GoogleFonts.mitr(
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                  ],
+                  rows: _recordController.recordDataId
+                      .map(
+                        (record) => DataRow(cells: [
+                          DataCell(
+                            ConstrainedBox(
+                              constraints: BoxConstraints(maxWidth: 60),
+                              child: Text(
+                                '${record['particular']}',
+                                style: GoogleFonts.mitr(
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          ),
+                          DataCell(Text(
+                            '${record['pay']}',
+                            style: GoogleFonts.mitr(
+                              fontSize: 14,
+                            ),
+                          )),
+                          DataCell(
+                            Text(
+                              '${record['date']}'.toString().substring(0, 10),
+                              style: GoogleFonts.mitr(
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                        ]),
+                      )
+                      .toList(),
+                );
+              });
+        });
   }
 }

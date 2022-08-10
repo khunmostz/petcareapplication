@@ -163,6 +163,7 @@ class PetController extends GetxController {
         'gender': genderController.text.trim().toLowerCase(),
         'birdthday': birdthday.substring(0, 10),
         'vaccine': vaccine.substring(0, 10),
+        'createdAt': Timestamp.now(),
       }).then((value) {
         petName.add(petNameController.text.trim());
         petImage.add(image);

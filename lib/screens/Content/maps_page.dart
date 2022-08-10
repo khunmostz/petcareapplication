@@ -113,7 +113,7 @@ class _MapsPageState extends State<MapsPage>
                         },
                       );
                     } else {
-                      return Container();
+                      return Center(child: CircularProgressIndicator());
                     }
                   }),
                 ),
