@@ -10,7 +10,6 @@ import 'package:image_picker/image_picker.dart';
 class PetController extends GetxController {
   var pets;
   var docLength;
-  var test = 1;
 
   List data = [];
 
@@ -38,11 +37,6 @@ class PetController extends GetxController {
   String? pathImageStore;
 
   File? image;
-
-  void testFunc() {
-    test++;
-    update(['test']);
-  }
 
   Future<void> uploadImageProfile({required ImageSource imageSource}) async {
     try {
@@ -124,6 +118,7 @@ class PetController extends GetxController {
       await FirebaseFirestore.instance
           .collection('pets')
           .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          // .orderBy('createdAt', descending: true)
           .get()
           .then((value) async {
         value.docs.forEach((pet) {

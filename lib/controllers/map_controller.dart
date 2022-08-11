@@ -1,9 +1,12 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:petcare_project/controllers/content_controller.dart';
 import 'package:petcare_project/services/api_url.dart';
 import 'package:petcare_project/services/services.dart';
 
 class MapController extends GetxController {
+  final ContentController _contentController = Get.find<ContentController>();
+
   var userPosition;
 
   void onInit() async {
@@ -32,12 +35,21 @@ class MapController extends GetxController {
       return Future.error(
           'Location permissions are permanently denied, we cannot request permissions.');
     }
+    await getCurrentUser();
+
+    update();
+  }
+
+  Future<dynamic> getCurrentUser() async {
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
         .then((currentLo) async {
       userPosition = currentLo;
       print('--------------------------------------');
-      await getRequest(path: API_URL.hostName, userPosition: userPosition);
+      print('param: ${_contentController.param}');
+      await getRequestMap(
+          path: API_URL.hostName +
+              '/get/location/type/${_contentController.param}',
+          userPosition: userPosition);
     });
-    update();
   }
 }

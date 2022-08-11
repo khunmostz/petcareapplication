@@ -180,12 +180,6 @@ class _MyPetPageState extends State<MyPetPage>
                               ),
                             ),
                           ]),
-                          // SizedBox(height: 20),
-                          // PetDialog(
-                          //   size: size,
-                          //   title: 'หมายเลข',
-                          //   controller: _petController.idController,
-                          // ),
                           SizedBox(height: 10),
                           PetDialog(
                             size: size,
@@ -447,12 +441,6 @@ class _MyPetPageState extends State<MyPetPage>
                                         color: Colors.white,
                                       ),
                                     ),
-                                    // GetBuilder<PetController>(
-                                    //     id: 'test',
-                                    //     builder: (_) {
-                                    //       return Text(
-                                    //           '${_petController.test.toString()}');
-                                    //     }),
                                   ],
                                 ),
                               ],

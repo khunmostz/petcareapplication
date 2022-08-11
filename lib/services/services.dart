@@ -12,10 +12,12 @@ List<Marker> placeKM = [];
 List placeName = [];
 List placeImage = [];
 List placeDesc = [];
+List placeLat = [];
+List placeLong = [];
 
 final MapController _mapController = Get.find<MapController>();
 
-Future<dynamic> getRequest(
+Future<dynamic> getRequestMap(
     {required String path, required Position userPosition}) async {
   try {
     final res = await Dio().get(path);
@@ -34,6 +36,8 @@ Future<dynamic> getRequest(
     print(
         'current location user: ${_mapController.userPosition.latitude.toString()}');
     data.forEach((place) {
+      print('location: ' + place.locationName.toString());
+
       double distancKm = calcDistance(
           userPosition.latitude,
           userPosition.longitude,
@@ -71,15 +75,25 @@ Future<dynamic> getRequest(
         var locationName = place.locationName.toString();
         var locationImage = place.locationImage.toString();
         var locationDesc = place.locationDesc.toString();
+        var locationLat = place.locationLat.toString();
+        var locationLong = place.locationLong.toString();
         placeName.add(locationName);
         placeImage.add(locationImage);
         placeDesc.add(locationDesc);
+        placeLat.add(locationLat);
+        placeLong.add(locationLong);
       }
     });
   } on DioError catch (e) {
     print(e.toString());
     errorFilter(e);
   }
+}
+
+Future<dynamic> getRequest(String path) async {
+  final res = await Dio().get(path);
+
+  // var data = res.data[''].map
 }
 
 errorFilter(DioError e) {

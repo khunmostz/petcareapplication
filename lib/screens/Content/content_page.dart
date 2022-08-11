@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:petcare_project/controllers/auth_controller.dart';
+import 'package:petcare_project/controllers/content_controller.dart';
 import 'package:petcare_project/screens/Content/maps_page.dart';
 import 'package:petcare_project/utils/constant.dart';
 import 'package:petcare_project/data/menuData.dart';
@@ -16,6 +17,7 @@ class ContentPage extends StatefulWidget {
 
 class _ContentPageState extends State<ContentPage> {
   final AuthController _authController = Get.find<AuthController>();
+  final ContentController _contentController = Get.put(ContentController());
 
   @override
   void initState() {
@@ -125,53 +127,8 @@ class _ContentPageState extends State<ContentPage> {
                   ),
                   itemCount: menuTitleData.length,
                   itemBuilder: (BuildContext context, index) {
-                    return GestureDetector(
-                      onTap: (() {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MapsPage(),
-                          ),
-                        );
-                      }),
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: kDefualtPadding / 4),
-                        width: 100,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          color: Colors.orange.withOpacity(0.9),
-                          borderRadius: BorderRadius.circular(16),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black38,
-                              blurRadius: 5,
-                              // spreadRadius: 1.5,
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              '${menuTitleData[index].image}',
-                              width: 50,
-                              height: 50,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              '${menuTitleData[index].titleMenu}',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                    return Container(
+                      child: menuList(index),
                     );
                   },
                 ),
@@ -255,6 +212,57 @@ class _ContentPageState extends State<ContentPage> {
             //   height: size.height,
             //   color: Colors.black,
             // ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget menuList(
+    int index,
+  ) {
+    return GestureDetector(
+      onTap: (() {
+        Get.toNamed('/mappage');
+        // print('-----' * 10);
+        // print('type: ${menuTitleData[index].type}');
+
+        _contentController.getParam(menuTitleData[index].type!);
+      }),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: kDefualtPadding / 4),
+        width: 100,
+        height: 100,
+        decoration: BoxDecoration(
+          color: Colors.orange.withOpacity(0.9),
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black38,
+              blurRadius: 5,
+              // spreadRadius: 1.5,
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset(
+              '${menuTitleData[index].image}',
+              width: 50,
+              height: 50,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              '${menuTitleData[index].titleMenu}',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              ),
+            ),
           ],
         ),
       ),

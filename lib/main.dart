@@ -34,6 +34,13 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.orange,
+        dialogTheme: const DialogTheme(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(20),
+            ),
+          ),
+        ),
       ),
       home: SplashScreenView(
         navigateRoute: CheckPage(),

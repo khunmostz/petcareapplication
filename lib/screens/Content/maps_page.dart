@@ -120,9 +120,15 @@ class _MapsPageState extends State<MapsPage>
               ),
               SizedBox(height: 20),
               // NearMe
-              Text(
-                'ใกล้ฉัน',
-                style: GoogleFonts.mitr(fontSize: 16),
+              Row(
+                children: [
+                  Text(
+                    'ใกล้ฉัน',
+                    style: GoogleFonts.mitr(fontSize: 18),
+                  ),
+                  SizedBox(width: 5),
+                  Icon(Icons.near_me),
+                ],
               ),
               SizedBox(height: 10),
               GetBuilder<MapController>(builder: (_) {
@@ -135,19 +141,37 @@ class _MapsPageState extends State<MapsPage>
                     itemBuilder: (context, index) {
                       var locationName = placeName[index];
                       var locationImage = placeImage[index];
+                      var locationDesc = placeDesc[index];
+                      var locationLat = placeLat[index];
+                      var locationLong = placeLong[index];
                       // print(locationImage);
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          width: 200,
-                          height: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Colors.grey,
-                            border: Border.all(),
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                            image: DecorationImage(
-                              image: NetworkImage(locationImage),
-                              fit: BoxFit.cover,
+                        child: GestureDetector(
+                          onTap: () {
+                            Get.toNamed(
+                              '/locationpage',
+                              arguments: [
+                                locationName,
+                                locationImage,
+                                locationDesc,
+                                locationLat,
+                                locationLong,
+                              ],
+                            );
+                          },
+                          child: Container(
+                            width: 200,
+                            height: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Colors.grey,
+                              border: Border.all(),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                              image: DecorationImage(
+                                image: NetworkImage(locationImage),
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:petcare_project/controllers/auth_controller.dart';
 import 'package:petcare_project/controllers/bottomnav_controller.dart';
 import 'package:petcare_project/screens/Content/content_page.dart';
 import 'package:petcare_project/screens/Pet/mypet_page.dart';
@@ -18,10 +19,15 @@ class BottomNav extends StatefulWidget {
 class _BottomNavState extends State<BottomNav> {
   // var _selectedIndex = 0;
   final _controller = Get.put(BottomNavController());
-  final screen = [
+  final AuthController _authController = Get.find<AuthController>();
+  final screenUser = [
     ContentPage(),
     RecordPage(),
-    // checkDataRecord(),
+    MyPetPage(),
+    ProfilePage(),
+  ];
+  final screenHospital = [
+    ContentPage(),
     MyPetPage(),
     ProfilePage(),
   ];
@@ -73,7 +79,7 @@ class _BottomNavState extends State<BottomNav> {
         builder: (_) {
           return IndexedStack(
             index: _controller.selectIndex.value,
-            children: screen,
+            children: screenUser,
           );
         },
       ),
