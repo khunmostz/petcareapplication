@@ -1,6 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:petcare_project/utils/constant.dart';
 import 'package:petcare_project/widget/custom_button.dart';
@@ -23,17 +24,27 @@ class LocationPage extends StatelessWidget {
     print('long' + locationLong);
 
     //lat long มาใส่
-    var url =
-        'https://www.google.com/maps/search/?api=1&query=${locationLat},${locationLong}';
+    Future<void> openMap(BuildContext context, double lat, double lng) async {
+      String url = '';
+      String urlAppleMaps = '';
+      if (Platform.isAndroid) {
+        url = 'https://www.google.com/maps/search/?api=1&query=$lat,$lng';
+      } else {
+        urlAppleMaps = 'https://maps.apple.com/?q=$lat,$lng';
+        url = 'comgooglemaps://?saddr=&daddr=$lat,$lng&directionsmode=driving';
+        if (await canLaunch(url)) {
+          await launch(url);
+        } else {
+          throw 'Could not launch $url';
+        }
+      }
 
-    Future openBrowserURL({required String url, bool inApp = false}) async {
       if (await canLaunch(url)) {
-        await launch(
-          url,
-          forceSafariVC: inApp, // iOS
-          forceWebView: inApp, // Android
-          enableJavaScript: inApp, // Android
-        );
+        await launch(url);
+      } else if (await canLaunch(urlAppleMaps)) {
+        await launch(urlAppleMaps);
+      } else {
+        throw 'Could not launch $url';
       }
     }
 
@@ -69,7 +80,11 @@ class LocationPage extends StatelessWidget {
               CustomButton(
                 text: 'นำทาง',
                 onPressed: () async {
-                  openBrowserURL(url: url, inApp: true);
+                  openMap(
+                    context,
+                    double.parse(locationLat),
+                    double.parse(locationLong),
+                  );
                 },
               ),
               SizedBox(height: 30),

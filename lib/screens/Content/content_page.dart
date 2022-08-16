@@ -224,10 +224,9 @@ class _ContentPageState extends State<ContentPage> {
     return GestureDetector(
       onTap: (() {
         Get.toNamed('/mappage');
-        // print('-----' * 10);
-        // print('type: ${menuTitleData[index].type}');
-
-        _contentController.getParam(menuTitleData[index].type!);
+        // print('type: ${menuTitleData[index].type?.split(' ').join('_')}');
+        _contentController
+            .getParam(menuTitleData[index].type!.split(' ').join('_'));
       }),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: kDefualtPadding / 4),

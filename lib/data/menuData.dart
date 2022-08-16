@@ -17,7 +17,7 @@ List<MenuData> menuTitleData = [
     type: 'Hospital',
   ),
   MenuData(
-      image: 'assets/icon/clinic.png', titleMenu: "Clinic", type: 'Clinic'),
+      image: 'assets/icon/clinic.png', titleMenu: "Exotic", type: 'Exotic'),
   MenuData(
     image: 'assets/icon/pet-hotel.png',
     titleMenu: "Pet Hotel",
@@ -25,8 +25,8 @@ List<MenuData> menuTitleData = [
   ),
   MenuData(
     image: 'assets/icon/pet-love.png',
-    titleMenu: "Pet Love",
-    type: 'Pet Love',
+    titleMenu: "Pet Cafe",
+    type: 'Pet Cafe',
   ),
   MenuData(
     image: 'assets/icon/pet-shop.png',

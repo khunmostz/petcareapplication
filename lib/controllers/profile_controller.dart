@@ -5,8 +5,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:petcare_project/controllers/auth_controller.dart';
 
 class ProfileController extends GetxController {
+  RxString userType = 'User'.obs;
+
   var user;
 
   final Rx<TextEditingController> usernameController =
@@ -66,7 +69,9 @@ class ProfileController extends GetxController {
         // print(snapshot.docs[0].data());
         snapshot.docs.forEach((data) {
           user = data.data();
-          // print(user['email']);
+          print(user['type']);
+          userType = user['type'].toString().obs;
+          // print('controller: ${userType}');
           usernameController.value.text = user['username'].toString();
           emailController.value.text = user['email'].toString();
           telController.value.text = user['tel'].toString();

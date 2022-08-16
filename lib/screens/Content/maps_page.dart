@@ -42,7 +42,7 @@ class _MapsPageState extends State<MapsPage>
   Widget build(BuildContext context) {
     // var size = MediaQuery.of(context).size;
     var size = Get.size;
-    print('-----------------' * 50);
+    // print('-----------------' * 50);
     // print(placeDetail.toString());
     return Scaffold(
       // appBar: AppBar(title: const Text('GoogleMaps examples')),
@@ -74,113 +74,114 @@ class _MapsPageState extends State<MapsPage>
               ),
               SizedBox(height: 20),
               // Map
-              Container(
-                width: size.width,
-                height: size.height * 0.6,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: GetBuilder<MapController>(builder: (_) {
-                    if (_mapController.userPosition.latitude != null) {
-                      return GoogleMap(
-                        mapType: MapType.normal,
-                        zoomControlsEnabled: false,
-                        myLocationButtonEnabled: false,
-                        initialCameraPosition: CameraPosition(
-                          target: LatLng(
-                            _mapController.userPosition.latitude,
-                            _mapController.userPosition.longitude,
-                          ),
-                          zoom: 12,
-                        ),
-                        markers: placeKM.map((e) => e).toSet(),
-                        circles: Set.from(
-                          [
-                            Circle(
-                              circleId: CircleId('currentCircle'),
-                              center: LatLng(
-                                  _mapController.userPosition.latitude,
-                                  _mapController.userPosition.longitude),
-                              radius: 5000,
-                              fillColor:
-                                  Colors.orangeAccent.shade100.withOpacity(0.5),
-                              strokeColor: Colors.orange,
-                              strokeWidth: 1,
-                            ),
-                          ],
-                        ),
-                        onMapCreated: (GoogleMapController controller) {
-                          _controller.complete(controller);
-                        },
-                      );
-                    } else {
+              StreamBuilder(
+                  stream: _mapController.getUserPosition().asStream(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(child: CircularProgressIndicator());
+                    } else {
+                      return Column(
+                        children: [
+                          Container(
+                            width: size.width,
+                            height: size.height * 0.6,
+                            child: GoogleMap(
+                              mapType: MapType.normal,
+                              zoomControlsEnabled: false,
+                              myLocationButtonEnabled: false,
+                              initialCameraPosition: CameraPosition(
+                                target: LatLng(
+                                  _mapController.userPosition.latitude,
+                                  _mapController.userPosition.longitude,
+                                ),
+                                zoom: 12,
+                              ),
+                              markers: placeKM.map((e) => e).toSet(),
+                              circles: Set.from(
+                                [
+                                  Circle(
+                                    circleId: CircleId('currentCircle'),
+                                    center: LatLng(
+                                        _mapController.userPosition.latitude,
+                                        _mapController.userPosition.longitude),
+                                    radius: 5000,
+                                    fillColor: Colors.orangeAccent.shade100
+                                        .withOpacity(0.5),
+                                    strokeColor: Colors.orange,
+                                    strokeWidth: 1,
+                                  ),
+                                ],
+                              ),
+                              onMapCreated: (GoogleMapController controller) {
+                                _controller.complete(controller);
+                              },
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          // NearMe
+                          Row(
+                            children: [
+                              Text(
+                                'ใกล้ฉัน',
+                                style: GoogleFonts.mitr(fontSize: 18),
+                              ),
+                              SizedBox(width: 5),
+                              Icon(Icons.near_me),
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          Container(
+                            width: size.width,
+                            height: 200,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: placeName.length,
+                              itemBuilder: (context, index) {
+                                var locationName = placeName[index];
+                                var locationImage = placeImage[index];
+                                var locationDesc = placeDesc[index];
+                                var locationLat = placeLat[index];
+                                var locationLong = placeLong[index];
+                                // print(locationImage);
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Get.toNamed(
+                                        '/locationpage',
+                                        arguments: [
+                                          locationName,
+                                          locationImage,
+                                          locationDesc,
+                                          locationLat,
+                                          locationLong,
+                                        ],
+                                      );
+                                    },
+                                    child: Container(
+                                      width: 200,
+                                      height: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey,
+                                        border: Border.all(),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(20)),
+                                        image: DecorationImage(
+                                          image: NetworkImage(locationImage),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                        ],
+                      );
                     }
                   }),
-                ),
-              ),
-              SizedBox(height: 20),
-              // NearMe
-              Row(
-                children: [
-                  Text(
-                    'ใกล้ฉัน',
-                    style: GoogleFonts.mitr(fontSize: 18),
-                  ),
-                  SizedBox(width: 5),
-                  Icon(Icons.near_me),
-                ],
-              ),
-              SizedBox(height: 10),
-              GetBuilder<MapController>(builder: (_) {
-                return Container(
-                  width: size.width,
-                  height: 200,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: placeName.length,
-                    itemBuilder: (context, index) {
-                      var locationName = placeName[index];
-                      var locationImage = placeImage[index];
-                      var locationDesc = placeDesc[index];
-                      var locationLat = placeLat[index];
-                      var locationLong = placeLong[index];
-                      // print(locationImage);
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            Get.toNamed(
-                              '/locationpage',
-                              arguments: [
-                                locationName,
-                                locationImage,
-                                locationDesc,
-                                locationLat,
-                                locationLong,
-                              ],
-                            );
-                          },
-                          child: Container(
-                            width: 200,
-                            height: double.infinity,
-                            decoration: BoxDecoration(
-                              color: Colors.grey,
-                              border: Border.all(),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20)),
-                              image: DecorationImage(
-                                image: NetworkImage(locationImage),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                );
-              }),
-              SizedBox(height: 20),
             ],
           ),
         ),

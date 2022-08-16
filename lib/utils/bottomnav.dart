@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:petcare_project/controllers/auth_controller.dart';
-import 'package:petcare_project/controllers/bottomnav_controller.dart';
+import 'package:petcare_project/controllers/profile_controller.dart';
 import 'package:petcare_project/screens/Content/content_page.dart';
 import 'package:petcare_project/screens/Pet/mypet_page.dart';
 import 'package:petcare_project/screens/Profile/profile_page.dart';
@@ -17,9 +16,11 @@ class BottomNav extends StatefulWidget {
 }
 
 class _BottomNavState extends State<BottomNav> {
-  // var _selectedIndex = 0;
-  final _controller = Get.put(BottomNavController());
-  final AuthController _authController = Get.find<AuthController>();
+  // var userCheck = 'User';
+  var _selectedIndex = 0;
+  // final _controller = Get.put(BottomNavController());
+  final ProfileController _profileController = Get.find<ProfileController>();
+  
   final screenUser = [
     ContentPage(),
     RecordPage(),
@@ -31,6 +32,40 @@ class _BottomNavState extends State<BottomNav> {
     MyPetPage(),
     ProfilePage(),
   ];
+
+  final tabUser = [
+    GButton(
+      icon: Icons.home,
+      text: "หน้าหลัก",
+    ),
+    GButton(
+      icon: Icons.article,
+      text: "ค่าใช้จ่าย",
+    ),
+    GButton(
+      icon: Icons.pets,
+      text: "สัตว์เลี้ยง",
+    ),
+    GButton(
+      icon: Icons.person,
+      text: "บัญชี",
+    ),
+  ];
+  final tabHospital = [
+    GButton(
+      icon: Icons.home,
+      text: "หน้าหลัก",
+    ),
+    GButton(
+      icon: Icons.pets,
+      text: "สัตว์เลี้ยง",
+    ),
+    GButton(
+      icon: Icons.person,
+      text: "บัญชี",
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -50,39 +85,22 @@ class _BottomNavState extends State<BottomNav> {
             style: GnavStyle.google,
             onTabChange: (index) {
               // print(index);
-              _controller.changIndex(index);
+              setState(() {
+                _selectedIndex = index;
+              });
             },
-            tabs: const [
-              GButton(
-                icon: Icons.home,
-                text: "หน้าหลัก",
-              ),
-              GButton(
-                icon: Icons.article,
-                text: "ค่าใช้จ่าย",
-              ),
-              GButton(
-                icon: Icons.pets,
-                text: "สัตว์เลี้ยง",
-              ),
-              GButton(
-                icon: Icons.person,
-                text: "บัญชี",
-              ),
-            ],
+            tabs: _profileController.userType.value == 'User'
+                ? tabUser
+                : tabHospital,
           ),
         ),
       ),
-      body: GetX<BottomNavController>(
-        init: BottomNavController(),
-        initState: (_) {},
-        builder: (_) {
-          return IndexedStack(
-            index: _controller.selectIndex.value,
-            children: screenUser,
-          );
-        },
-      ),
+      body: Obx(() => IndexedStack(
+            index: _selectedIndex,
+            children: _profileController.userType.value == 'User'
+                ? screenUser
+                : screenHospital,
+          )),
     );
   }
 }

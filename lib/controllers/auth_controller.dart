@@ -16,7 +16,7 @@ class AuthController extends GetxController {
 
   var _profileController = Get.put(ProfileController());
 
-  var isLogin = false;
+
 
   late Rx<User?> user;
 
@@ -41,10 +41,9 @@ class AuthController extends GetxController {
       }
     } else {
       print('content page');
+      // print(user);
       _profileController.getUserDetail();
       Get.offAllNamed('/bottomnav');
-      // Future.delayed(
-      //     Duration(milliseconds: 350), () => );
     }
   }
 
@@ -142,6 +141,8 @@ class AuthController extends GetxController {
       Get.snackbar('เกิดข้อผิดพลาด', 'กรุณาลองใหม่อีกครั้ง');
     }
   }
+
+  
 
   clearForm() {
     emailController.clear();

@@ -14,9 +14,20 @@ class MapController extends GetxController {
     await getUserPosition();
   }
 
+  void clearList() {
+    placeKM.clear();
+    placeName.clear();
+    placeImage.clear();
+    placeDesc.clear();
+    placeLat.clear();
+    placeLong.clear();
+  }
+
   Future getUserPosition() async {
     bool serviceEnabled;
     LocationPermission permission;
+    clearList();
+    print('asdasd 1: ${placeKM}');
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
@@ -35,12 +46,12 @@ class MapController extends GetxController {
       return Future.error(
           'Location permissions are permanently denied, we cannot request permissions.');
     }
-    await getCurrentUser();
-
+    await _getCurrentUser();
+    print('asdasd 2: ${placeKM}');
     update();
   }
 
-  Future<dynamic> getCurrentUser() async {
+  Future<dynamic> _getCurrentUser() async {
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
         .then((currentLo) async {
       userPosition = currentLo;
