@@ -28,6 +28,7 @@ class DocSearchController extends GetxController {
 
   Future<void> fetchPetUserById(String uid) async {
     // print(uid);
+    petShow.clear();
     var data = await FirebaseFirestore.instance
         .collection('pets')
         .where('uid', isEqualTo: uid)
