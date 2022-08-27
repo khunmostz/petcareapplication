@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:petcare_project/controllers/profile_controller.dart';
 import 'package:petcare_project/screens/Content/content_page.dart';
+import 'package:petcare_project/screens/Doctor/docsearch.dart';
 import 'package:petcare_project/screens/Pet/mypet_page.dart';
 import 'package:petcare_project/screens/Profile/profile_page.dart';
 import 'package:petcare_project/screens/Record/record_page.dart';
@@ -20,7 +21,7 @@ class _BottomNavState extends State<BottomNav> {
   var _selectedIndex = 0;
   // final _controller = Get.put(BottomNavController());
   final ProfileController _profileController = Get.find<ProfileController>();
-  
+
   final screenUser = [
     ContentPage(),
     RecordPage(),
@@ -29,7 +30,7 @@ class _BottomNavState extends State<BottomNav> {
   ];
   final screenHospital = [
     ContentPage(),
-    MyPetPage(),
+    DocSearch(),
     ProfilePage(),
   ];
 
@@ -57,8 +58,8 @@ class _BottomNavState extends State<BottomNav> {
       text: "หน้าหลัก",
     ),
     GButton(
-      icon: Icons.pets,
-      text: "สัตว์เลี้ยง",
+      icon: Icons.healing,
+      text: "คนรักษา",
     ),
     GButton(
       icon: Icons.person,

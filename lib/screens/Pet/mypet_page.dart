@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:petcare_project/controllers/pet_controller.dart';
+import 'package:petcare_project/controllers/record_controller.dart';
 import 'package:petcare_project/utils/constant.dart';
 import 'package:petcare_project/widget/custom_button.dart';
 
@@ -313,6 +314,7 @@ class _MyPetPageState extends State<MyPetPage>
                           CustomButton(
                             text: 'ยืนยัน',
                             onPressed: () {
+                              print('${_petController.birdthday.value}');
                               _petController.addPet(
                                   _petController.birdthday.value,
                                   _petController.vaccine.value,

@@ -16,8 +16,6 @@ class AuthController extends GetxController {
 
   var _profileController = Get.put(ProfileController());
 
-
-
   late Rx<User?> user;
 
   @override
@@ -105,6 +103,7 @@ class AuthController extends GetxController {
             FirebaseAuth.instance.currentUser!.uid,
           )
           .set({
+        'uid': FirebaseAuth.instance.currentUser!.uid.toString(),
         'image': '',
         'username': username,
         'email': email,
@@ -141,8 +140,6 @@ class AuthController extends GetxController {
       Get.snackbar('เกิดข้อผิดพลาด', 'กรุณาลองใหม่อีกครั้ง');
     }
   }
-
-  
 
   clearForm() {
     emailController.clear();

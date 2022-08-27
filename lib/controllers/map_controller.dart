@@ -57,7 +57,7 @@ class MapController extends GetxController {
       userPosition = currentLo;
       print('--------------------------------------');
       print('param: ${_contentController.param}');
-      await getRequestMap(
+      await getRequestMapDistance(
           path: API_URL.hostName +
               '/get/location/type/${_contentController.param}',
           userPosition: userPosition);

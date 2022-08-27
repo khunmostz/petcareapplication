@@ -5,12 +5,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:petcare_project/controllers/auth_controller.dart';
 
 class ProfileController extends GetxController {
   RxString userType = 'User'.obs;
 
-  var user;
+  late var user;
 
   final Rx<TextEditingController> usernameController =
       TextEditingController().obs;
@@ -50,10 +49,10 @@ class ProfileController extends GetxController {
     var uploadTask = firebaseRef.putFile(image!);
     var taskSnapshot = await uploadTask.whenComplete(() async {
       print('upload profile success');
-      Get.snackbar('แจ้งเตือน', 'เปลี่ยนรูปภาพสำเร็จ');
+      // Get.snackbar('แจ้งเตือน', 'เปลี่ยนรูปภาพสำเร็จ');
     }).then((value) async {
       var imageUrl = await value.ref.getDownloadURL();
-      print(imageUrl.toString());
+      // print(';djlksjfsalkfjklsdf: ${imageUrl.toString()}');
       user['image'] = imageUrl;
       updateImageProfile(imageUrl.toString());
     });

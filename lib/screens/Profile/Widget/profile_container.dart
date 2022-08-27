@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:petcare_project/controllers/auth_controller.dart';
 import 'package:petcare_project/controllers/profile_controller.dart';
 import 'package:petcare_project/screens/Profile/Widget/Profile_edit.dart';
 import 'package:petcare_project/utils/constant.dart';
@@ -17,6 +18,7 @@ class ProfileContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ProfileController _profileController = Get.put(ProfileController());
+    final AuthController _authController = Get.find<AuthController>();
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: kDefualtPadding),
       width: size.width,
@@ -44,9 +46,9 @@ class ProfileContainer extends StatelessWidget {
                 StreamBuilder<dynamic>(
                     stream: _profileController.getUserDetail().asStream(),
                     builder: (context, snapshot) {
-                      // print(_profileController.user['image'] == null
-                      //     ? null
-                      //     : 'has Data');
+                      // print(_profileController.user['image'] != null
+                      //     ? 'has Data'
+                      //     : null);
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return Center(child: CircularProgressIndicator());
                       } else {
@@ -57,6 +59,8 @@ class ProfileContainer extends StatelessWidget {
                               CircleAvatar(
                                 radius: 50,
                                 backgroundColor: Colors.grey[200],
+                                // backgroundImage: NetworkImage(
+                                //     '${_profileController.user['image']}')
                                 // backgroundImage: NetworkImage(
                                 //             '${_profileController.user['image']}') !=
                                 //         null
@@ -306,12 +310,27 @@ class ProfileContainer extends StatelessWidget {
                           },
                         );
                       },
-                      child: Text(
-                        'แก้ไข',
-                        style: GoogleFonts.mitr(
-                          fontSize: 16,
-                          color: Colors.grey,
-                        ),
+                      child: Column(
+                        children: [
+                          Text(
+                            'แก้ไข',
+                            style: GoogleFonts.mitr(
+                              fontSize: 16,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          GestureDetector(
+                            onTap: () => _authController.signOut(),
+                            child: Text(
+                              'ลงชื่อออก',
+                              style: GoogleFonts.mitr(
+                                fontSize: 16,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],

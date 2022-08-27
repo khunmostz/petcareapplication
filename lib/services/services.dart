@@ -6,7 +6,11 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:petcare_project/controllers/map_controller.dart';
 import 'package:petcare_project/models/location.dart';
+import 'package:petcare_project/models/promotion.dart';
 import 'package:petcare_project/utils/distance.dart';
+
+List allPlace = [];
+List allPromotions = [];
 
 List<Marker> placeKM = [];
 List placeName = [];
@@ -17,7 +21,7 @@ List placeLong = [];
 
 final MapController _mapController = Get.find<MapController>();
 
-Future<dynamic> getRequestMap(
+Future<dynamic> getRequestMapDistance(
     {required String path, required Position userPosition}) async {
   try {
     final res = await Dio().get(path);
@@ -43,8 +47,9 @@ Future<dynamic> getRequestMap(
           userPosition.longitude,
           double.parse(place.locationLat),
           double.parse(place.locationLong));
+
       if (distancKm <= 5) {
-        print('location distance 5 KM: ${place.locationName.toString()}');
+        // print('location distance 5 KM: ${place.locationName.toString()}');
 
         Marker userLocation = Marker(
           markerId: MarkerId('User'),
@@ -90,10 +95,37 @@ Future<dynamic> getRequestMap(
   }
 }
 
-Future<dynamic> getRequest(String path) async {
+Future<dynamic> getRequestAllMap({required String path}) async {
   final res = await Dio().get(path);
 
-  // var data = res.data[''].map
+  var data = res.data['locations'].map((place) {
+    return Location.fromJson(place);
+  });
+
+  data.forEach((place) {
+    allPlace.add(place.locationName);
+  });
+}
+
+Future<dynamic> getPromotion({required String path}) async {
+  final res = await Dio().get(path);
+  var data = res.data['promotions'].map((promotion) {
+    print('promotion: ${promotion}');
+    return Promotions.fromJson(promotion);
+  });
+  print('from get');
+  data.forEach((promotion) {
+    // print(promotion['promotion']);
+    // print(promotion.promotionTitle);
+    allPromotions.add(
+      {
+        'promotionId': promotion.promotionId,
+        'promotionTitle': promotion.promotionTitle,
+        'promotionImage': promotion.promotionImage
+      },
+    );
+    // print(allPromotions[0]['promotionTitle']);
+  });
 }
 
 errorFilter(DioError e) {

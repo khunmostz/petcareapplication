@@ -51,6 +51,8 @@ dependencies:
   shared_preferences: ^2.0.15
   url_launcher: ^6.1.5
   flutter_launcher_icons: ^0.10.0
+  dropdown_button2: ^1.7.2
+  quickalert: ^0.0.2
 
 dev_dependencies:
   flutter_test:

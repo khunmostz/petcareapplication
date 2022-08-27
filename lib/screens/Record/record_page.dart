@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -5,8 +6,9 @@ import 'package:petcare_project/controllers/record_controller.dart';
 import 'package:petcare_project/screens/Record/Widget/indicator.dart';
 import 'package:petcare_project/screens/Record/Widget/petslide.dart';
 import 'package:petcare_project/screens/Record/Widget/record_dialog.dart';
-import 'package:petcare_project/screens/Record/Widget/record_table.dart';
 import 'package:petcare_project/widget/custom_button.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 import '../../utils/constant.dart';
 
 class RecordPage extends StatefulWidget {
@@ -19,8 +21,8 @@ class RecordPage extends StatefulWidget {
 class _RecordPageState extends State<RecordPage> {
   var _selectedIndex = 0;
   bool _tapSearch = true;
-
   var date;
+  var search = '';
 
   // late final AnimationController _controller;
   final RecordController _recordController = Get.put(RecordController());
@@ -33,7 +35,9 @@ class _RecordPageState extends State<RecordPage> {
       lastDate: DateTime(2030),
     ).then((value) {
       date = value;
-      print(date);
+      setState(() {
+        search = date.toString();
+      });
     });
   }
 
@@ -59,6 +63,23 @@ class _RecordPageState extends State<RecordPage> {
   );
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // _showDialog();
+  }
+
+  // _showDialog() async {
+  //   Future.delayed(Duration(milliseconds: 4));
+  //   print('lenght ${_recordController.docLength.value}');
+  //   // if (_recordController.docLength.value == 0) {
+  //   //   await Future.delayed(Duration(milliseconds: 1000));
+  //   //   print('show dialog');
+
+  //   // }
+  // }
+
+  @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
@@ -82,6 +103,22 @@ class _RecordPageState extends State<RecordPage> {
                     color: kDefualtColorMain,
                   ),
                 ),
+
+                if (_recordController.docLength.value == 0)
+                  Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: kDefualtPadding + 60),
+                      child: Text(
+                        'ไม่มีพบข้อมูล',
+                        style: GoogleFonts.mitr(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ),
+
                 // Pet Slide
                 GetBuilder<RecordController>(
                     id: 'getPets',
@@ -95,7 +132,9 @@ class _RecordPageState extends State<RecordPage> {
                           onPageChanged: (index) {
                             setState(() {
                               _selectedIndex = index;
-                              print('after:' + _selectedIndex.toString());
+                              // print('after:' + _selectedIndex.toString());
+                              search = '';
+                              // snapshotData = 0;
                             });
                           },
                           itemCount: _recordController.docLength.value,
@@ -143,6 +182,12 @@ class _RecordPageState extends State<RecordPage> {
                 ),
               ],
             ),
+
+            // FlatButton(
+            //     onPressed: () {
+            //
+            //     },
+            //     child: Text('ssss')),
             // ประวัติ
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: kDefualtPadding),
@@ -160,6 +205,9 @@ class _RecordPageState extends State<RecordPage> {
                     children: [
                       GestureDetector(
                         onTap: () {
+                          print([
+                            'asda : ${_recordController.petNameController.text}'
+                          ]);
                           showDialog(
                             context: context,
                             builder: (context) {
@@ -288,6 +336,7 @@ class _RecordPageState extends State<RecordPage> {
                       GestureDetector(
                         onTap: () {
                           _tapSearch ? null : _showDatePicker();
+                          // _tapSearch ? null : Get.toNamed('/showsearch');
                         },
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 350),
@@ -360,6 +409,7 @@ class _RecordPageState extends State<RecordPage> {
               ),
             ),
             SizedBox(height: 30),
+
             // แสดงรายรับรายจ่าย
             GetBuilder<RecordController>(
               id: 'getPets',
@@ -371,6 +421,34 @@ class _RecordPageState extends State<RecordPage> {
               },
             ),
             SizedBox(height: 20),
+
+            if (search != '')
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        search = '';
+                        _tapSearch = true;
+                      });
+                    },
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: kDefualtColorMain,
+                        borderRadius: BorderRadius.all(Radius.circular(50)),
+                      ),
+                      child: Icon(
+                        Icons.clear,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              )
           ],
         ),
       ),
@@ -378,77 +456,132 @@ class _RecordPageState extends State<RecordPage> {
   }
 
   Widget recordTable({required String indexSelect}) {
+    print(indexSelect);
     return GetBuilder<RecordController>(
         id: 'updateRecord',
         builder: (_) {
-          return StreamBuilder<dynamic>(
-              stream: _recordController
-                  .getRecordByName(
-                    indexSelect.toString(),
-                  )
-                  .asStream(),
-              builder: (context, snapshot) {
-                return DataTable(
-                  columnSpacing: 80,
-                  columns: [
-                    DataColumn(
-                      label: Text(
-                        'รายการ',
-                        style: GoogleFonts.mitr(
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
-                    DataColumn(
-                      label: Text(
-                        'ค่าใช้จ่าย',
-                        style: GoogleFonts.mitr(
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
-                    DataColumn(
-                      label: Text(
-                        'วันเวลา',
-                        style: GoogleFonts.mitr(
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
-                  ],
-                  rows: _recordController.recordDataId
-                      .map(
-                        (record) => DataRow(cells: [
-                          DataCell(
-                            ConstrainedBox(
-                              constraints: BoxConstraints(maxWidth: 60),
+          return Column(
+            children: [
+              StreamBuilder<QuerySnapshot>(
+                  stream: (search != '' && search != null)
+                      ? FirebaseFirestore.instance
+                          .collection('records')
+                          .where('date', isEqualTo: search)
+                          .snapshots()
+                      : FirebaseFirestore.instance
+                          .collection('records')
+                          .where('petname',
+                              isEqualTo: indexSelect.toLowerCase())
+                          .snapshots(),
+                  builder: (context, snapshot) {
+                    int snapshotData = 0;
+                    // print('snapshot: ${snapshot.data!.docs}');
+                    // print(snapshot.data!.docs.length);
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else {
+                      snapshot.data!.docs.forEach((element) {
+                        var value = int.parse(element['pay']);
+                        print('value ${value}');
+                        snapshotData = snapshotData + value;
+                      });
+                      // snapshotData + 10;
+                      print('total ${snapshotData}');
+                      return Column(
+                        children: [
+                          DataTable(
+                            columnSpacing: 80,
+                            columns: [
+                              DataColumn(
+                                label: Text(
+                                  'รายการ',
+                                  style: GoogleFonts.mitr(
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  'ค่าใช้จ่าย',
+                                  style: GoogleFonts.mitr(
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  'วันเวลา',
+                                  style: GoogleFonts.mitr(
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ),
+                            ],
+                            rows: snapshot.data!.docs
+                                .map(
+                                  (record) => DataRow(cells: [
+                                    DataCell(
+                                      ConstrainedBox(
+                                        constraints:
+                                            BoxConstraints(maxWidth: 60),
+                                        child: Text(
+                                          '${record['particular']}',
+                                          style: GoogleFonts.mitr(
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    DataCell(Text(
+                                      '${record['pay']}',
+                                      style: GoogleFonts.mitr(
+                                        fontSize: 14,
+                                      ),
+                                    )),
+                                    DataCell(
+                                      Text(
+                                        '${record['date']}'
+                                            .toString()
+                                            .substring(0, 10),
+                                        style: GoogleFonts.mitr(
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ),
+                                  ]),
+                                )
+                                .toList(),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: kDefualtPadding),
+                            child: Align(
+                              alignment: Alignment.bottomRight,
                               child: Text(
-                                '${record['particular']}',
+                                'รวม ${snapshotData.toString()}',
                                 style: GoogleFonts.mitr(
                                   fontSize: 14,
                                 ),
                               ),
                             ),
                           ),
-                          DataCell(Text(
-                            '${record['pay']}',
-                            style: GoogleFonts.mitr(
-                              fontSize: 14,
-                            ),
-                          )),
-                          DataCell(
-                            Text(
-                              '${record['date']}'.toString().substring(0, 10),
-                              style: GoogleFonts.mitr(
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                        ]),
-                      )
-                      .toList(),
-                );
-              });
+                        ],
+                      );
+                    }
+                  }),
+            ],
+          );
         });
+  }
+
+  Future showAlert() {
+    return QuickAlert.show(
+      context: context,
+      type: QuickAlertType.error,
+      title: 'Oops...',
+      text: 'Sorry, something went wrong',
+    );
   }
 }

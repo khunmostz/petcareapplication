@@ -11,16 +11,18 @@ class PetController extends GetxController {
   var pets;
   var docLength;
 
+  var test = 0.obs;
+
   List data = [];
 
-  RxList petName = [].obs;
-  RxList petType = [].obs;
-  RxList petSpecies = [].obs;
-  RxList petGender = [].obs;
-  RxList petBday = [].obs;
-  RxList petVday = [].obs;
-  RxList petImage = [].obs;
-  RxList petWeight = [].obs;
+  List petName = [].obs;
+  List petType = [].obs;
+  List petSpecies = [].obs;
+  List petGender = [].obs;
+  List petBday = [].obs;
+  List petVday = [].obs;
+  List petImage = [].obs;
+  List petWeight = [].obs;
 
   final TextEditingController idController = TextEditingController();
   final TextEditingController petNameController = TextEditingController();

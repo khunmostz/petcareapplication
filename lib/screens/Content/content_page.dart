@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:petcare_project/controllers/auth_controller.dart';
 import 'package:petcare_project/controllers/content_controller.dart';
+import 'package:petcare_project/controllers/profile_controller.dart';
 import 'package:petcare_project/screens/Content/maps_page.dart';
+import 'package:petcare_project/services/services.dart';
 import 'package:petcare_project/utils/constant.dart';
 import 'package:petcare_project/data/menuData.dart';
 import 'package:petcare_project/data/recommendData.dart';
@@ -17,6 +20,7 @@ class ContentPage extends StatefulWidget {
 
 class _ContentPageState extends State<ContentPage> {
   final AuthController _authController = Get.find<AuthController>();
+  final ProfileController _profileController = Get.find<ProfileController>();
   final ContentController _contentController = Get.put(ContentController());
 
   @override
@@ -35,8 +39,9 @@ class _ContentPageState extends State<ContentPage> {
           children: [
             Container(
               width: size.width,
-              height:
-                  size.height < 920 ? size.height * 0.45 : size.height * 0.35,
+              // height:
+              //     size.height < 920 ? size.height * 0.45 : size.height * 0.35,
+              height: size.height < 920 ? size.height * 0.3 : size.height * 0.3,
               decoration: BoxDecoration(
                   color: kDefualtColorMain,
                   borderRadius: BorderRadius.only(
@@ -71,23 +76,26 @@ class _ContentPageState extends State<ContentPage> {
                       ],
                     ),
                     SizedBox(height: 10),
-                    Text(
-                      'Hi User',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.grey.shade50,
-                      ),
-                    ),
+                    GetBuilder<ProfileController>(
+                        init: ProfileController(),
+                        builder: (controller) {
+                          return Text(
+                            controller.usernameController.value.text,
+                            style: GoogleFonts.mitr(
+                              fontSize: 20,
+                              color: Colors.white,
+                            ),
+                          );
+                        }),
                     SizedBox(height: 10),
                     Text(
                       'Welcome back',
-                      style: TextStyle(
+                      style: GoogleFonts.mitr(
                         fontSize: 20,
                         color: Colors.white,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 30),
+                    SizedBox(height: 20),
                     Container(
                       decoration: BoxDecoration(
                         // border: Border.all(),
@@ -101,12 +109,41 @@ class _ContentPageState extends State<ContentPage> {
                           )
                         ],
                       ),
-                      child: SearchField(),
+                      // child: SearchField(),
                     ),
                   ],
                 ),
               ),
             ),
+            SizedBox(height: 10),
+
+            if (_profileController.userType.value == 'Doctor')
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed('/addlocation');
+                },
+                child: Hero(
+                  tag: 'addlocation',
+                  child: Container(
+                    width: 150,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: kDefualtColorMain,
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'เพิ่มโลเคชั่น',
+                          style: GoogleFonts.mitr(fontSize: 18),
+                        ),
+                        Icon(Icons.location_city)
+                      ],
+                    ),
+                  ),
+                ),
+              ),
 
             Container(
               width: size.width,
@@ -152,50 +189,56 @@ class _ContentPageState extends State<ContentPage> {
                       height: 10,
                     ),
 
-                    Container(
-                      width: size.width,
-                      height: size.height * 0.3,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: recommendData.length,
-                        itemBuilder: (BuildContext context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: 200,
-                                  height: 150,
-                                  decoration: BoxDecoration(
-                                    color: Colors.amber,
-                                    borderRadius: BorderRadius.circular(16),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color:
-                                            Color.fromARGB(255, 175, 175, 175),
-                                        spreadRadius: 0,
-                                        blurRadius: 5,
-                                        offset: Offset(-1, 5),
+                    StreamBuilder(
+                      stream: _contentController.allPromotion().asStream(),
+                      builder: ((context, snapshot) {
+                        return Container(
+                          width: size.width,
+                          height: size.height * 0.3,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: allPromotions.length,
+                            itemBuilder: (BuildContext context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      width: 200,
+                                      height: 150,
+                                      decoration: BoxDecoration(
+                                        color: Colors.amber,
+                                        borderRadius: BorderRadius.circular(16),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Color.fromARGB(
+                                                255, 175, 175, 175),
+                                            spreadRadius: 0,
+                                            blurRadius: 5,
+                                            offset: Offset(-1, 5),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(16),
-                                    child: Image.network(
-                                      "${recommendData[index].imageRecommend}",
-                                      fit: BoxFit.cover,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(16),
+                                        child: Image.network(
+                                          "${allPromotions[index]['promotionImage']}",
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                    SizedBox(height: 10),
+                                    Text(
+                                        "${allPromotions[index]['promotionTitle']}"),
+                                    SizedBox(height: 20),
+                                  ],
                                 ),
-                                SizedBox(height: 10),
-                                Text("${recommendData[index].titleMenu}"),
-                                SizedBox(height: 20),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+                              );
+                            },
+                          ),
+                        );
+                      }),
+                    )
                     // dummy container
                     // Container(
                     //   width: double.infinity,

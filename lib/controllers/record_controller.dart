@@ -5,10 +5,12 @@ import 'package:get/get.dart';
 
 class RecordController extends GetxController {
   var pets;
+  var date;
   var docLength = 0.obs;
   var recordDocLength;
   RxInt selectedIndex = 0.obs;
   var recordDataId = [].obs;
+  var searchDataId = [].obs;
 
   List petName = [].obs;
   List petType = [];
@@ -26,9 +28,16 @@ class RecordController extends GetxController {
   void onInit() async {
     super.onInit();
     await getPet();
+    print('from controller ${docLength.value}');
   }
 
+  // void onReady() {
+  //   super.onReady();
+
+  // }
+
   Future<dynamic> getPet() async {
+    print('xxxxxxxxx');
     petName = []; // กันมันแสดง index ตัวแรก
 
     try {
@@ -38,7 +47,7 @@ class RecordController extends GetxController {
           .get()
           .then((value) async {
         docLength = value.docs.length.obs;
-        // print(docLength.toString());
+        print('getPets: ${docLength.toString()}');
         value.docs.forEach((pet) {
           pets = pet.data();
           petImage.add(pets['image']);
@@ -71,6 +80,11 @@ class RecordController extends GetxController {
         value.docs.forEach((id) {
           recordDataId.add(id);
         });
+
+        searchDataId = recordDataId;
+        // recordDataId.where((element) => element['date']).contains(date);
+        // print(
+        //     'test ${recordDataId.where((element) => element['date']).contains(date).toString()}');
       });
 
       update(['getPetId']);

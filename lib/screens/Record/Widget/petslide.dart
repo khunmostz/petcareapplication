@@ -14,6 +14,7 @@ class PetSlide extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(kDefualtPadding),
       decoration: BoxDecoration(
+        color: Colors.black,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
