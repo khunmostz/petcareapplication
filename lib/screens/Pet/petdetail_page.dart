@@ -23,91 +23,104 @@ class _PetDetailPageState extends State<PetDetailPage> {
     var petType = Get.arguments[2];
     var petSpecies = Get.arguments[3];
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            width: size.width,
-            height: size.height,
-          ),
-          Container(
-            width: size.width,
-            height: size.height * 0.4,
-            child: Hero(
-              tag: petName,
-              child: Image.network(
-                petImage,
-                fit: BoxFit.cover,
+      body: RefreshIndicator(
+        onRefresh: () async {
+          setState(() {});
+        },
+        child: Stack(
+          children: [
+            Container(
+              width: size.width,
+              height: size.height,
+            ),
+            Container(
+              width: size.width,
+              height: size.height * 0.4,
+              child: Hero(
+                tag: petName,
+                child: Image.network(
+                  petImage,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          Positioned(
-            bottom: 0,
-            child: SingleChildScrollView(
-              child: Container(
-                width: size.width,
-                height: size.height * 0.65,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(20),
+            Positioned(
+              bottom: 0,
+              child: SingleChildScrollView(
+                child: Container(
+                  width: size.width,
+                  height: size.height * 0.65,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(20),
+                    ),
                   ),
-                ),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: kDefualtPadding),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 20),
-                        Text(
-                          '${petName}'.toUpperCase(),
-                          style: GoogleFonts.mitr(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: kDefualtPadding),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 20),
+                          Text(
+                            '${petName}'.toUpperCase(),
+                            style: GoogleFonts.mitr(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              '${petType} / '.toUpperCase(),
-                              style: GoogleFonts.mitr(
-                                color: Colors.black54,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
+                          Row(
+                            children: [
+                              Text(
+                                '${petType} / '.toUpperCase(),
+                                style: GoogleFonts.mitr(
+                                  color: Colors.black54,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
-                            ),
-                            Text(
-                              '${petSpecies}'.toUpperCase(),
-                              style: GoogleFonts.mitr(
-                                color: Colors.black54,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
+                              Text(
+                                '${petSpecies}'.toUpperCase(),
+                                style: GoogleFonts.mitr(
+                                  color: Colors.black54,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 10),
-                        ...List.generate(10, (index) => BlogContent())
-                      ],
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          ...List.generate(
+                              _petController.treat.length,
+                              (index) => BlogContent(
+                                    index: index,
+                                  ))
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
 
 class BlogContent extends StatelessWidget {
-  const BlogContent({Key? key}) : super(key: key);
+  const BlogContent({Key? key, required this.index}) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
+    final PetController _petController = Get.find<PetController>();
     var size = MediaQuery.of(context).size;
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -146,7 +159,9 @@ class BlogContent extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        DateTime.now().toString().substring(0, 10),
+                        _petController.treat[index]['date'] == null
+                            ? 'ไม่มีข้อมูลการักษา'
+                            : '${_petController.treat[index]['date']}',
                         style: GoogleFonts.mitr(
                             color: Colors.white,
                             fontSize: 18,
@@ -203,7 +218,7 @@ class BlogContent extends StatelessWidget {
                       padding: const EdgeInsets.all(kDefualtPadding),
                       child: SingleChildScrollView(
                         child: ReadMoreText(
-                          'Lorem Ipsum คือ เนื้อหาจำลองแบบเรียบๆ ที่ใช้กันในธุรกิจงานพิมพ์หรืองานเรียงพิมพ์ มันได้กลายมาเป็นเนื้อหาจำลองมาตรฐานของธุรกิจดังกล่าวมาตั้งแต่ศตวรรษที่ 16 เมื่อเครื่องพิมพ์โนเนมเครื่องหนึ่งนำรางตัวพิมพ์มาสลับสับตำแหน่งตัวอักษรเพื่อทำหนังสือตัวอย่าง Lorem Ipsum อยู่ยงคงกระพันมาไม่ใช่แค่เพียงห้าศตวรรษ แต่อยู่มาจนถึงยุคที่พลิกโฉมเข้าสู่งานเรียงพิมพ์ด้วยวิธีทางอิเล็กทรอนิกส์ และยังคงสภาพเดิมไว้อย่างไม่มีการเปลี่ยนแปลง มันได้รับความนิยมมากขึ้นในยุค ค.ศ. 1960 เมื่อแผ่น Letraset วางจำหน่ายโดยมีข้อความบนนั้นเป็น Lorem Ipsum และล่าสุดกว่านั้น คือเมื่อซอฟท์แวร์การทำสื่อสิ่งพิมพ์ (Desktop Publishing) อย่าง Aldus PageMaker ได้รวมเอา Lorem Ipsum เวอร์ชั่นต่างๆ เข้าไว้ในซอฟท์แวร์ด้วย',
+                          '${_petController.treat[index]['description']}',
                           trimLines: 5,
                           style: GoogleFonts.mitr(
                               color: Colors.white, fontSize: 16),

@@ -139,7 +139,9 @@ class _UserDetailState extends State<UserDetail> {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
-                          Get.toNamed('/adddetailpet');
+                          Get.offNamed('/adddetailpet', arguments: [
+                            _docSearchController.petShow[index]['petName'],
+                          ]);
                         },
                         child: Column(
                           children: [

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:petcare_project/animations/content_animation.dart';
 import 'package:petcare_project/controllers/auth_controller.dart';
 import 'package:petcare_project/controllers/content_controller.dart';
 import 'package:petcare_project/controllers/profile_controller.dart';
@@ -18,10 +19,12 @@ class ContentPage extends StatefulWidget {
   State<ContentPage> createState() => _ContentPageState();
 }
 
-class _ContentPageState extends State<ContentPage> {
+class _ContentPageState extends State<ContentPage>
+    with SingleTickerProviderStateMixin {
   final AuthController _authController = Get.find<AuthController>();
   final ProfileController _profileController = Get.find<ProfileController>();
   final ContentController _contentController = Get.put(ContentController());
+  final ContentAnimation _contentAniamtion = Get.put(ContentAnimation());
 
   @override
   void initState() {
@@ -154,21 +157,28 @@ class _ContentPageState extends State<ContentPage> {
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: kDefualtPadding),
-                child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 130,
-                    childAspectRatio: 1.6,
-                    mainAxisExtent: 120,
-                    crossAxisSpacing: 20,
-                    mainAxisSpacing: 20,
-                  ),
-                  itemCount: menuTitleData.length,
-                  itemBuilder: (BuildContext context, index) {
-                    return Container(
-                      child: menuList(index),
-                    );
-                  },
-                ),
+                child: AnimatedBuilder(
+                    animation: _contentAniamtion.animationController,
+                    builder: (context, _) {
+                      return GridView.builder(
+                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 130,
+                          childAspectRatio: 1.5,
+                          mainAxisExtent: 120,
+                          crossAxisSpacing: 20,
+                          mainAxisSpacing: 20,
+                        ),
+                        itemCount: menuTitleData.length,
+                        itemBuilder: (BuildContext context, index) {
+                          return Opacity(
+                            opacity: _contentAniamtion.animation.value,
+                            child: Container(
+                              child: menuList(index),
+                            ),
+                          );
+                        },
+                      );
+                    }),
               ),
             ),
             // Recommend

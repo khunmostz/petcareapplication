@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:petcare_project/controllers/content_controller.dart';
 import 'package:petcare_project/controllers/profile_controller.dart';
 import 'package:petcare_project/screens/Content/content_page.dart';
 import 'package:petcare_project/screens/Doctor/docsearch.dart';
@@ -32,6 +33,10 @@ class _BottomNavState extends State<BottomNav> {
     ContentPage(),
     DocSearch(),
     ProfilePage(),
+  ];
+
+  final controllerPage = [
+    ContentController(),
   ];
 
   final tabUser = [

@@ -202,4 +202,21 @@ class PetController extends GetxController {
       );
     }
   }
+
+  // -------------------------------------------
+
+  List treat = [];
+
+  Future<void> fetchTreat({required String petName}) async {
+    var data = await FirebaseFirestore.instance
+        .collection('pettreat')
+        .where('petName', isEqualTo: petName)
+        .get();
+
+    data.docs.forEach((element) {
+      // print(element['description']);
+      treat.add(element.data());
+      update();
+    });
+  }
 }
