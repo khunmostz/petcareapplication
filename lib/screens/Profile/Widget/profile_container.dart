@@ -46,9 +46,7 @@ class ProfileContainer extends StatelessWidget {
                 StreamBuilder<dynamic>(
                     stream: _profileController.getUserDetail().asStream(),
                     builder: (context, snapshot) {
-                      // print(_profileController.user['image'] != null
-                      //     ? 'has Data'
-                      //     : null);
+                      // print('*' * 10 + _profileController.user['image']);
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return Center(child: CircularProgressIndicator());
                       } else {
@@ -59,14 +57,12 @@ class ProfileContainer extends StatelessWidget {
                               CircleAvatar(
                                 radius: 50,
                                 backgroundColor: Colors.grey[200],
-                                // backgroundImage: NetworkImage(
-                                //     '${_profileController.user['image']}')
-                                // backgroundImage: NetworkImage(
-                                //             '${_profileController.user['image']}') !=
-                                //         null
-                                //     ? NetworkImage(
+                                // backgroundImage: _profileController
+                                //             .user['image'] ==
+                                //         ''
+                                //     ? null
+                                //     : NetworkImage(
                                 //         '${_profileController.user['image']}')
-                                //     : null,
                               ),
                               Positioned(
                                 bottom: 0,

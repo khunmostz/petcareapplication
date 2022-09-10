@@ -73,6 +73,13 @@ class _BottomNavState extends State<BottomNav> {
   ];
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print('type user ${_profileController.userType.value}');
+  }
+
+  @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(

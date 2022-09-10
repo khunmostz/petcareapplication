@@ -210,7 +210,11 @@ class PetController extends GetxController {
   Future<void> fetchTreat({required String petName}) async {
     var data = await FirebaseFirestore.instance
         .collection('pettreat')
-        .where('petName', isEqualTo: petName)
+        .orderBy('date', descending: true)
+        .where(
+          'petName',
+          isEqualTo: petName,
+        )
         .get();
 
     data.docs.forEach((element) {

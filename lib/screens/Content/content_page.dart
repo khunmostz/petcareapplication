@@ -44,7 +44,8 @@ class _ContentPageState extends State<ContentPage>
               width: size.width,
               // height:
               //     size.height < 920 ? size.height * 0.45 : size.height * 0.35,
-              height: size.height < 920 ? size.height * 0.3 : size.height * 0.3,
+              height:
+                  size.height < 920 ? size.height * 0.35 : size.height * 0.3,
               decoration: BoxDecoration(
                   color: kDefualtColorMain,
                   borderRadius: BorderRadius.only(
@@ -80,7 +81,7 @@ class _ContentPageState extends State<ContentPage>
                     ),
                     SizedBox(height: 10),
                     GetBuilder<ProfileController>(
-                        init: ProfileController(),
+                        id: 'getUserDetail',
                         builder: (controller) {
                           return Text(
                             controller.usernameController.value.text,

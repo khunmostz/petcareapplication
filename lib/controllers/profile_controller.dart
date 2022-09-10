@@ -22,6 +22,10 @@ class ProfileController extends GetxController {
 
   File? image;
 
+  void onInit() {
+    super.onInit();
+  }
+
   Future<void> uploadImageProfile({required ImageSource imageSource}) async {
     try {
       final ImagePicker _picker = ImagePicker();
@@ -68,7 +72,8 @@ class ProfileController extends GetxController {
         // print(snapshot.docs[0].data());
         snapshot.docs.forEach((data) {
           user = data.data();
-          print(user['type']);
+          print('image : ${user!['image']}');
+
           userType = user['type'].toString().obs;
           // print('controller: ${userType}');
           usernameController.value.text = user['username'].toString();
