@@ -73,47 +73,74 @@ class _BottomNavState extends State<BottomNav> {
   ];
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    print('type user ${_profileController.userType.value}');
-  }
-
-  @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      bottomNavigationBar: Container(
-        width: size.width,
-        color: kDefualtColorMain,
-        child: Padding(
-          padding: const EdgeInsets.all(kDefualtPadding / 2),
-          child: GNav(
-            backgroundColor: kDefualtColorMain,
-            color: Colors.white,
-            activeColor: Colors.white,
-            tabBackgroundColor: Colors.black38,
-            gap: 7,
-            padding: EdgeInsets.all(16),
-            style: GnavStyle.google,
-            onTabChange: (index) {
-              // print(index);
-              setState(() {
-                _selectedIndex = index;
-              });
-            },
-            tabs: _profileController.userType.value == 'User'
-                ? tabUser
-                : tabHospital,
-          ),
-        ),
+      bottomNavigationBar: GetBuilder<ProfileController>(
+        id: 'getUserDetail',
+        builder: (_) {
+          if (_profileController.userType.value == 'User') {
+            return Container(
+              width: size.width,
+              color: kDefualtColorMain,
+              child: Padding(
+                padding: const EdgeInsets.all(kDefualtPadding / 2),
+                child: GNav(
+                  backgroundColor: kDefualtColorMain,
+                  color: Colors.white,
+                  activeColor: Colors.white,
+                  tabBackgroundColor: Colors.black38,
+                  gap: 7,
+                  padding: EdgeInsets.all(16),
+                  style: GnavStyle.google,
+                  onTabChange: (index) {
+                    // print(index);
+                    setState(() {
+                      _selectedIndex = index;
+                    });
+                  },
+                  tabs: tabUser,
+                ),
+              ),
+            );
+          } else {
+            return Container(
+              width: size.width,
+              color: kDefualtColorMain,
+              child: Padding(
+                padding: const EdgeInsets.all(kDefualtPadding / 2),
+                child: GNav(
+                  backgroundColor: kDefualtColorMain,
+                  color: Colors.white,
+                  activeColor: Colors.white,
+                  tabBackgroundColor: Colors.black38,
+                  gap: 7,
+                  padding: EdgeInsets.all(16),
+                  style: GnavStyle.google,
+                  onTabChange: (index) {
+                    // print(index);
+                    setState(() {
+                      _selectedIndex = index;
+                    });
+                  },
+                  tabs: tabHospital,
+                ),
+              ),
+            );
+          }
+        },
       ),
-      body: Obx(() => IndexedStack(
-            index: _selectedIndex,
-            children: _profileController.userType.value == 'User'
-                ? screenUser
-                : screenHospital,
-          )),
+      body: GetBuilder<ProfileController>(
+        id: 'getUserDetail',
+        builder: ((_) {
+          if (_profileController.userType.value == 'User') {
+            return IndexedStack(index: _selectedIndex, children: screenUser);
+          } else {
+            return IndexedStack(
+                index: _selectedIndex, children: screenHospital);
+          }
+        }),
+      ),
     );
   }
 }

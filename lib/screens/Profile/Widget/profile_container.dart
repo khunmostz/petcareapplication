@@ -54,16 +54,20 @@ class ProfileContainer extends StatelessWidget {
                           id: 'updateProfile',
                           builder: (_) {
                             return Stack(children: [
-                              CircleAvatar(
-                                radius: 50,
-                                backgroundColor: Colors.grey[200],
-                                // backgroundImage: _profileController
-                                //             .user['image'] ==
-                                //         ''
-                                //     ? null
-                                //     : NetworkImage(
-                                //         '${_profileController.user['image']}')
-                              ),
+                              if (_profileController.user['image'] == '')
+                                CircleAvatar(
+                                  radius: 50,
+                                  backgroundColor: Colors.grey[200],
+                                  backgroundImage: AssetImage(
+                                      'assets/image/person-placeholder.jpg'),
+                                )
+                              else
+                                CircleAvatar(
+                                  radius: 50,
+                                  backgroundColor: Colors.grey[200],
+                                  backgroundImage: NetworkImage(
+                                      '${_profileController.user['image']}'),
+                                ),
                               Positioned(
                                 bottom: 0,
                                 right: 0,

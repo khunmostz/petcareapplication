@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,6 +26,7 @@ class _ContentPageState extends State<ContentPage>
   final AuthController _authController = Get.find<AuthController>();
   final ProfileController _profileController = Get.find<ProfileController>();
   final ContentController _contentController = Get.put(ContentController());
+
   final ContentAnimation _contentAniamtion = Get.put(ContentAnimation());
 
   @override
@@ -34,6 +37,9 @@ class _ContentPageState extends State<ContentPage>
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+
+    print(_contentAniamtion.animationController);
+    print(Get.isRegistered<ContentAnimation>());
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -171,10 +177,13 @@ class _ContentPageState extends State<ContentPage>
                         ),
                         itemCount: menuTitleData.length,
                         itemBuilder: (BuildContext context, index) {
-                          return Opacity(
-                            opacity: _contentAniamtion.animation.value,
-                            child: Container(
-                              child: menuList(index),
+                          return SlideTransition(
+                            position: _contentAniamtion.offsetAnimation,
+                            child: Opacity(
+                              opacity: _contentAniamtion.animation.value,
+                              child: Container(
+                                child: menuList(index),
+                              ),
                             ),
                           );
                         },
@@ -200,53 +209,67 @@ class _ContentPageState extends State<ContentPage>
                       height: 10,
                     ),
 
-                    StreamBuilder(
-                      stream: _contentController.allPromotion().asStream(),
+                    FutureBuilder(
+                      future: _contentController.allPromotion(),
                       builder: ((context, snapshot) {
-                        return Container(
-                          width: size.width,
-                          height: size.height * 0.3,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: allPromotions.length,
-                            itemBuilder: (BuildContext context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      width: 200,
-                                      height: 150,
-                                      decoration: BoxDecoration(
-                                        color: Colors.amber,
-                                        borderRadius: BorderRadius.circular(16),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Color.fromARGB(
-                                                255, 175, 175, 175),
-                                            spreadRadius: 0,
-                                            blurRadius: 5,
-                                            offset: Offset(-1, 5),
+                        return AnimatedBuilder(
+                          animation: _contentAniamtion.animationController,
+                          child: Container(
+                            width: size.width,
+                            height: size.height * 0.3,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: allPromotions.length,
+                              itemBuilder: (BuildContext context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        width: 200,
+                                        height: 150,
+                                        decoration: BoxDecoration(
+                                          color: Colors.amber,
+                                          borderRadius:
+                                              BorderRadius.circular(16),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Color.fromARGB(
+                                                  255, 175, 175, 175),
+                                              spreadRadius: 0,
+                                              blurRadius: 5,
+                                              offset: Offset(-1, 5),
+                                            ),
+                                          ],
+                                        ),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(16),
+                                          child: Image.network(
+                                            "${allPromotions[index]['promotionImage']}",
+                                            fit: BoxFit.cover,
                                           ),
-                                        ],
-                                      ),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(16),
-                                        child: Image.network(
-                                          "${allPromotions[index]['promotionImage']}",
-                                          fit: BoxFit.cover,
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(height: 10),
-                                    Text(
-                                        "${allPromotions[index]['promotionTitle']}"),
-                                    SizedBox(height: 20),
-                                  ],
-                                ),
-                              );
-                            },
+                                      SizedBox(height: 10),
+                                      Text(
+                                          "${allPromotions[index]['promotionTitle']}"),
+                                      SizedBox(height: 20),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
                           ),
+                          builder: ((context, child) {
+                            return SlideTransition(
+                              position: _contentAniamtion.offsetAnimation,
+                              child: Opacity(
+                                opacity: _contentAniamtion.animation.value,
+                                child: child,
+                              ),
+                            );
+                          }),
                         );
                       }),
                     )

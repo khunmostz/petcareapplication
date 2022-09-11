@@ -63,7 +63,7 @@ class _AddLocationPageState extends State<AddLocationPage> {
                 Stack(
                   children: [
                     CircleAvatar(
-                      radius: 100,
+                      radius: 100, 
                       backgroundColor: Colors.amber,
                     ),
                     Positioned(

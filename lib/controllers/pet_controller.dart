@@ -210,17 +210,37 @@ class PetController extends GetxController {
   Future<void> fetchTreat({required String petName}) async {
     var data = await FirebaseFirestore.instance
         .collection('pettreat')
-        .orderBy('date', descending: true)
-        .where(
-          'petName',
-          isEqualTo: petName,
-        )
+        // .orderBy('date', descending: true)
+        .where('petName', isEqualTo: petName)
         .get();
 
-    data.docs.forEach((element) {
+    List test = [...data.docs];
+    test = test.map((e) {
+      var date = e.data()['date'];
+      int year = int.parse(date.toString().split('-')[0]);
+      int month = int.parse(date.toString().split('-')[1]);
+      int day = int.parse(date.toString().split('-')[2]);
+      print(date.toString());
+      return {
+        "data": e,
+        "date": DateTime(year, month, day).millisecondsSinceEpoch,
+      };
+    }).toList();
+
+    test.sort(((a, b) {
+      return (b['date'] as int).compareTo((a['date'] as int));
+    }));
+
+    test.forEach((element) {
       // print(element['description']);
-      treat.add(element.data());
+      treat.add(element['data'].data());
       update();
     });
+
+    // data.docs.forEach((element) {
+    //   // print(element['description']);
+    //   treat.add(element.data());
+    //   update();
+    // });
   }
 }

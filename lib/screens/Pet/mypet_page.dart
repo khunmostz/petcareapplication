@@ -362,7 +362,9 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                         builder: (context, value, _) {
                           var percent = value * index;
                           return GestureDetector(
-                            onTap: (() {
+                            onTap: (() async {
+                              await _petController.fetchTreat(
+                                  petName: _petController.petName[index]);
                               Get.toNamed(
                                 '/petdetail',
                                 arguments: [
@@ -372,8 +374,6 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                                   _petController.petSpecies[index],
                                 ],
                               );
-                              _petController.fetchTreat(
-                                  petName: _petController.petName[index]);
                             }),
                             child: Padding(
                               padding: EdgeInsets.symmetric(

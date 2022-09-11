@@ -75,7 +75,7 @@ class ProfileController extends GetxController {
           print('image : ${user!['image']}');
 
           userType = user['type'].toString().obs;
-          // print('controller: ${userType}');
+          print('controller: ${userType}');
           usernameController.value.text = user['username'].toString();
           emailController.value.text = user['email'].toString();
           telController.value.text = user['tel'].toString();

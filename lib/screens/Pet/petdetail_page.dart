@@ -18,6 +18,8 @@ class _PetDetailPageState extends State<PetDetailPage> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    print(_petController.treat.length.toString());
+
     var petImage = Get.arguments[0];
     var petName = Get.arguments[1];
     var petType = Get.arguments[2];
