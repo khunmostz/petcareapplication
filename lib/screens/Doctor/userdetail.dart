@@ -18,6 +18,8 @@ class _UserDetailState extends State<UserDetail> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var username = Get.arguments[0];
+    var image = Get.arguments[1];
+
     // print(_docSearchController.petShow[0]['gender']);
     return Container(
       decoration: BoxDecoration(
@@ -50,10 +52,19 @@ class _UserDetailState extends State<UserDetail> {
               padding: const EdgeInsets.symmetric(horizontal: kDefualtPadding),
               child: Row(
                 children: [
-                  CircleAvatar(
-                    radius: 60,
-                    backgroundColor: Colors.green,
-                  ),
+                  if (image == "")
+                    CircleAvatar(
+                      radius: 60,
+                      backgroundColor: Colors.grey,
+                      backgroundImage:
+                          AssetImage('assets/image/person-placeholder.jpg'),
+                    )
+                  else
+                    CircleAvatar(
+                      radius: 60,
+                      backgroundColor: Colors.grey,
+                      backgroundImage: NetworkImage('${image}'),
+                    ),
                   SizedBox(
                     width: 20,
                   ),
@@ -141,18 +152,16 @@ class _UserDetailState extends State<UserDetail> {
                         onTap: () {
                           Get.offNamed('/adddetailpet', arguments: [
                             _docSearchController.petShow[index]['petName'],
+                            _docSearchController.petShow[index]['image'],
                           ]);
                         },
                         child: Column(
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: kDefualtPadding / 2,
-                                  vertical: kDefualtPadding / 4),
-                              child: CircleAvatar(
-                                radius: 30,
-                                backgroundColor: Colors.blue,
-                              ),
+                            CircleAvatar(
+                              radius: 30,
+                              backgroundColor: Colors.blue,
+                              backgroundImage: NetworkImage(
+                                  '${_docSearchController.petShow[index]['image']}'),
                             ),
                             Text(
                               "${_docSearchController.petShow[index]['petName']}",

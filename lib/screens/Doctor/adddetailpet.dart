@@ -18,6 +18,7 @@ class _AddDetailPetState extends State<AddDetailPet> {
   @override
   Widget build(BuildContext context) {
     var petname = Get.arguments[0];
+    var image = Get.arguments[1];
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -61,6 +62,7 @@ class _AddDetailPetState extends State<AddDetailPet> {
                 child: CircleAvatar(
                   radius: 100,
                   backgroundColor: Colors.green,
+                  backgroundImage: NetworkImage('${image}'),
                 ),
               ),
               SizedBox(height: 20),

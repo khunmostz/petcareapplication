@@ -78,18 +78,16 @@ class _PetDetailPageState extends State<PetDetailPage> {
                               Text(
                                 '${petType} / '.toUpperCase(),
                                 style: GoogleFonts.mitr(
-                                  color: Colors.black54,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                                    color: Colors.black54,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w300),
                               ),
                               Text(
                                 '${petSpecies}'.toUpperCase(),
                                 style: GoogleFonts.mitr(
-                                  color: Colors.black54,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                                    color: Colors.black54,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w300),
                               ),
                             ],
                           ),
@@ -167,7 +165,7 @@ class BlogContent extends StatelessWidget {
                         style: GoogleFonts.mitr(
                             color: Colors.white,
                             fontSize: 18,
-                            fontWeight: FontWeight.w400),
+                            fontWeight: FontWeight.w300),
                       ),
                     ),
                   ),

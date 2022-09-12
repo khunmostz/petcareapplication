@@ -111,6 +111,8 @@ class _DocSearchState extends State<DocSearch>
                                                 _docSearchController
                                                         .dataShow[index]
                                                     ['username'],
+                                                _docSearchController
+                                                    .dataShow[index]['image']
                                               ]);
                                           _docSearchController.fetchPetUserById(
                                               _docSearchController
@@ -154,16 +156,23 @@ class _DocSearchState extends State<DocSearch>
                                                   fontSize: 18,
                                                 ),
                                               ),
-                                              CircleAvatar(
-                                                radius: 30,
-                                                backgroundColor: Colors.grey,
-                                                // backgroundImage: _docSearchController
-                                                //             .dataShow[index]['image'] !=
-                                                //         null
-                                                //     ? NetworkImage(
-                                                //         '${_docSearchController.dataShow[index]['image']}')
-                                                //     : null,
-                                              ),
+                                              if (_docSearchController
+                                                          .dataShow[index]
+                                                      ['image'] ==
+                                                  "")
+                                                CircleAvatar(
+                                                  radius: 30,
+                                                  backgroundColor: Colors.grey,
+                                                  backgroundImage: AssetImage(
+                                                      'assets/image/person-placeholder.jpg'),
+                                                )
+                                              else
+                                                CircleAvatar(
+                                                  radius: 30,
+                                                  backgroundColor: Colors.grey,
+                                                  backgroundImage: NetworkImage(
+                                                      '${_docSearchController.dataShow[index]['image']}'),
+                                                ),
                                             ],
                                           ),
                                         ),

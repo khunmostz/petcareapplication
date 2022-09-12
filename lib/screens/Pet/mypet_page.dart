@@ -23,6 +23,23 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
   late final AnimationController _controller;
   var birdthday, vaccine;
 
+  List<String> petType = [
+    'กบ',
+    'กระตาย',
+    'กระรอก',
+    'กิ้งก่า',
+    'งู',
+    'ชูกาไรเดอร์',
+    'เต่า',
+    'นก',
+    'ปลา',
+    'เม่น',
+    'แมว',
+    'ลิง',
+    'หนู',
+    'หมา'
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -439,34 +456,40 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                                           Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.end,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
                                             children: [
                                               Text(
                                                 'Name: ${_petController.petName[index]}',
                                                 style: GoogleFonts.mitr(
-                                                  fontSize: 16,
-                                                  color: Colors.white,
-                                                ),
+                                                    fontSize: 16,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.w300),
                                               ),
                                               Text(
                                                 'Type: ${_petController.petType[index]}',
                                                 style: GoogleFonts.mitr(
-                                                  fontSize: 16,
-                                                  color: Colors.white,
-                                                ),
+                                                    fontSize: 16,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.w300),
                                               ),
                                               Text(
                                                 'Species: ${_petController.petSpecies[index]}',
                                                 style: GoogleFonts.mitr(
-                                                  fontSize: 16,
-                                                  color: Colors.white,
-                                                ),
+                                                    fontSize: 16,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.w300),
                                               ),
                                               Text(
                                                 'Weight: ${_petController.petWeight[index]}',
                                                 style: GoogleFonts.mitr(
-                                                  fontSize: 16,
-                                                  color: Colors.white,
-                                                ),
+                                                    fontSize: 16,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.w300),
                                               ),
                                             ],
                                           ),

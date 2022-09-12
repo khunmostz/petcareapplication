@@ -21,8 +21,8 @@ class DogSearchAniamtion extends GetxController
   }
 
   @override
-  void onClose() {
+  void dispose() {
     animationController.dispose();
-    super.onClose();
+    super.dispose();
   }
 }

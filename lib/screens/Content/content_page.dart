@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,12 +5,9 @@ import 'package:petcare_project/animations/content_animation.dart';
 import 'package:petcare_project/controllers/auth_controller.dart';
 import 'package:petcare_project/controllers/content_controller.dart';
 import 'package:petcare_project/controllers/profile_controller.dart';
-import 'package:petcare_project/screens/Content/maps_page.dart';
 import 'package:petcare_project/services/services.dart';
 import 'package:petcare_project/utils/constant.dart';
 import 'package:petcare_project/data/menuData.dart';
-import 'package:petcare_project/data/recommendData.dart';
-import 'package:petcare_project/widget/search_bar.dart';
 
 class ContentPage extends StatefulWidget {
   const ContentPage({Key? key}) : super(key: key);
@@ -94,6 +89,7 @@ class _ContentPageState extends State<ContentPage>
                             style: GoogleFonts.mitr(
                               fontSize: 20,
                               color: Colors.white,
+                              fontWeight: FontWeight.w300,
                             ),
                           );
                         }),
@@ -101,9 +97,9 @@ class _ContentPageState extends State<ContentPage>
                     Text(
                       'Welcome back',
                       style: GoogleFonts.mitr(
-                        fontSize: 20,
-                        color: Colors.white,
-                      ),
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w300),
                     ),
                     SizedBox(height: 20),
                     Container(
@@ -146,7 +142,8 @@ class _ContentPageState extends State<ContentPage>
                       children: [
                         Text(
                           'เพิ่มโลเคชั่น',
-                          style: GoogleFonts.mitr(fontSize: 18),
+                          style: GoogleFonts.mitr(
+                              fontSize: 18, fontWeight: FontWeight.w300),
                         ),
                         Icon(Icons.location_city)
                       ],
@@ -198,13 +195,11 @@ class _ContentPageState extends State<ContentPage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Recommend",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    Text("Promotion",
+                        style: GoogleFonts.mitr(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w300,
+                        )),
                     SizedBox(
                       height: 10,
                     ),
@@ -253,7 +248,11 @@ class _ContentPageState extends State<ContentPage>
                                       ),
                                       SizedBox(height: 10),
                                       Text(
-                                          "${allPromotions[index]['promotionTitle']}"),
+                                        "${allPromotions[index]['promotionTitle']}",
+                                        style: GoogleFonts.mitr(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w300),
+                                      ),
                                       SizedBox(height: 20),
                                     ],
                                   ),
@@ -334,9 +333,10 @@ class _ContentPageState extends State<ContentPage>
             ),
             Text(
               '${menuTitleData[index].titleMenu}',
-              style: TextStyle(
-                color: Colors.white,
+              style: GoogleFonts.mitr(
                 fontSize: 16,
+                fontWeight: FontWeight.w300,
+                color: Colors.white,
               ),
             ),
           ],
