@@ -25,7 +25,7 @@ class _RecordPageState extends State<RecordPage> {
   var search = '';
 
   // late final AnimationController _controller;
-  final RecordController _recordController = Get.put(RecordController());
+  final RecordController _recordController = Get.find<RecordController>();
 
   void _showDatePicker() {
     showDatePicker(
@@ -66,18 +66,7 @@ class _RecordPageState extends State<RecordPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // _showDialog();
   }
-
-  // _showDialog() async {
-  //   Future.delayed(Duration(milliseconds: 4));
-  //   print('lenght ${_recordController.docLength.value}');
-  //   // if (_recordController.docLength.value == 0) {
-  //   //   await Future.delayed(Duration(milliseconds: 1000));
-  //   //   print('show dialog');
-
-  //   // }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -134,6 +123,7 @@ class _RecordPageState extends State<RecordPage> {
                               _selectedIndex = index;
                               // print('after:' + _selectedIndex.toString());
                               search = '';
+
                               // snapshotData = 0;
                             });
                           },
@@ -475,8 +465,6 @@ class _RecordPageState extends State<RecordPage> {
                           .snapshots(),
                   builder: (context, snapshot) {
                     int snapshotData = 0;
-                    // print('snapshot: ${snapshot.data!.docs}');
-                    // print(snapshot.data!.docs.length);
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(
                         child: CircularProgressIndicator(),
@@ -484,15 +472,13 @@ class _RecordPageState extends State<RecordPage> {
                     } else {
                       snapshot.data!.docs.forEach((element) {
                         var value = int.parse(element['pay']);
-                        print('value ${value}');
                         snapshotData = snapshotData + value;
                       });
-                      // snapshotData + 10;
-                      print('total ${snapshotData}');
+
                       return Column(
                         children: [
                           DataTable(
-                            columnSpacing: 80,
+                            columnSpacing: 50,
                             columns: [
                               DataColumn(
                                 label: Text(

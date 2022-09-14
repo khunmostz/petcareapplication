@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:petcare_project/controllers/content_controller.dart';
 import 'package:petcare_project/controllers/profile_controller.dart';
+import 'package:petcare_project/controllers/record_controller.dart';
 import 'package:petcare_project/screens/Content/content_page.dart';
 import 'package:petcare_project/screens/Doctor/docsearch.dart';
 import 'package:petcare_project/screens/Pet/mypet_page.dart';
@@ -18,10 +19,9 @@ class BottomNav extends StatefulWidget {
 }
 
 class _BottomNavState extends State<BottomNav> {
-  // var userCheck = 'User';
   var _selectedIndex = 0;
-  // final _controller = Get.put(BottomNavController());
   final ProfileController _profileController = Get.find<ProfileController>();
+  final RecordController _recordController = Get.put(RecordController());
 
   final screenUser = [
     ContentPage(),
@@ -97,6 +97,10 @@ class _BottomNavState extends State<BottomNav> {
                     // print(index);
                     setState(() {
                       _selectedIndex = index;
+                      if (_selectedIndex == 1) {
+                        print('record');
+                        _recordController.getPet();
+                      }
                     });
                   },
                   tabs: tabUser,

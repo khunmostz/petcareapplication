@@ -35,6 +35,7 @@ class AddLocationController extends GetxController {
       }
 
       print('image: ${image}');
+      update();
 
       uploadImage(image!.path.toString());
     } catch (e) {
@@ -52,7 +53,7 @@ class AddLocationController extends GetxController {
       // Get.snackbar('แจ้งเตือน', 'เปลี่ยนรูปภาพสำเร็จ');
     }).then((value) async {
       var imageUrl = await value.ref.getDownloadURL();
-      print(';djlksjfsalkfjklsdf: ${imageUrl.toString()}');
+      // print(';djlksjfsalkfjklsdf: ${imageUrl.toString()}');
 
       // user['image'] = imageUrl;
       updateImageProfile(imageUrl.toString());

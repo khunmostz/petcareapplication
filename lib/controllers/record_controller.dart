@@ -52,13 +52,14 @@ class RecordController extends GetxController {
           pets = pet.data();
           petImage.add(pets['image']);
           petName.add(pets['petName']);
+          petNameController.text = pets['petName'];
           petType.add(pets['type']);
           petSpecies.add(pets['species']);
           petWeight.add(pets['weight']);
           petGender.add(pets['gender']);
           petBday.add(pets['birdthday']);
           petVday.add(pets['vaccine']);
-          print("petName: ${petName.toString()}");
+          // print("petName: ${petName.toString()}");
         });
       });
       update(['getPets']);
@@ -82,9 +83,6 @@ class RecordController extends GetxController {
         });
 
         searchDataId = recordDataId;
-        // recordDataId.where((element) => element['date']).contains(date);
-        // print(
-        //     'test ${recordDataId.where((element) => element['date']).contains(date).toString()}');
       });
 
       update(['getPetId']);

@@ -62,9 +62,16 @@ class _AddLocationPageState extends State<AddLocationPage> {
                 SizedBox(height: 10),
                 Stack(
                   children: [
-                    CircleAvatar(
-                      radius: 100, 
-                      backgroundColor: Colors.amber,
+                    GetBuilder<AddLocationController>(
+                      builder: ((_) {
+                        return CircleAvatar(
+                          radius: 100,
+                          backgroundColor: Colors.amber,
+                          backgroundImage: _addLocationController.image != null
+                              ? FileImage(_addLocationController.image!)
+                              : null,
+                        );
+                      }),
                     ),
                     Positioned(
                       right: 0,

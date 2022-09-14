@@ -15,6 +15,7 @@ class PetController extends GetxController {
 
   List data = [];
 
+  List petUid = [].obs;
   List petName = [].obs;
   List petType = [].obs;
   List petSpecies = [].obs;
@@ -120,12 +121,13 @@ class PetController extends GetxController {
       await FirebaseFirestore.instance
           .collection('pets')
           .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-          // .orderBy('createdAt', descending: true)
           .get()
           .then((value) async {
         value.docs.forEach((pet) {
           pets = pet.data();
 
+          // print('ssssssss: ${pets['uid']}');
+          petUid.add(pets['uid']);
           petImage.add(pets['image']);
           petName.add(pets['petName']);
           petType.add(pets['type']);
@@ -149,7 +151,10 @@ class PetController extends GetxController {
 
   Future<dynamic> addPet(String birdthday, String vaccine, String image) async {
     try {
-      await FirebaseFirestore.instance.collection('pets').doc().set({
+      await FirebaseFirestore.instance
+          .collection('pets')
+          .doc(petNameController.text.trim().toLowerCase())
+          .set({
         // 'id': idController.text.trim(),
         'uid': FirebaseAuth.instance.currentUser!.uid,
         'image': image,
@@ -170,16 +175,15 @@ class PetController extends GetxController {
         petBday.add(pets['birdthday']);
         petVday.add(pets['vaccine']);
 
-        docLength++;
+        // docLength++;
 
         this.image = null;
+        petNameController.text == '';
+        typeController.text == '';
+        speciesController.text == '';
+        weightController.text == '';
 
         update(['addPets']);
-        Get.back();
-        Get.snackbar(
-          'แจ้งเตือน',
-          'เพิ่มข้อมูลสำเร็จ',
-        );
       });
     } catch (e) {
       print(e);
@@ -200,6 +204,20 @@ class PetController extends GetxController {
         'แจ้งเตือน',
         'เกิดข้อผิดพลาด',
       );
+    }
+  }
+
+  Future<void> deletePet(String petname) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('pets')
+          .doc(petname.toLowerCase())
+          .delete()
+          .then((value) {
+        Get.snackbar('แจ้งเตือน', 'ลบ ${petname} สำเร็จ');
+      });
+    } catch (e) {
+      print(e);
     }
   }
 

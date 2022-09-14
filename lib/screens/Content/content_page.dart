@@ -204,9 +204,10 @@ class _ContentPageState extends State<ContentPage>
                       height: 10,
                     ),
 
-                    FutureBuilder(
-                      future: _contentController.allPromotion(),
+                    StreamBuilder(
+                      stream: _contentController.allPromotion().asStream(),
                       builder: ((context, snapshot) {
+                        print('test1');
                         return AnimatedBuilder(
                           animation: _contentAniamtion.animationController,
                           child: Container(

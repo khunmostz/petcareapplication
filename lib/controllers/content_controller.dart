@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:petcare_project/controllers/map_controller.dart';
 import 'package:petcare_project/services/api_url.dart';
 import 'package:petcare_project/services/services.dart';
 
@@ -14,8 +13,7 @@ class ContentController extends GetxController {
 
   Future<dynamic> allPromotion() async {
     allPromotions.clear();
-    print('object');
+    print("promotions: " + allPromotions.length.toString());
     await getPromotion(path: '${API_URL.hostName}/promotion/get');
-    print('success');
   }
 }

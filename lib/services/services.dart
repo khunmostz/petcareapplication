@@ -110,10 +110,11 @@ Future<dynamic> getRequestAllMap({required String path}) async {
 Future<dynamic> getPromotion({required String path}) async {
   final res = await Dio().get(path);
   var data = res.data['promotions'].map((promotion) {
-    print('promotion: ${promotion}');
+    // print('promotion: ${promotion}');
     return Promotions.fromJson(promotion);
   });
   print('from get');
+  allPromotions.clear();
   data.forEach((promotion) {
     // print(promotion['promotion']);
     // print(promotion.promotionTitle);
@@ -124,7 +125,7 @@ Future<dynamic> getPromotion({required String path}) async {
         'promotionImage': promotion.promotionImage
       },
     );
-    // print(allPromotions[0]['promotionTitle']);
+    print('sss' + allPromotions.length.toString());
   });
 }
 
