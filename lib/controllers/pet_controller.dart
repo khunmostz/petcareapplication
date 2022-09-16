@@ -41,6 +41,59 @@ class PetController extends GetxController {
 
   File? image;
 
+  List result = [];
+  List showCate = [];
+  List typeP = [
+    {'id': 1, 'value': 'กบ'},
+    {'id': 2, 'value': 'กระต่าย'},
+    {'id': 3, 'value': 'กระรอก'},
+    {'id': 4, 'value': 'กิ้งก่า'},
+    {'id': 5, 'value': 'งู'},
+    {'id': 6, 'value': 'ชูกาไรเดอร์'},
+    {'id': 7, 'value': 'เต่า'},
+    {'id': 8, 'value': 'นก'},
+    {'id': 9, 'value': 'ปลา'},
+    {'id': 10, 'value': 'เม่น'},
+    {'id': 11, 'value': 'แมว'},
+    {'id': 12, 'value': 'ลิง'},
+    {'id': 13, 'value': 'หนู'},
+    {'id': 14, 'value': 'หมา'}
+  ];
+  List<dynamic> typeCategories = [
+    {
+      'id': 'กบ',
+      'type': ['ไม่รู้ (Unknown)', 'ฮอร์นฟร็อก Horned Frogs']
+    },
+    {
+      'id': 'กระต่าย',
+      'type': [
+        "ไม่รู้ (Unknown)",
+        "กระต่ายไทย",
+        "นิวซีแลนด์ ไวท์ แรบบิท",
+        "ไลอ้อนเฮดท์",
+        "เท็ดดี้แบร์",
+        "เจอร์รี่วู๊ดดี้ทอย",
+        "มินิล็อป",
+        "ฮอลแลนด์ล็อป",
+        "เฟรนซ์ล็อป",
+        "อิงลิซล็อป",
+        "ดัชต์",
+        "มินิเร็กซ์",
+        "โปลิส",
+        "เนเธอร์แลนด์ดรอฟ"
+      ]
+    },
+  ];
+
+  void onSelected(selected) {
+    Map data = {};
+    data = typeCategories.firstWhere((element) => element['id'] == selected);
+    showCate = data['type'];
+    print(showCate);
+
+    update();
+  }
+
   Future<void> uploadImageProfile({required ImageSource imageSource}) async {
     try {
       final ImagePicker _picker = ImagePicker();

@@ -1,6 +1,4 @@
-import 'dart:math';
-import 'dart:ui';
-
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
@@ -8,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:petcare_project/controllers/pet_controller.dart';
-import 'package:petcare_project/controllers/record_controller.dart';
 import 'package:petcare_project/utils/constant.dart';
 import 'package:petcare_project/widget/custom_button.dart';
 
@@ -24,22 +21,7 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
   late final AnimationController _controller;
   var birdthday, vaccine;
 
-  List<String> petType = [
-    'กบ',
-    'กระตาย',
-    'กระรอก',
-    'กิ้งก่า',
-    'งู',
-    'ชูกาไรเดอร์',
-    'เต่า',
-    'นก',
-    'ปลา',
-    'เม่น',
-    'แมว',
-    'ลิง',
-    'หนู',
-    'หมา'
-  ];
+  List<String> Categories = [];
 
   @override
   void initState() {
@@ -47,6 +29,10 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
     _controller =
         AnimationController(vsync: this, duration: Duration(seconds: 2));
     _controller.repeat();
+  }
+
+  onSelected() {
+    // Categories.add(data.toString());
   }
 
   @override
@@ -58,6 +44,20 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+
+    ButtonStyle buttonStyle = ElevatedButton.styleFrom(
+      onPrimary: Colors.black,
+      primary: Colors.white,
+      minimumSize: Size(size.width, 50),
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(12)),
+      ),
+    );
+
+    // print(Categories.toString());
+    // var value = Categories.where((element) => (element).contains('กบ'));
+
     return Scaffold(
       backgroundColor: Colors.grey[300],
       floatingActionButton: FloatingActionButton(
@@ -208,28 +208,65 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                             controller: _petController.petNameController,
                           ),
                           SizedBox(height: 10),
-                          PetDialog(
-                            size: size,
-                            title: 'ประเภท',
-                            controller: _petController.typeController,
+                          // PetDialog(
+                          //   size: size,
+                          //   title: 'ประเภท',
+                          //   controller: _petController.typeController,
+                          // ),
+
+                          // DropdownSearch<dynamic>(
+                          //   popupProps: PopupProps.menu(
+                          //     showSelectedItems: true,
+                          //     // disabledItemFn: (String s) => s.startsWith('I'),
+                          //   ),
+                          //   items: petType,
+                          //   onChanged: ((value) {
+                          //     setState(() {
+                          //       _petController.typeController.text =
+                          //           value as String;
+                          //     });
+                          //     print(_petController.typeController.text);
+                          //   }),
+                          //   selectedItem: "Please select value",
+                          // ),
+                          DropdownSearch<dynamic>(
+                            items: _petController.typeP
+                                .map((e) => e['value'])
+                                .toList(),
+                            onChanged: ((value) {
+                              // print(_petController.typeController.text);
+                              _petController.onSelected(value);
+                              _petController.typeController.text = value;
+                            }),
+                            selectedItem: "Select Pet",
                           ),
                           SizedBox(height: 10),
-                          PetDialog(
-                            size: size,
-                            title: 'สายพัน',
-                            controller: _petController.speciesController,
-                          ),
+                          GetBuilder<PetController>(builder: (_) {
+                            return DropdownSearch<dynamic>(
+                              items: _petController.showCate,
+                              onChanged: ((value) {
+                                _petController.speciesController.text = value;
+                              }),
+                              selectedItem: "Select Categories",
+                            );
+                          }),
+
+                          // SizedBox(height: 10),
+                          // PetDialog(
+                          //   size: size,
+                          //   title: 'สายพัน',
+                          //   controller: _petController.speciesController,
+                          // ),
                           SizedBox(height: 10),
                           Row(
                             children: [
                               Expanded(
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: PetDialog(
-                                    size: size,
-                                    title: 'น้ำหนัก (กิโลกรัม)',
-                                    controller: _petController.weightController,
-                                  ),
+                                child: DropdownSearch<dynamic>(
+                                  items: _petController.showCate,
+                                  onChanged: ((value) {
+                                    _petController.weightController.text == value;
+                                  }),
+                                  selectedItem: "น้ำหนัก",
                                 ),
                               ),
                               Expanded(
@@ -260,9 +297,9 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                                         width: size.width,
                                         height: 60,
                                         decoration: BoxDecoration(
-                                          color: Colors.grey[300],
+                                          color: Colors.white,
                                           border:
-                                              Border.all(color: Colors.white),
+                                              Border.all(color: Colors.grey),
                                           borderRadius:
                                               BorderRadius.circular(12),
                                         ),
@@ -299,9 +336,9 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                                         width: size.width,
                                         height: 60,
                                         decoration: BoxDecoration(
-                                          color: Colors.grey[300],
+                                          color: Colors.white,
                                           border:
-                                              Border.all(color: Colors.white),
+                                              Border.all(color: Colors.grey),
                                           borderRadius:
                                               BorderRadius.circular(12),
                                         ),
@@ -351,6 +388,20 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                                 );
                               }
                             },
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          ElevatedButton(
+                            style: buttonStyle,
+                            onPressed: () => Get.back(),
+                            child: Text(
+                              'ยกเลิก',
+                              style: GoogleFonts.mitr(
+                                fontSize: 18,
+                                color: Colors.black,
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -408,13 +459,6 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                             icon: Icons.delete,
                             label: 'Delete',
                           ),
-                          // SlidableAction(
-                          //   onPressed: doNothing,
-                          //   backgroundColor: Color(0xFF21B7CA),
-                          //   foregroundColor: Colors.white,
-                          //   icon: Icons.share,
-                          //   label: 'Share',
-                          // ),
                         ],
                       ),
                       child: TweenAnimationBuilder<double>(
@@ -576,8 +620,8 @@ class PetDialog extends StatelessWidget {
     return Container(
       width: size.width,
       decoration: BoxDecoration(
-        color: Colors.grey[300],
-        border: Border.all(color: Colors.white),
+        color: Colors.white,
+        border: Border.all(color: Colors.grey),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Padding(

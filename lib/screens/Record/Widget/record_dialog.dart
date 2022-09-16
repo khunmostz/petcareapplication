@@ -6,12 +6,13 @@ class RecordDialog extends StatelessWidget {
   final String hinText;
   final TextEditingController controller;
   final TextInputType keyboardType;
+  final bool readOnly;
   const RecordDialog({
     Key? key,
     required this.title,
     required this.hinText,
     required this.controller,
-    required this.keyboardType,
+    required this.keyboardType, required this.readOnly,
   }) : super(key: key);
 
   @override
@@ -34,6 +35,7 @@ class RecordDialog extends StatelessWidget {
           ),
           child: TextFormField(
             // obscureText: obscureText,
+            readOnly: readOnly,
             keyboardType: keyboardType,
             controller: controller,
             decoration: InputDecoration(

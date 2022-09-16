@@ -8,6 +8,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:petcare_project/services/api_url.dart';
 import 'package:petcare_project/services/services.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 class AddLocationController extends GetxController {
   final TextEditingController establishmentController = TextEditingController();
@@ -109,32 +111,12 @@ class AddLocationController extends GetxController {
                   });
         } else {
           print('ไม่พบในฐานข้อมูล');
+          Get.snackbar('แจ้งเตือน', "ไม่พบในฐานข้อมูล");
           return;
         }
       });
     } on FirebaseAuthException catch (e) {
       print(e);
     }
-    // try {
-    //   await FirebaseFirestore.instance
-    //       .collection('doctor')
-    //       .doc(FirebaseAuth.instance.currentUser!.uid)
-    //       .set(
-    //         ({
-    //           'establishent': establishmentController.text.trim(),
-    //           'nameDoctor': nameDoctorController.text.trim(),
-    //           'email': emailController.text.trim(),
-    //           'tel': telController.text.trim(),
-    //         }),
-    //       );
-    // } on FirebaseAuthException catch (e) {
-    //   print(e.email);
-    //   switch (e.email) {
-    //     case "invalid-email":
-    //       return print('xxx');
-    //       break;
-    //     default:
-    //   }
-    // }
   }
 }

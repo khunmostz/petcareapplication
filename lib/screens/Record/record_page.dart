@@ -196,7 +196,7 @@ class _RecordPageState extends State<RecordPage> {
                       GestureDetector(
                         onTap: () {
                           print([
-                            'asda : ${_recordController.petNameController.text}'
+                            // 'asda : ${_recordController.petNameController.text}'
                           ]);
                           showDialog(
                             context: context,
@@ -217,6 +217,7 @@ class _RecordPageState extends State<RecordPage> {
                                         RecordDialog(
                                           title: 'ชื่อสัตว์เลี้ยง',
                                           hinText: 'ชื่อสัตว์เลี้ยง',
+                                          readOnly: true,
                                           keyboardType: TextInputType.text,
                                           controller: _recordController
                                               .petNameController,
@@ -225,6 +226,7 @@ class _RecordPageState extends State<RecordPage> {
                                         RecordDialog(
                                           title: 'รายการ',
                                           hinText: 'รายการ',
+                                          readOnly: false,
                                           keyboardType: TextInputType.text,
                                           controller: _recordController
                                               .particularController,
@@ -236,6 +238,7 @@ class _RecordPageState extends State<RecordPage> {
                                               child: RecordDialog(
                                                 title: 'ค่าใช้จ่าย',
                                                 hinText: 'ค่าใช้จ่าย',
+                                                readOnly: false,
                                                 keyboardType:
                                                     TextInputType.number,
                                                 controller: _recordController

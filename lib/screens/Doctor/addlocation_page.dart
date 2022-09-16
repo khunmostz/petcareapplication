@@ -1,4 +1,3 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -66,7 +65,7 @@ class _AddLocationPageState extends State<AddLocationPage> {
                       builder: ((_) {
                         return CircleAvatar(
                           radius: 100,
-                          backgroundColor: Colors.amber,
+                          backgroundColor: Colors.grey,
                           backgroundImage: _addLocationController.image != null
                               ? FileImage(_addLocationController.image!)
                               : null,
@@ -153,14 +152,7 @@ class _AddLocationPageState extends State<AddLocationPage> {
                     _addLocationController.addDoctor();
                   },
                 ),
-                SizedBox(height: 30),
-                CustomButton(
-                  text: 'test post',
-                  onPressed: () {
-                    print('post');
-                    _addLocationController.test();
-                  },
-                ),
+                SizedBox(height: 20),
               ],
             ),
           ),
@@ -184,78 +176,6 @@ class _AddLocationPageState extends State<AddLocationPage> {
             ),
           ),
           child: icon),
-    );
-  }
-
-  Widget DropdownMenu(Size size) {
-    return DropdownButtonHideUnderline(
-      child: DropdownButton2(
-        isExpanded: true,
-        hint: Row(
-          children: [
-            Icon(
-              Icons.list,
-              // size: 16,
-              color: Colors.black,
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Text(
-                'Select Item',
-                style: GoogleFonts.mitr(),
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ],
-        ),
-        items: typeLocation
-            .map(
-              (item) => DropdownMenuItem(
-                value: item,
-                child: Text(item),
-              ),
-            )
-            .toList(),
-        value: _selectedValue,
-        onChanged: ((value) {
-          setState(() {
-            _selectedValue = value as String;
-          });
-        }),
-        icon: Icon(
-          Icons.arrow_forward_ios_outlined,
-        ),
-        // iconSize: 14,
-        iconEnabledColor: kDefualtColorMain,
-        iconDisabledColor: Colors.grey,
-        buttonHeight: 60,
-        buttonWidth: size.width,
-        buttonPadding: const EdgeInsets.only(left: 14, right: 14),
-        buttonDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(14),
-          // border: Border.all(
-          //   color: Colors.black26,
-          // ),
-          color: Colors.white,
-        ),
-        buttonElevation: 0,
-        itemHeight: 40,
-        itemPadding: const EdgeInsets.only(left: 14, right: 14),
-        dropdownMaxHeight: size.width,
-        dropdownWidth: size.width * 0.9,
-        dropdownPadding: null,
-        dropdownDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(14),
-          color: Colors.white,
-        ),
-        dropdownElevation: 8,
-        scrollbarRadius: const Radius.circular(40),
-        scrollbarThickness: 6,
-        scrollbarAlwaysShow: true,
-        // offset: const Offset(-20, 0),
-      ),
     );
   }
 
