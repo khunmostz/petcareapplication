@@ -238,7 +238,7 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                               _petController.onSelected(value);
                               _petController.typeController.text = value;
                             }),
-                            selectedItem: "Select Pet",
+                            selectedItem: "เลือกสัตว์เลี้ยง",
                           ),
                           SizedBox(height: 10),
                           GetBuilder<PetController>(builder: (_) {
@@ -247,7 +247,7 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                               onChanged: ((value) {
                                 _petController.speciesController.text = value;
                               }),
-                              selectedItem: "Select Categories",
+                              selectedItem: "พันธุ์สัตวเลี้ยง",
                             );
                           }),
 
@@ -261,12 +261,13 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                           Row(
                             children: [
                               Expanded(
-                                child: DropdownSearch<dynamic>(
-                                  items: _petController.showCate,
-                                  onChanged: ((value) {
-                                    _petController.weightController.text == value;
-                                  }),
-                                  selectedItem: "น้ำหนัก",
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: PetDialog(
+                                    size: size,
+                                    title: 'น้ำหนัก (กิโลกรัม)',
+                                    controller: _petController.weightController,
+                                  ),
                                 ),
                               ),
                               Expanded(
@@ -564,14 +565,18 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                                                       fontWeight:
                                                           FontWeight.w300),
                                                 ),
-                                                Text(
-                                                  'Species: ${_petController.petSpecies[index]}',
-                                                  style: GoogleFonts.mitr(
-                                                      fontSize: 16,
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.w300),
-                                                ),
+                                                // Text(
+                                                //   'Species: ${_petController.petSpecies[index]}',
+                                                //   overflow:
+                                                //       TextOverflow.ellipsis,
+                                                //   softWrap: false,
+                                                //   style: GoogleFonts.mitr(
+                                                //       fontSize: 16,
+                                                //       color: Colors.white,
+                                                //       fontWeight:
+                                                //           FontWeight.w300),
+                                                // ),
+
                                                 Text(
                                                   'Weight: ${_petController.petWeight[index]}',
                                                   style: GoogleFonts.mitr(
