@@ -54,31 +54,33 @@ class _MapsPageState extends State<MapsPage>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 50),
-              // Search
-              Container(
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.grey.shade200,
-                    // fillColor: Colors.black,ad
-                    prefixIcon: Icon(Icons.search),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    hintText: 'Search',
-                  ),
-                  textInputAction: TextInputAction.next,
-                ),
-              ),
+              // SizedBox(height: 50),
+              // // Search
+              // Container(
+              //   child: TextFormField(
+              //     decoration: InputDecoration(
+              //       filled: true,
+              //       fillColor: Colors.grey.shade200,
+              //       // fillColor: Colors.black,ad
+              //       prefixIcon: Icon(Icons.search),
+              //       border: OutlineInputBorder(
+              //         borderSide: BorderSide.none,
+              //         borderRadius: BorderRadius.circular(12),
+              //       ),
+              //       hintText: 'Search',
+              //     ),
+              //     textInputAction: TextInputAction.next,
+              //   ),
+              // ),
               SizedBox(height: 20),
               // Map
               StreamBuilder(
                   stream: _mapController.getUserPosition().asStream(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: CircularProgressIndicator());
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
                     } else {
                       return Column(
                         children: [
