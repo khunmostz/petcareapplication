@@ -576,7 +576,6 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                                                 //       fontWeight:
                                                 //           FontWeight.w300),
                                                 // ),
-
                                                 Text(
                                                   'Weight: ${_petController.petWeight[index]}',
                                                   style: GoogleFonts.mitr(
