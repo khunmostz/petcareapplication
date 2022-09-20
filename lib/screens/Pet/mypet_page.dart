@@ -270,6 +270,7 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                                   ),
                                 ),
                               ),
+                              SizedBox(width: 10),
                               Expanded(
                                 child: Align(
                                   alignment: Alignment.centerLeft,
@@ -302,7 +303,7 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                                           border:
                                               Border.all(color: Colors.grey),
                                           borderRadius:
-                                              BorderRadius.circular(12),
+                                              BorderRadius.circular(6),
                                         ),
                                         child: Padding(
                                           padding: EdgeInsets.only(left: 20),
@@ -326,6 +327,7 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                                   ),
                                 ),
                               ),
+                              SizedBox(width: 10),
                               Expanded(
                                 child: GestureDetector(
                                   onTap: () => _petController.selectVaccine(
@@ -341,7 +343,7 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                                           border:
                                               Border.all(color: Colors.grey),
                                           borderRadius:
-                                              BorderRadius.circular(12),
+                                              BorderRadius.circular(6),
                                         ),
                                         child: Padding(
                                           padding: EdgeInsets.only(left: 20),
@@ -626,7 +628,7 @@ class PetDialog extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(6),
       ),
       child: Padding(
         padding: EdgeInsets.only(left: 20),
