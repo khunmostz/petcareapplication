@@ -208,27 +208,6 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                             controller: _petController.petNameController,
                           ),
                           SizedBox(height: 10),
-                          // PetDialog(
-                          //   size: size,
-                          //   title: 'ประเภท',
-                          //   controller: _petController.typeController,
-                          // ),
-
-                          // DropdownSearch<dynamic>(
-                          //   popupProps: PopupProps.menu(
-                          //     showSelectedItems: true,
-                          //     // disabledItemFn: (String s) => s.startsWith('I'),
-                          //   ),
-                          //   items: petType,
-                          //   onChanged: ((value) {
-                          //     setState(() {
-                          //       _petController.typeController.text =
-                          //           value as String;
-                          //     });
-                          //     print(_petController.typeController.text);
-                          //   }),
-                          //   selectedItem: "Please select value",
-                          // ),
                           DropdownSearch<dynamic>(
                             items: _petController.typeP
                                 .map((e) => e['value'])
@@ -250,13 +229,6 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                               selectedItem: "พันธุ์สัตวเลี้ยง",
                             );
                           }),
-
-                          // SizedBox(height: 10),
-                          // PetDialog(
-                          //   size: size,
-                          //   title: 'สายพัน',
-                          //   controller: _petController.speciesController,
-                          // ),
                           SizedBox(height: 10),
                           Row(
                             children: [
@@ -412,9 +384,6 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                   ),
                 );
               });
-
-          // print('xxx');
-          // _petController.testFunc();
         },
         child: Icon(Icons.add),
       ),
@@ -437,8 +406,8 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                 return ListView.builder(
                   itemCount: _petController.docLength,
                   itemBuilder: (context, index) {
-                    print('page: ${_petController.petName}');
-                    print('length ${_petController.docLength.toString()}');
+                    // print('page: ${_petController.petName}');
+                    // print('length ${_petController.docLength.toString()}');
                     return Slidable(
                       key: Key(_petController.petName[index]),
                       endActionPane: ActionPane(
@@ -470,6 +439,8 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                           curve: Curves.bounceOut,
                           builder: (context, value, _) {
                             var percent = value * index;
+                            print(
+                                'image from mypet : ${_petController.petImage.length.toString()}');
                             return GestureDetector(
                               onTap: (() async {
                                 await _petController.fetchTreat(
@@ -567,17 +538,6 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                                                       fontWeight:
                                                           FontWeight.w300),
                                                 ),
-                                                // Text(
-                                                //   'Species: ${_petController.petSpecies[index]}',
-                                                //   overflow:
-                                                //       TextOverflow.ellipsis,
-                                                //   softWrap: false,
-                                                //   style: GoogleFonts.mitr(
-                                                //       fontSize: 16,
-                                                //       color: Colors.white,
-                                                //       fontWeight:
-                                                //           FontWeight.w300),
-                                                // ),
                                                 Text(
                                                   'Weight: ${_petController.petWeight[index]}',
                                                   style: GoogleFonts.mitr(

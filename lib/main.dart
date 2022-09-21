@@ -20,8 +20,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // var _authController = Get.put(AuthController());
-
   @override
   void initState() {
     // TODO: implement initState

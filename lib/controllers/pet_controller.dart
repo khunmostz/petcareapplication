@@ -353,6 +353,7 @@ class PetController extends GetxController {
 
   Future<dynamic> getPet() async {
     petName = [].obs; // กันมันแสดง index ตัวแรก
+    petImage = [].obs;
 
     try {
       await FirebaseFirestore.instance
@@ -463,6 +464,7 @@ class PetController extends GetxController {
   List treat = [];
 
   Future<void> fetchTreat({required String petName}) async {
+    treat.clear();
     var data = await FirebaseFirestore.instance
         .collection('pettreat')
         // .orderBy('date', descending: true)
