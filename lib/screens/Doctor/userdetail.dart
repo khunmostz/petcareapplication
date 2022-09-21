@@ -153,6 +153,10 @@ class _UserDetailState extends State<UserDetail> {
                           Get.offNamed('/adddetailpet', arguments: [
                             _docSearchController.petShow[index]['petName'],
                             _docSearchController.petShow[index]['image'],
+                            _docSearchController.petShow[index]['type'],
+                            _docSearchController.petShow[index]['species'],
+                            _docSearchController.petShow[index]['gender'],
+                            _docSearchController.petShow[index]['weight'],
                           ]);
                         },
                         child: Column(

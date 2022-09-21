@@ -69,15 +69,29 @@ class _ContentPageState extends State<ContentPage>
                           size: 25,
                         ),
                         Spacer(),
-                        IconButton(
-                          onPressed: () {
-                            _authController.signOut();
-                          },
-                          icon: Icon(
-                            Icons.logout,
-                            size: 25,
-                          ),
-                        )
+                        GetBuilder<ProfileController>(builder: (_) {
+                          if (_profileController.userType.value == 'Doctor')
+                            return IconButton(
+                              onPressed: () {
+                                Get.toNamed('/addlocation');
+                              },
+                              icon: Icon(
+                                Icons.add,
+                                size: 25,
+                              ),
+                            );
+                          else {
+                            return IconButton(
+                              onPressed: () {
+                                _authController.signOut();
+                              },
+                              icon: Icon(
+                                Icons.logout,
+                                size: 25,
+                              ),
+                            );
+                          }
+                        }),
                       ],
                     ),
                     SizedBox(height: 10),
@@ -94,7 +108,7 @@ class _ContentPageState extends State<ContentPage>
                           );
                         }),
                     SizedBox(height: 10),
-                  Text(
+                    Text(
                       'Welcome back',
                       style: GoogleFonts.mitr(
                           fontSize: 20,
@@ -123,40 +137,40 @@ class _ContentPageState extends State<ContentPage>
             ),
             SizedBox(height: 10),
 
-            GetBuilder<ProfileController>(builder: (_) {
-              if (_profileController.userType.value == 'Doctor') {
-                print(_profileController.userType.value);
-                return GestureDetector(
-                  onTap: () {
-                    Get.toNamed('/addlocation');
-                  },
-                  child: Hero(
-                    tag: 'addlocation',
-                    child: Container(
-                      width: 150,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: kDefualtColorMain,
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'เพิ่มโลเคชั่น',
-                            style: GoogleFonts.mitr(
-                                fontSize: 18, fontWeight: FontWeight.w300),
-                          ),
-                          Icon(Icons.location_city)
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              } else {
-                return Container();
-              }
-            }),
+            // GetBuilder<ProfileController>(builder: (_) {
+            //   if (_profileController.userType.value == 'Doctor') {
+            //     print(_profileController.userType.value);
+            //     return GestureDetector(
+            //       onTap: () {
+            //         Get.toNamed('/addlocation');
+            //       },
+            //       child: Hero(
+            //         tag: 'addlocation',
+            //         child: Container(
+            //           width: 150,
+            //           height: 50,
+            //           decoration: BoxDecoration(
+            //             color: kDefualtColorMain,
+            //             borderRadius: BorderRadius.all(Radius.circular(20)),
+            //           ),
+            //           child: Row(
+            //             mainAxisAlignment: MainAxisAlignment.center,
+            //             children: [
+            //               Text(
+            //                 'เพิ่มโลเคชั่น',
+            //                 style: GoogleFonts.mitr(
+            //                     fontSize: 18, fontWeight: FontWeight.w300),
+            //               ),
+            //               Icon(Icons.location_city)
+            //             ],
+            //           ),
+            //         ),
+            //       ),
+            //     );
+            //   } else {
+            //     return Container();
+            //   }
+            // }),
 
             Container(
               width: size.width,
@@ -209,7 +223,6 @@ class _ContentPageState extends State<ContentPage>
                     SizedBox(
                       height: 10,
                     ),
-
                     StreamBuilder(
                       stream: _contentController.allPromotion().asStream(),
                       builder: ((context, snapshot) {
@@ -279,22 +292,10 @@ class _ContentPageState extends State<ContentPage>
                         );
                       }),
                     )
-                    // dummy container
-                    // Container(
-                    //   width: double.infinity,
-                    //   height: 500,
-                    //   color: Colors.green,
-                    // )
                   ],
                 ),
               ),
             )
-
-            // Container(
-            //   width: double.infinity,
-            //   height: size.height,
-            //   color: Colors.black,
-            // ),
           ],
         ),
       ),

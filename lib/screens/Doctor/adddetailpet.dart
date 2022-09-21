@@ -19,6 +19,11 @@ class _AddDetailPetState extends State<AddDetailPet> {
   Widget build(BuildContext context) {
     var petname = Get.arguments[0];
     var image = Get.arguments[1];
+    var type = Get.arguments[2];
+    var species = Get.arguments[3];
+    var gender = Get.arguments[4];
+    var weight = Get.arguments[5];
+
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -67,7 +72,19 @@ class _AddDetailPetState extends State<AddDetailPet> {
               ),
               SizedBox(height: 20),
               Text(
-                '${petname}',
+                'ชื่อ ${petname}',
+                style: GoogleFonts.mitr(
+                  fontSize: 20,
+                ),
+              ),
+              Text(
+                'เพศ ${gender} / น้ำหนัก ${weight}',
+                style: GoogleFonts.mitr(
+                  fontSize: 20,
+                ),
+              ),
+              Text(
+                'ประเภท ${type} / พันธุ์ ${species}',
                 style: GoogleFonts.mitr(
                   fontSize: 20,
                 ),
