@@ -31,15 +31,9 @@ class RecordController extends GetxController {
     print('from controller ${docLength.value}');
   }
 
-  // void onReady() {
-  //   super.onReady();
-
-  // }
 
   Future<dynamic> getPet() async {
-    print('xxxxxxxxx');
     petName = []; // กันมันแสดง index ตัวแรก
-
     try {
       await FirebaseFirestore.instance
           .collection('pets')

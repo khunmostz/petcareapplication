@@ -132,6 +132,5 @@ class ProfileController extends GetxController {
         'เกิดข้อผิดพลาด',
       );
     }
-    // print(FirebaseAuth.instance.currentUser!.uid);
   }
 }
