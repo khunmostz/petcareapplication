@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:petcare_project/controllers/auth_controller.dart';
-import 'package:petcare_project/screens/Auth/before_page.dart';
-import 'package:petcare_project/utils/bottomnav.dart';
 import 'package:petcare_project/utils/routes.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
 
