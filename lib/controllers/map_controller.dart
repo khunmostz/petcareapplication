@@ -9,10 +9,9 @@ class MapController extends GetxController {
 
   var userPosition;
 
-  void onInit() async {
-    super.onInit();
-    await getUserPosition();
-  }
+  // void onInit() async {
+  //   super.onInit();
+  // }
 
   void clearList() {
     placeKM.clear();
@@ -24,9 +23,10 @@ class MapController extends GetxController {
   }
 
   Future getUserPosition() async {
+    clearList();
     bool serviceEnabled;
     LocationPermission permission;
-    clearList();
+
     print('asdasd 1: ${placeKM}');
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();

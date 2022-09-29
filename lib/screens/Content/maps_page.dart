@@ -53,6 +53,7 @@ class _MapsPageState extends State<MapsPage>
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // SizedBox(height: 50),
               // // Search
