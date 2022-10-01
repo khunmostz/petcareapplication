@@ -36,7 +36,7 @@ class _RecordPageState extends State<RecordPage> {
     ).then((value) {
       date = value;
       setState(() {
-        search = date.toString();
+        _recordController.search = date.toString();
       });
     });
   }
@@ -121,22 +121,29 @@ class _RecordPageState extends State<RecordPage> {
                           onPageChanged: (index) {
                             setState(() {
                               _selectedIndex = index;
+                              _recordController.selectedIndex.value = index;
+                              // print(_recordController.selectedIndex.toString());
                               // print('after:' + _selectedIndex.toString());
-                              search = '';
+                              _recordController.search = '';
 
                               // snapshotData = 0;
                             });
                           },
                           itemCount: _recordController.docLength.value,
                           itemBuilder: (context, index) {
+                            print('index' + index.toString());
                             var _scale = _selectedIndex == index ? 1.0 : 0.8;
                             return TweenAnimationBuilder(
                               duration: const Duration(milliseconds: 350),
                               tween: Tween(begin: _scale, end: _scale),
                               curve: Curves.ease,
-                              child: PetSlide(
-                                pet: _recordController.petImage[index],
-                              ),
+                              child: GetBuilder<RecordController>(
+                                  id: 'getPets',
+                                  builder: (_) {
+                                    return PetSlide(
+                                      pet: _recordController.petImage[index],
+                                    );
+                                  }),
                               builder: (context, double value, child) {
                                 return Transform.scale(
                                   scale: value,
@@ -195,9 +202,8 @@ class _RecordPageState extends State<RecordPage> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          print([
-                            // 'asda : ${_recordController.petNameController.text}'
-                          ]);
+                          _recordController.petNameController.text =
+                              _recordController.petName[_selectedIndex];
                           showDialog(
                             context: context,
                             builder: (context) {
@@ -214,13 +220,18 @@ class _RecordPageState extends State<RecordPage> {
                                     height: size.height * 0.5,
                                     child: Column(
                                       children: [
-                                        RecordDialog(
-                                          title: 'ชื่อสัตว์เลี้ยง',
-                                          hinText: 'ชื่อสัตว์เลี้ยง',
-                                          readOnly: true,
-                                          keyboardType: TextInputType.text,
-                                          controller: _recordController
-                                              .petNameController,
+                                        GetBuilder<RecordController>(
+                                          id: 'getPets',
+                                          builder: (_) {
+                                            return RecordDialog(
+                                              title: 'ชื่อสัตว์เลี้ยง',
+                                              hinText: 'ชื่อสัตว์เลี้ยง',
+                                              readOnly: true,
+                                              keyboardType: TextInputType.text,
+                                              controller: _recordController
+                                                  .petNameController,
+                                            );
+                                          },
                                         ),
                                         SizedBox(height: 10),
                                         RecordDialog(
@@ -249,6 +260,10 @@ class _RecordPageState extends State<RecordPage> {
                                               child: GestureDetector(
                                                 onTap: () {
                                                   _showDatePicker();
+                                                  setState(() {
+                                                    _recordController.search =
+                                                        '';
+                                                  });
                                                 },
                                                 child: Container(
                                                   margin:
@@ -275,7 +290,10 @@ class _RecordPageState extends State<RecordPage> {
                                         CustomButton(
                                           onPressed: () {
                                             _recordController
-                                                .addRecord(date.toString());
+                                                .addRecord(date.toString())
+                                                .then((value) => print(
+                                                    _recordController.search
+                                                        .toString()));
                                           },
                                           text: 'เพิ่มข้อมูล',
                                         ),
@@ -415,33 +433,44 @@ class _RecordPageState extends State<RecordPage> {
             ),
             SizedBox(height: 20),
 
-            if (search != '')
-              Align(
-                alignment: Alignment.bottomLeft,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        search = '';
-                        _tapSearch = true;
-                      });
-                    },
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: kDefualtColorMain,
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
+            GetBuilder<RecordController>(
+                id: 'updateRecord',
+                builder: (_) {
+                  if (_recordController.search != '') {
+                    return Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _recordController.search = '';
+                              _tapSearch = true;
+                            });
+                          },
+                          child: Container(
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: kDefualtColorMain,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(50)),
+                            ),
+                            child: Icon(
+                              Icons.clear,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
                       ),
-                      child: Icon(
-                        Icons.clear,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              )
+                    );
+                  } else {
+                    return Container();
+                  }
+                }),
+            SizedBox(
+              height: 20,
+            )
           ],
         ),
       ),
@@ -449,17 +478,19 @@ class _RecordPageState extends State<RecordPage> {
   }
 
   Widget recordTable({required String indexSelect}) {
-    print(indexSelect);
+    print('qwerty:${indexSelect}');
     return GetBuilder<RecordController>(
         id: 'updateRecord',
         builder: (_) {
           return Column(
             children: [
               StreamBuilder<QuerySnapshot>(
-                  stream: (search != '' && search != null)
+                  stream: (_recordController.search != '' &&
+                          _recordController.search != null)
                       ? FirebaseFirestore.instance
                           .collection('records')
                           .where('date', isEqualTo: search)
+                          .where('petname', isEqualTo: indexSelect)
                           .snapshots()
                       : FirebaseFirestore.instance
                           .collection('records')
@@ -467,6 +498,8 @@ class _RecordPageState extends State<RecordPage> {
                               isEqualTo: indexSelect.toLowerCase())
                           .snapshots(),
                   builder: (context, snapshot) {
+                    print(
+                        'laksjdlkasdlald ${indexSelect.toLowerCase().toString()}');
                     int snapshotData = 0;
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(

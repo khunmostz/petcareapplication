@@ -21,6 +21,8 @@ class RecordController extends GetxController {
   List petImage = [];
   List petWeight = [];
 
+  String search = '';
+
   final TextEditingController petNameController = TextEditingController();
   final TextEditingController particularController = TextEditingController();
   final TextEditingController payController = TextEditingController();
@@ -31,7 +33,6 @@ class RecordController extends GetxController {
     print('from controller ${docLength.value}');
   }
 
-
   Future<dynamic> getPet() async {
     petName = []; // กันมันแสดง index ตัวแรก
     try {
@@ -41,28 +42,32 @@ class RecordController extends GetxController {
           .get()
           .then((value) async {
         docLength = value.docs.length.obs;
-        print('getPets: ${docLength.toString()}');
         value.docs.forEach((pet) {
           pets = pet.data();
+          // print(pets['petName']);
           petImage.add(pets['image']);
           petName.add(pets['petName']);
-          petNameController.text = pets['petName'];
           petType.add(pets['type']);
           petSpecies.add(pets['species']);
           petWeight.add(pets['weight']);
           petGender.add(pets['gender']);
           petBday.add(pets['birdthday']);
           petVday.add(pets['vaccine']);
-          // print("petName: ${petName.toString()}");
+          print("petName: ${petName.length}");
+          // docLength++;
         });
       });
+
+      petNameController.text = petName[selectedIndex.value];
+
       update(['getPets']);
     } catch (e) {}
   }
 
   Future<dynamic> getRecordByName(String? nameIndex) async {
     recordDataId = [].obs;
-    petNameController.text = nameIndex!;
+    // petNameController.text = nameIndex!;
+
     try {
       await FirebaseFirestore.instance
           .collection('records')
@@ -84,6 +89,7 @@ class RecordController extends GetxController {
   }
 
   Future<void> addRecord(String date) async {
+    search = '';
     try {
       if (checkEmpty()) {
         await FirebaseFirestore.instance.collection('records').add({
@@ -91,7 +97,9 @@ class RecordController extends GetxController {
           'particular': particularController.text,
           'pay': payController.text,
           'date': date
-        }).then((value) => Get.back());
+        }).then((value) {
+          Get.back();
+        });
         Get.snackbar('แจ้งเตือน', 'เพิ่มข้อมูลสำเร็จ');
         clearForm();
 

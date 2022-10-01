@@ -64,7 +64,7 @@ class _BottomNavState extends State<BottomNav> {
     ),
     GButton(
       icon: Icons.healing,
-      text: "คนรักษา",
+      text: "การรักษา",
     ),
     GButton(
       icon: Icons.person,

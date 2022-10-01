@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:petcare_project/controllers/record_controller.dart';
 import 'package:petcare_project/utils/constant.dart';
 
 class PetSlide extends StatelessWidget {
