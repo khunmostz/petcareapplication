@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:petcare_project/animations/content_animation.dart';
+import 'package:petcare_project/controllers/addlocation_controller.dart';
 import 'package:petcare_project/controllers/auth_controller.dart';
 import 'package:petcare_project/controllers/content_controller.dart';
 import 'package:petcare_project/controllers/profile_controller.dart';
@@ -18,11 +19,12 @@ class ContentPage extends StatefulWidget {
 
 class _ContentPageState extends State<ContentPage>
     with SingleTickerProviderStateMixin {
-  final AuthController _authController = Get.find<AuthController>();
   final ProfileController _profileController = Get.find<ProfileController>();
   final ContentController _contentController = Get.put(ContentController());
 
   final ContentAnimation _contentAniamtion = Get.put(ContentAnimation());
+  final AddLocationController _addLocationController =
+      Get.find<AddLocationController>();
 
   @override
   void initState() {
@@ -41,97 +43,108 @@ class _ContentPageState extends State<ContentPage>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              width: size.width,
-              // height:
-              //     size.height < 920 ? size.height * 0.45 : size.height * 0.35,
-              height:
-                  size.height < 920 ? size.height * 0.35 : size.height * 0.3,
-              decoration: BoxDecoration(
-                  color: kDefualtColorMain,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(16),
-                    bottomRight: Radius.circular(16),
-                  )),
-              child: Padding(
-                padding: const EdgeInsets.all(kDefualtPadding),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // header
-                    SizedBox(
-                      height: 50,
-                    ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.person,
-                          size: 25,
-                        ),
-                        Spacer(),
-                        GetBuilder<ProfileController>(builder: (_) {
-                          if (_profileController.userType.value == 'Doctor')
-                            return IconButton(
-                              onPressed: () {
-                                Get.toNamed('/addlocation');
-                              },
-                              icon: Icon(
-                                Icons.add,
-                                size: 25,
-                              ),
-                            );
-                          else {
-                            return IconButton(
-                              onPressed: () {
-                                _authController.signOut();
-                              },
-                              icon: Icon(
-                                Icons.logout,
-                                size: 25,
-                              ),
-                            );
-                          }
-                        }),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    GetBuilder<ProfileController>(
-                        id: 'getUserDetail',
-                        builder: (controller) {
-                          return Text(
-                            controller.usernameController.value.text,
-                            style: GoogleFonts.mitr(
-                              fontSize: 20,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w300,
+            ClipPath(
+              clipper: BackgroundHeader(),
+              child: Container(
+                width: size.width,
+                // height:
+                //     size.height < 920 ? size.height * 0.45 : size.height * 0.35,
+                height:
+                    size.height < 920 ? size.height * 0.35 : size.height * 0.3,
+                color: kDefualtColorMain,
+                child: CustomPaint(
+                  painter: BackgroundPainter(),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(kDefualtPadding),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // header
+                            SizedBox(
+                              height: 50,
                             ),
-                          );
-                        }),
-                    SizedBox(height: 10),
-                    Text(
-                      'Welcome back',
-                      style: GoogleFonts.mitr(
-                          fontSize: 20,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w300),
-                    ),
-                    SizedBox(height: 20),
-                    Container(
-                      decoration: BoxDecoration(
-                        // border: Border.all(),
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.shade50,
-                            spreadRadius: 0.5,
-                            blurRadius: 10,
-                          )
-                        ],
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.person,
+                                  size: 25,
+                                ),
+                                Spacer(),
+                                GetBuilder<ProfileController>(
+                                    id: 'getUserDetail',
+                                    builder: (_) {
+                                      if (_profileController.userType.value ==
+                                          'Doctor')
+                                        return GetBuilder<
+                                                AddLocationController>(
+                                            builder: (_) {
+                                          if (_addLocationController
+                                                  .dataCheck ==
+                                              'have') {
+                                            return Container();
+                                          } else {
+                                            return IconButton(
+                                              onPressed: () {
+                                                Get.toNamed('/addlocation');
+                                              },
+                                              icon: Icon(
+                                                Icons.add,
+                                                size: 25,
+                                              ),
+                                            );
+                                          }
+                                        });
+                                      else {
+                                        return Container();
+                                      }
+                                    }),
+                              ],
+                            ),
+                            SizedBox(height: 10),
+                            GetBuilder<ProfileController>(
+                                id: 'getUserDetail',
+                                builder: (controller) {
+                                  return Text(
+                                    controller.usernameController.value.text,
+                                    style: GoogleFonts.mitr(
+                                      fontSize: 20,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                  );
+                                }),
+                            SizedBox(height: 10),
+                            Text(
+                              'Welcome back',
+                              style: GoogleFonts.mitr(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w300),
+                            ),
+                            SizedBox(height: 20),
+                            Container(
+                              decoration: BoxDecoration(
+                                // border: Border.all(),
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(50)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.shade50,
+                                    spreadRadius: 0.5,
+                                    blurRadius: 10,
+                                  )
+                                ],
+                              ),
+                              // child: SearchField(),
+                            ),
+                          ],
+                        ),
                       ),
-                      // child: SearchField(),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -351,5 +364,60 @@ class _ContentPageState extends State<ContentPage>
         ),
       ),
     );
+  }
+}
+
+class BackgroundHeader extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    double w = size.width;
+    double h = size.height;
+
+    final path = Path();
+
+    // (0,0) point 1
+    path.lineTo(0, h); // 2 point
+    path.quadraticBezierTo(w * 0.5, h - 50, w, h);
+    path.lineTo(w, h - 100);
+    path.lineTo(w, 0);
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    // TODO: implement shouldReclip
+    return false;
+  }
+}
+
+class BackgroundPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint paint = Paint()..color = Colors.white.withOpacity(0.1);
+    final path = Path();
+
+    path.moveTo(0, 0);
+    path.lineTo(size.width * 0.2, 0);
+    path.lineTo(0, size.height * 0.4);
+    path.close();
+
+    final path2 = Path();
+
+    path.moveTo(size.width, 0);
+    path.lineTo(size.width * 0.9, 0);
+    path.lineTo(size.width * 0.4, size.height);
+    path.lineTo(size.width, size.height);
+    path.close();
+
+    canvas.drawPath(path, paint);
+    canvas.drawPath(path2, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    // TODO: implement shouldRepaint
+    return false;
   }
 }

@@ -16,9 +16,9 @@ class DocSearch extends StatefulWidget {
 class _DocSearchState extends State<DocSearch>
     with SingleTickerProviderStateMixin {
   final DocSearchController _docSearchController =
-      Get.put(DocSearchController());
+      Get.find<DocSearchController>();
 
-  final DogSearchAniamtion _aniamtion = Get.put(DogSearchAniamtion());
+  final DogSearchAniamtion _aniamtion = Get.find<DogSearchAniamtion>();
 
   @override
   Widget build(BuildContext context) {

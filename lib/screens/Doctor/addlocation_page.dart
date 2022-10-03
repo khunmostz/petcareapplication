@@ -15,7 +15,7 @@ class AddLocationPage extends StatefulWidget {
 
 class _AddLocationPageState extends State<AddLocationPage> {
   final AddLocationController _addLocationController =
-      Get.put(AddLocationController());
+      Get.find<AddLocationController>();
 
   List<String> typeLocation = [
     'Groomer',
@@ -65,10 +65,13 @@ class _AddLocationPageState extends State<AddLocationPage> {
                       builder: ((_) {
                         return CircleAvatar(
                           radius: 100,
-                          backgroundColor: Colors.grey,
+                          backgroundColor: Colors.grey.withOpacity(0.3),
                           backgroundImage: _addLocationController.image != null
                               ? FileImage(_addLocationController.image!)
                               : null,
+                          child: Icon(
+                            Icons.photo,
+                          ),
                         );
                       }),
                     ),
@@ -150,6 +153,7 @@ class _AddLocationPageState extends State<AddLocationPage> {
                   text: 'ยืนยัน',
                   onPressed: () {
                     _addLocationController.addDoctor();
+                    // _addLocationController.fetchDoc();
                   },
                 ),
                 SizedBox(height: 20),

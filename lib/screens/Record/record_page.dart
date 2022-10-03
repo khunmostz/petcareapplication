@@ -489,7 +489,7 @@ class _RecordPageState extends State<RecordPage> {
                           _recordController.search != null)
                       ? FirebaseFirestore.instance
                           .collection('records')
-                          .where('date', isEqualTo: search)
+                          .where('date', isEqualTo: _recordController.search)
                           .where('petname', isEqualTo: indexSelect)
                           .snapshots()
                       : FirebaseFirestore.instance

@@ -24,7 +24,7 @@ class ContentAnimation extends GetxController
     ));
     animationController.forward();
     animationController.addListener(() {
-      print(animationController.value);
+      // print(animationController.value);
     });
     print('onInitRun');
   }

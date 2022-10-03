@@ -8,6 +8,7 @@ import 'package:lottie/lottie.dart';
 import 'package:petcare_project/controllers/pet_controller.dart';
 import 'package:petcare_project/utils/constant.dart';
 import 'package:petcare_project/widget/custom_button.dart';
+import 'package:splash_screen_view/SplashScreenView.dart';
 
 class MyPetPage extends StatefulWidget {
   const MyPetPage({Key? key}) : super(key: key);
@@ -237,6 +238,7 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                                   alignment: Alignment.centerLeft,
                                   child: PetDialog(
                                     size: size,
+                                    type: TextInputType.number,
                                     title: 'น้ำหนัก (กิโลกรัม)',
                                     controller: _petController.weightController,
                                   ),
@@ -572,12 +574,14 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
 class PetDialog extends StatelessWidget {
   final String title;
   final TextEditingController controller;
-  const PetDialog({
-    Key? key,
-    required this.size,
-    required this.title,
-    required this.controller,
-  }) : super(key: key);
+  final TextInputType? type;
+  const PetDialog(
+      {Key? key,
+      required this.size,
+      required this.title,
+      required this.controller,
+      this.type})
+      : super(key: key);
 
   final Size size;
 
@@ -594,6 +598,7 @@ class PetDialog extends StatelessWidget {
         padding: EdgeInsets.only(left: 20),
         child: TextFormField(
           controller: controller,
+          keyboardType: type,
           decoration: InputDecoration(
             border: InputBorder.none,
             labelText: title,
