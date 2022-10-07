@@ -47,11 +47,9 @@ class _BottomNavState extends State<BottomNav> {
     ContentPage(),
     ProfilePage(),
   ];
-
   final controllerPage = [
     ContentController(),
   ];
-
   final tabUser = [
     GButton(
       icon: Icons.home,
@@ -123,6 +121,7 @@ class _BottomNavState extends State<BottomNav> {
                       if (_selectedIndex == 1) {
                         print('record');
                         _recordController.getPet();
+                        setState(() {});
                       }
                     });
                   },

@@ -25,8 +25,9 @@ class _RecordPageState extends State<RecordPage> {
   var search = '';
 
   // late final AnimationController _controller;
-  final RecordController _recordController = Get.find<RecordController>();
+  // final RecordController _recordController = Get.find<RecordController>();
 
+  final RecordController _recordController = Get.put(RecordController());
   void _showDatePicker() {
     showDatePicker(
       context: context,
@@ -131,6 +132,8 @@ class _RecordPageState extends State<RecordPage> {
                           },
                           itemCount: _recordController.docLength.value,
                           itemBuilder: (context, index) {
+                            print('+' * 100);
+                            print(_recordController.docLength.value.toString());
                             print('index' + index.toString());
                             var _scale = _selectedIndex == index ? 1.0 : 0.8;
                             return TweenAnimationBuilder(
@@ -478,7 +481,7 @@ class _RecordPageState extends State<RecordPage> {
   }
 
   Widget recordTable({required String indexSelect}) {
-    print('qwerty:${indexSelect}');
+    // print('qwerty:${indexSelect}');
     return GetBuilder<RecordController>(
         id: 'updateRecord',
         builder: (_) {
@@ -498,8 +501,8 @@ class _RecordPageState extends State<RecordPage> {
                               isEqualTo: indexSelect.toLowerCase())
                           .snapshots(),
                   builder: (context, snapshot) {
-                    print(
-                        'laksjdlkasdlald ${indexSelect.toLowerCase().toString()}');
+                    // print(
+                    //     'laksjdlkasdlald ${indexSelect.toLowerCase().toString()}');
                     int snapshotData = 0;
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(

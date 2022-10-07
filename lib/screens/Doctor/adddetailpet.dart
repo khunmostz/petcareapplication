@@ -30,7 +30,7 @@ class _AddDetailPetState extends State<AddDetailPet> {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Color.fromARGB(255, 248, 135, 100),
+            kDefualtColorMain,
             Colors.white,
           ],
         ),

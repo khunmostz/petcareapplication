@@ -27,7 +27,7 @@ class _UserDetailState extends State<UserDetail> {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Color.fromARGB(255, 248, 135, 100),
+            kDefualtColorMain,
             Colors.white,
           ],
         ),
@@ -94,7 +94,7 @@ class _UserDetailState extends State<UserDetail> {
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                     boxShadow: [
                       BoxShadow(
-                          color: Color.fromARGB(255, 248, 135, 100),
+                          color: kDefualtColorMain.withOpacity(0.8),
                           offset: Offset(5, 5),
                           spreadRadius: 1,
                           blurRadius: 10),
@@ -146,7 +146,7 @@ class _UserDetailState extends State<UserDetail> {
                       ),
                   child: GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 4,
+                        crossAxisCount: 3,
                         mainAxisSpacing: 10,
                       ),
                       itemCount: _docSearchController.petShow.length,

@@ -91,7 +91,7 @@ class PetController extends GetxController {
       ]
     },
     {
-      'id': 'กิ่งก่า',
+      'id': 'กิ้งก่า',
       'type': [
         "ไม่รู้ (Unknown)",
         "กิ้งก่าทะเลทราย (Bearded Dragon)",
@@ -269,6 +269,22 @@ class PetController extends GetxController {
     },
   ];
 
+  List genderList = ['ผู้', 'เมีย'];
+  List weightList = [
+    '1 - 5',
+    '5 - 10',
+    '10 - 15',
+    '15 - 20',
+    '20 - 25',
+    '25 - 30',
+    '30 - 35',
+    '35 - 40',
+    '40 - 45',
+    '45 - 50',
+    '50 - 55',
+    '55 - 60',
+  ];
+
   void onSelected(selected) {
     Map data = {};
     data = typeCategories.firstWhere((element) => element['id'] == selected);
@@ -284,8 +300,8 @@ class PetController extends GetxController {
       final XFile? _pickedImage = await _picker.pickImage(
         source: imageSource,
         imageQuality: 100,
-        maxHeight: 150,
-        maxWidth: 150,
+        maxHeight: 500,
+        maxWidth: 500,
       );
       if (_pickedImage != null) {
         final Rx<File> _imagePath = File(_pickedImage.path).obs;
@@ -322,39 +338,62 @@ class PetController extends GetxController {
       firstDate: DateTime(2000),
       lastDate: DateTime(2030),
     ).then((value) {
+      if (value == null) {
+        print('-' * 100);
+        var check = value.toString();
+        // print(check);
+        check = 'เลือกวันเกิด';
+        // print(check);
+        birdthday = check.obs;
+        update(['updateVaccine']);
+        return;
+      }
       date = value;
       bday = date.toString();
       birdthday = bday.obs;
 
       if (birdthday != '') {
-        print(birdthday.toString().substring(0, 10));
+        // print(birdthday.toString().substring(0, 10));
         update(['updateDay']);
       }
     });
   }
 
-  selectVaccine(BuildContext context, date) {
-    showDatePicker(
+  selectVaccine(BuildContext context, date) async {
+    DateTime? picker = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2030),
     ).then((value) {
+      // print(value);
+      if (value == null) {
+        print('-' * 100);
+        var check = value.toString();
+        // print(check);
+        check = 'ตารางวัคซีน';
+        // print(check);
+        vaccine = check.obs;
+        update(['updateVaccine']);
+        return;
+      }
       date = value;
       vday = date.toString();
       vaccine = vday.obs;
 
-      if (vaccine != '') {
-        print(birdthday.toString().substring(0, 10));
-        update(['updateVaccine']);
-      }
+      update(['updateVaccine']);
     });
+
+    if (picker == null) return;
+
+    ;
   }
 
   Future<dynamic> getPet() async {
     petName = [].obs; // กันมันแสดง index ตัวแรก
     petImage = [].obs;
-
+    petType = [].obs;
+    petWeight = [].obs;
     try {
       await FirebaseFirestore.instance
           .collection('pets')
@@ -399,7 +438,7 @@ class PetController extends GetxController {
         'petName': petNameController.text.trim().toLowerCase(),
         'type': typeController.text.trim().toLowerCase(),
         'species': speciesController.text.trim().toLowerCase(),
-        'weight': weightController.text.trim() + 'KG',
+        'weight': weightController.text.trim() + 'กิโลกรัม',
         'gender': genderController.text.trim().toLowerCase(),
         'birdthday': birdthday.substring(0, 10),
         'vaccine': vaccine.substring(0, 10),
@@ -416,10 +455,13 @@ class PetController extends GetxController {
         // docLength++;
 
         this.image = null;
-        petNameController.text == '';
-        typeController.text == '';
-        speciesController.text == '';
-        weightController.text == '';
+        petNameController.text = '';
+        typeController.text = '';
+        speciesController.text = '';
+        weightController.text = '';
+        genderController.text = '';
+        birdthday = 'เลือกวันเกิด';
+        vaccine = 'ตารางวัคซีน';
 
         update(['addPets']);
       });
@@ -445,7 +487,15 @@ class PetController extends GetxController {
     }
   }
 
-  Future<void> deletePet(String petname) async {
+  Future<void> deletePet(String petname, int index) async {
+    petName.removeAt(index);
+    petImage.removeAt(index);
+    petType.removeAt(index);
+    petSpecies.removeAt(index);
+    petWeight.removeAt(index);
+    petGender.removeAt(index);
+    petBday.removeAt(index);
+    petVday.removeAt(index);
     try {
       await FirebaseFirestore.instance
           .collection('pets')
@@ -453,6 +503,9 @@ class PetController extends GetxController {
           .delete()
           .then((value) {
         Get.snackbar('แจ้งเตือน', 'ลบ ${petname} สำเร็จ');
+
+        print('petName Length: ${petName.length}');
+        update();
       });
     } catch (e) {
       print(e);

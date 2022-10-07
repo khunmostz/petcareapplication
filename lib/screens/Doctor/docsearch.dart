@@ -128,8 +128,8 @@ class _DocSearchState extends State<DocSearch>
                                               begin: Alignment.topCenter,
                                               end: Alignment.bottomCenter,
                                               colors: [
-                                                Color.fromARGB(
-                                                    255, 248, 135, 100),
+                                                kDefualtColorMain
+                                                    .withOpacity(0.8),
                                                 Colors.white,
                                               ],
                                             ),

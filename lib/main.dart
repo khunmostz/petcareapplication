@@ -9,6 +9,7 @@ import 'package:splash_screen_view/SplashScreenView.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
   runApp(MyApp());
 }
 

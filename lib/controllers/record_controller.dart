@@ -27,14 +27,15 @@ class RecordController extends GetxController {
   final TextEditingController particularController = TextEditingController();
   final TextEditingController payController = TextEditingController();
 
-  void onInit() async {
+  void onInit() {
     super.onInit();
-    await getPet();
+    getPet();
     print('from controller ${docLength.value}');
   }
 
   Future<dynamic> getPet() async {
     petName = []; // กันมันแสดง index ตัวแรก
+    petImage = [];
     try {
       await FirebaseFirestore.instance
           .collection('pets')

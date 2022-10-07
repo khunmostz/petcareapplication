@@ -32,9 +32,9 @@ class ProfileController extends GetxController {
       final ImagePicker _picker = ImagePicker();
       final XFile? _pickedImage = await _picker.pickImage(
         source: imageSource,
-        imageQuality: 50,
-        maxHeight: 150,
-        maxWidth: 150,
+        imageQuality: 100,
+        maxHeight: 250,
+        maxWidth: 250,
       );
       if (_pickedImage != null) {
         final Rx<File> _imagePath = File(_pickedImage.path).obs;

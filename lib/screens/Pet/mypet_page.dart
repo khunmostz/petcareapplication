@@ -8,7 +8,6 @@ import 'package:lottie/lottie.dart';
 import 'package:petcare_project/controllers/pet_controller.dart';
 import 'package:petcare_project/utils/constant.dart';
 import 'package:petcare_project/widget/custom_button.dart';
-import 'package:splash_screen_view/SplashScreenView.dart';
 
 class MyPetPage extends StatefulWidget {
   const MyPetPage({Key? key}) : super(key: key);
@@ -236,11 +235,13 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                               Expanded(
                                 child: Align(
                                   alignment: Alignment.centerLeft,
-                                  child: PetDialog(
-                                    size: size,
-                                    type: TextInputType.number,
-                                    title: 'น้ำหนัก (กิโลกรัม)',
-                                    controller: _petController.weightController,
+                                  child: DropdownSearch<dynamic>(
+                                    items: _petController.weightList,
+                                    onChanged: ((value) {
+                                      _petController.weightController.text =
+                                          value;
+                                    }),
+                                    selectedItem: "น้ำหนัก",
                                   ),
                                 ),
                               ),
@@ -248,10 +249,13 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                               Expanded(
                                 child: Align(
                                   alignment: Alignment.centerLeft,
-                                  child: PetDialog(
-                                    size: size,
-                                    title: 'เพศ',
-                                    controller: _petController.genderController,
+                                  child: DropdownSearch<dynamic>(
+                                    items: _petController.genderList,
+                                    onChanged: ((value) {
+                                      _petController.genderController.text =
+                                          value;
+                                    }),
+                                    selectedItem: "เพศ",
                                   ),
                                 ),
                               ),
@@ -277,10 +281,10 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                                           border:
                                               Border.all(color: Colors.grey),
                                           borderRadius:
-                                              BorderRadius.circular(6),
+                                              BorderRadius.circular(4),
                                         ),
                                         child: Padding(
-                                          padding: EdgeInsets.only(left: 20),
+                                          padding: EdgeInsets.only(left: 10),
                                           child: Align(
                                             alignment: Alignment.centerLeft,
                                             child: Text(
@@ -290,9 +294,11 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                                                   ? 'เลือกวันเกิด'
                                                   : _petController.birdthday
                                                       .toString()
-                                                      .substring(0, 10),
+                                                      .characters
+                                                      .take(10)
+                                                      .toString(),
                                               style: TextStyle(
-                                                  color: Colors.black54),
+                                                  color: Colors.black),
                                             ),
                                           ),
                                         ),
@@ -317,10 +323,10 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                                           border:
                                               Border.all(color: Colors.grey),
                                           borderRadius:
-                                              BorderRadius.circular(6),
+                                              BorderRadius.circular(4),
                                         ),
                                         child: Padding(
-                                          padding: EdgeInsets.only(left: 20),
+                                          padding: EdgeInsets.only(left: 10),
                                           child: Align(
                                             alignment: Alignment.centerLeft,
                                             child: Text(
@@ -330,9 +336,11 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                                                   ? 'ตารางวัคซีน'
                                                   : _petController.vaccine
                                                       .toString()
-                                                      .substring(0, 10),
+                                                      .characters
+                                                      .take(10)
+                                                      .toString(),
                                               style: TextStyle(
-                                                  color: Colors.black54),
+                                                  color: Colors.black),
                                             ),
                                           ),
                                         ),
@@ -371,7 +379,9 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                           ),
                           ElevatedButton(
                             style: buttonStyle,
-                            onPressed: () => Get.back(),
+                            onPressed: () {
+                              Get.back();
+                            },
                             child: Text(
                               'ยกเลิก',
                               style: GoogleFonts.mitr(
@@ -405,163 +415,186 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
             return GetBuilder<PetController>(
               id: 'addPets',
               builder: (_) {
-                return ListView.builder(
-                  itemCount: _petController.docLength,
-                  itemBuilder: (context, index) {
-                    // print('page: ${_petController.petName}');
-                    // print('length ${_petController.docLength.toString()}');
-                    return Slidable(
-                      key: Key(_petController.petName[index]),
-                      endActionPane: ActionPane(
-                        // A motion is a widget used to control how the pane animates.
-                        motion: const ScrollMotion(),
+                return GetBuilder<PetController>(builder: (_) {
+                  return ListView.builder(
+                    itemCount: _petController.docLength,
+                    itemBuilder: (context, index) {
+                      // print('page: ${_petController.petName}');
+                      print('length ${_petController.docLength.toString()}');
 
-                        // A pane can dismiss the Slidable.
-                        dismissible: DismissiblePane(onDismissed: () {
-                          _petController
-                              .deletePet(_petController.petName[index]);
-                        }),
+                      if (_petController.docLength <= 0) {
+                        return Container(
+                          child: Text('ไม่มีข้อมูลสัตว์เลี้ยง'),
+                        );
+                      } else {
+                        return Slidable(
+                          key: Key(_petController.petName[index]),
+                          endActionPane: ActionPane(
+                            // A motion is a widget used to control how the pane animates.
+                            motion: const ScrollMotion(),
 
-                        // All actions are defined in the children parameter.
-                        children: [
-                          // A SlidableAction can have an icon and/or a label.
-                          SlidableAction(
-                            onPressed: (context) => _petController
-                                .deletePet(_petController.petName[index]),
-                            backgroundColor: Color(0xFFFE4A49),
-                            foregroundColor: Colors.white,
-                            icon: Icons.delete,
-                            label: 'Delete',
+                            // A pane can dismiss the Slidable.
+                            dismissible: DismissiblePane(onDismissed: () {
+                              _petController.deletePet(
+                                  _petController.petName[index], index);
+                              setState(() {});
+                            }),
+
+                            // All actions are defined in the children parameter.
+                            children: [
+                              // A SlidableAction can have an icon and/or a label.
+                              SlidableAction(
+                                onPressed: (context) {
+                                  _petController.deletePet(
+                                      _petController.petName[index], index);
+                                  setState(() {});
+                                },
+                                backgroundColor: Color(0xFFFE4A49),
+                                foregroundColor: Colors.white,
+                                icon: Icons.delete,
+                                label: 'Delete',
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      child: TweenAnimationBuilder<double>(
-                          duration: const Duration(seconds: 2),
-                          tween: Tween(begin: 0, end: 1),
-                          curve: Curves.bounceOut,
-                          builder: (context, value, _) {
-                            var percent = value * index;
-                            print(
-                                'image from mypet : ${_petController.petImage.length.toString()}');
-                            return GestureDetector(
-                              onTap: (() async {
-                                await _petController.fetchTreat(
-                                    petName: _petController.petName[index]);
-                                Get.toNamed(
-                                  '/petdetail',
-                                  arguments: [
-                                    _petController.petImage[index],
-                                    _petController.petName[index],
-                                    _petController.petType[index],
-                                    _petController.petSpecies[index],
-                                  ],
-                                );
-                              }),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: kDefualtPadding,
-                                    vertical: kDefualtPadding / 2),
-                                child: Transform(
-                                  transform: Matrix4.identity()
-                                    ..rotateY(value - 1)
-                                    ..scale(value)
-                                    ..translate(value - 1),
-                                  child: Opacity(
-                                    opacity: value,
-                                    child: Container(
-                                      width: size.width,
-                                      height: size.height * 0.2,
-                                      decoration: BoxDecoration(
-                                        // border: Border.all(),
-                                        borderRadius: BorderRadius.circular(12),
-                                        color: kDefualtColorMain,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.white,
-                                            blurRadius: 15,
-                                            spreadRadius: 1,
-                                            offset: Offset(-4, -4),
-                                          ),
-                                          BoxShadow(
+                          child: TweenAnimationBuilder<double>(
+                              duration: const Duration(seconds: 2),
+                              tween: Tween(begin: 0, end: 1),
+                              curve: Curves.bounceOut,
+                              builder: (context, value, _) {
+                                var percent = value * index;
+                                print(
+                                    'image from mypet : ${_petController.petImage.length.toString()}');
+                                return GestureDetector(
+                                  onTap: (() async {
+                                    await _petController.fetchTreat(
+                                        petName: _petController.petName[index]);
+                                    Get.toNamed(
+                                      '/petdetail',
+                                      arguments: [
+                                        _petController.petImage[index] ?? [],
+                                        _petController.petName[index] ?? [],
+                                        _petController.petType[index] ?? [],
+                                        _petController.petSpecies[index] ?? [],
+                                      ],
+                                    );
+                                  }),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: kDefualtPadding,
+                                        vertical: kDefualtPadding / 2),
+                                    child: Transform(
+                                      transform: Matrix4.identity()
+                                        ..rotateY(value - 1)
+                                        ..scale(value)
+                                        ..translate(value - 1),
+                                      child: Opacity(
+                                        opacity: value,
+                                        child: Container(
+                                          width: size.width,
+                                          height: size.height * 0.2,
+                                          decoration: BoxDecoration(
+                                            // border: Border.all(),
+                                            borderRadius:
+                                                BorderRadius.circular(12),
                                             color: kDefualtColorMain,
-                                            blurRadius: 15,
-                                            spreadRadius: 1,
-                                            offset: Offset(4, 4),
-                                          ),
-                                        ],
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(
-                                            kDefualtPadding),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Hero(
-                                              tag:
-                                                  '${_petController.petName[index]}',
-                                              child: Container(
-                                                width: size.width / 3,
-                                                height: size.height * 0.3,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                  image: DecorationImage(
-                                                    image: NetworkImage(
-                                                      '${_petController.petImage[index]}',
-                                                    ),
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.white,
+                                                blurRadius: 15,
+                                                spreadRadius: 1,
+                                                offset: Offset(-4, -4),
                                               ),
-                                            ),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  'Name: ${_petController.petName[index]}',
-                                                  style: GoogleFonts.mitr(
-                                                      fontSize: 16,
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.w300),
-                                                ),
-                                                Text(
-                                                  'Type: ${_petController.petType[index]}',
-                                                  style: GoogleFonts.mitr(
-                                                      fontSize: 16,
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.w300),
-                                                ),
-                                                Text(
-                                                  'Weight: ${_petController.petWeight[index]}',
-                                                  style: GoogleFonts.mitr(
-                                                      fontSize: 16,
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.w300),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
+                                              BoxShadow(
+                                                color: kDefualtColorMain,
+                                                blurRadius: 15,
+                                                spreadRadius: 1,
+                                                offset: Offset(4, 4),
+                                              ),
+                                            ],
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(
+                                                kDefualtPadding),
+                                            child: GetBuilder<PetController>(
+                                                builder: (_) {
+                                              return Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Hero(
+                                                    tag:
+                                                        '${_petController.petName[index] ?? []} ',
+                                                    child: Container(
+                                                      width: size.width / 3,
+                                                      height: size.height * 0.3,
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12),
+                                                        image: DecorationImage(
+                                                          image: NetworkImage(
+                                                            '${_petController.petImage[index] ?? []}',
+                                                          ),
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.end,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                        'Name: ${_petController.petName[index] ?? []}',
+                                                        style: GoogleFonts.mitr(
+                                                            fontSize: 16,
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w300),
+                                                      ),
+                                                      Text(
+                                                        'Type: ${_petController.petType[index] ?? []}',
+                                                        style: GoogleFonts.mitr(
+                                                            fontSize: 16,
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w300),
+                                                      ),
+                                                      Text(
+                                                        'Weight: ${_petController.petWeight[index]}',
+                                                        style: GoogleFonts.mitr(
+                                                            fontSize: 16,
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w300),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              );
+                                            }),
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            );
-                          }),
-                    );
-                  },
-                );
+                                );
+                              }),
+                        );
+                      }
+                    },
+                  );
+                });
               },
             );
           }
@@ -589,19 +622,21 @@ class PetDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: size.width,
+      // height: size.height * 0.1,
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.circular(6),
+        borderRadius: BorderRadius.circular(4),
       ),
       child: Padding(
-        padding: EdgeInsets.only(left: 20),
+        padding: EdgeInsets.only(left: 10),
         child: TextFormField(
           controller: controller,
           keyboardType: type,
           decoration: InputDecoration(
             border: InputBorder.none,
             labelText: title,
+            labelStyle: TextStyle(color: Colors.black),
           ),
         ),
       ),
