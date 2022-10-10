@@ -187,7 +187,7 @@ class ProfileContainer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     GetBuilder<ProfileController>(
-                        id: 'getUserDetail',
+                        id: 'updateUser',
                         builder: (_) {
                           return Text(
                             '${_profileController.profileName.value}',
@@ -274,9 +274,13 @@ class ProfileContainer extends StatelessWidget {
                                                     child: ElevatedButton(
                                                       style: ElevatedButton
                                                           .styleFrom(
-                                                        onSurface: Colors.white,
+                                                        primary: Colors.white,
                                                       ),
-                                                      child: Text('ยกเลิก'),
+                                                      child: Text(
+                                                        'ยกเลิก',
+                                                        style: GoogleFonts.mitr(
+                                                            fontSize: 16),
+                                                      ),
                                                       onPressed: () {
                                                         Get.back();
                                                       },
@@ -285,7 +289,13 @@ class ProfileContainer extends StatelessWidget {
                                                   SizedBox(width: 10),
                                                   Expanded(
                                                     child: ElevatedButton(
-                                                      child: Text('ยืนยัน'),
+                                                      child: Text(
+                                                        'ยืนยัน',
+                                                        style: GoogleFonts.mitr(
+                                                          fontSize: 16,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
                                                       onPressed: () {
                                                         _profileController
                                                             .updateUser();

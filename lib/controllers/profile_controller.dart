@@ -110,6 +110,7 @@ class ProfileController extends GetxController {
   }
 
   Future<void> updateUser() async {
+    profileName = usernameController.value.text.obs;
     try {
       await FirebaseFirestore.instance
           .collection('users')
