@@ -66,6 +66,8 @@ class AuthController extends GetxController {
           return Get.snackbar('เกิดข้อผิดพลาด', 'ไม่พบข้อมูลในระบบ');
         case "wrong-password":
           return Get.snackbar('เกิดข้อผิดพลาด', 'บัญชีหรือรหัสผ่านผิดพลาด');
+        case "invalid-email":
+          return Get.snackbar('เกิดข้อผิดพลาด', 'บัญชีหรือรหัสผ่านผิดพลาด');
         default:
       }
     }
@@ -88,7 +90,7 @@ class AuthController extends GetxController {
       }
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
-        case "invalid-email":
+        case "email-already-in-use":
           return Get.snackbar(
               'เกิดข้อผิดพลาด', 'อีเมลนี้เชื่อมโยงกับบัญชีอื่นแล้ว');
       }

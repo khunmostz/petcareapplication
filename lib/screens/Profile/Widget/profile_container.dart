@@ -234,6 +234,8 @@ class ProfileContainer extends StatelessWidget {
                                                 CrossAxisAlignment.stretch,
                                             children: [
                                               ProfileEdit(
+                                                color: Colors.grey[200],
+                                                readOnly: false,
                                                 hintText: 'Username',
                                                 keyboardType:
                                                     TextInputType.text,
@@ -242,6 +244,8 @@ class ProfileContainer extends StatelessWidget {
                                               ),
                                               SizedBox(height: 20),
                                               ProfileEdit(
+                                                color: Colors.grey[300],
+                                                readOnly: true,
                                                 hintText: 'Email',
                                                 keyboardType:
                                                     TextInputType.emailAddress,
@@ -250,6 +254,8 @@ class ProfileContainer extends StatelessWidget {
                                               ),
                                               SizedBox(height: 20),
                                               ProfileEdit(
+                                                color: Colors.grey[200],
+                                                readOnly: false,
                                                 hintText: 'Tel',
                                                 keyboardType:
                                                     TextInputType.phone,
@@ -259,6 +265,8 @@ class ProfileContainer extends StatelessWidget {
                                               SizedBox(height: 20),
                                               SingleChildScrollView(
                                                 child: ProfileEdit(
+                                                  color: Colors.grey[200],
+                                                  readOnly: false,
                                                   hintText: 'Address',
                                                   keyboardType:
                                                       TextInputType.text,

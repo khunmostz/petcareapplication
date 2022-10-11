@@ -244,7 +244,7 @@ class _ContentPageState extends State<ContentPage>
                           animation: _contentAniamtion.animationController,
                           child: Container(
                             width: size.width,
-                            height: size.height * 0.3,
+                            height: size.height * 0.4,
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               itemCount: allPromotions.length,
@@ -255,7 +255,7 @@ class _ContentPageState extends State<ContentPage>
                                     children: [
                                       Container(
                                         width: 200,
-                                        height: 150,
+                                        height: 200,
                                         decoration: BoxDecoration(
                                           color: Colors.amber,
                                           borderRadius:

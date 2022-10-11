@@ -143,29 +143,29 @@ class _BeforePageState extends State<BeforePage>
                   ),
                   SizedBox(height: 15),
                   // Already a member ?
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Already a member ?",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      GestureDetector(
-                        onTap: () {
-                          Get.toNamed('/signin');
-                        },
-                        child: Text(
-                          "Sign In",
-                          style: TextStyle(
-                            color: kDefualtColorMain,
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     Text(
+                  //       "Already a member ?",
+                  //       style: TextStyle(
+                  //         color: Colors.white,
+                  //       ),
+                  //     ),
+                  //     SizedBox(width: 10),
+                  //     GestureDetector(
+                  //       onTap: () {
+                  //         Get.toNamed('/signin');
+                  //       },
+                  //       child: Text(
+                  //         "Sign In",
+                  //         style: TextStyle(
+                  //           color: kDefualtColorMain,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // )
                 ],
               ),
             ),
