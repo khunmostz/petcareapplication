@@ -552,7 +552,7 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                                                             .center,
                                                     children: [
                                                       Text(
-                                                        'Name: ${_petController.petName[index] ?? []}',
+                                                        'ชื่อ: ${_petController.petName[index] ?? []}',
                                                         style: GoogleFonts.mitr(
                                                             fontSize: 16,
                                                             color: Colors.white,
@@ -561,7 +561,7 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                                                                     .w300),
                                                       ),
                                                       Text(
-                                                        'Type: ${_petController.petType[index] ?? []}',
+                                                        'สายพันธุ์: ${_petController.petType[index] ?? []}',
                                                         style: GoogleFonts.mitr(
                                                             fontSize: 16,
                                                             color: Colors.white,
@@ -570,7 +570,16 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                                                                     .w300),
                                                       ),
                                                       Text(
-                                                        'Weight: ${_petController.petWeight[index]}',
+                                                        'น้ำหนัก: ${_petController.petWeight[index]}',
+                                                        style: GoogleFonts.mitr(
+                                                            fontSize: 16,
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w300),
+                                                      ),
+                                                      Text(
+                                                        'วัคซีน: ${_petController.petVday[index]}',
                                                         style: GoogleFonts.mitr(
                                                             fontSize: 16,
                                                             color: Colors.white,

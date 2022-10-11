@@ -100,7 +100,7 @@ class _RecordPageState extends State<RecordPage> {
                     child: Padding(
                       padding: const EdgeInsets.only(top: kDefualtPadding + 60),
                       child: Text(
-                        'ไม่มีพบข้อมูล',
+                        'กรุณาเพิ่มข้อมูลสัตว์เลี้ยง',
                         style: GoogleFonts.mitr(
                           fontSize: 20,
                           fontWeight: FontWeight.w400,

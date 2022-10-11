@@ -136,6 +136,7 @@ class _AddLocationPageState extends State<AddLocationPage> {
                 ),
                 SizedBox(height: 10),
                 FormField(
+                  textInputType: TextInputType.emailAddress,
                   controller: _addLocationController.emailController,
                   hintText: 'อีเมลล์',
                   prefixIcon: Icon(Icons.email),
@@ -143,6 +144,7 @@ class _AddLocationPageState extends State<AddLocationPage> {
                 ),
                 SizedBox(height: 10),
                 FormField(
+                  textInputType: TextInputType.number,
                   controller: _addLocationController.telController,
                   hintText: 'เบอร์',
                   prefixIcon: Icon(Icons.phone),
@@ -183,13 +185,16 @@ class _AddLocationPageState extends State<AddLocationPage> {
     );
   }
 
-  Widget FormField(
-      {required TextEditingController controller,
-      required String hintText,
-      required Icon prefixIcon,
-      required int maxLines}) {
+  Widget FormField({
+    required TextEditingController controller,
+    required String hintText,
+    required Icon prefixIcon,
+    required int maxLines,
+    TextInputType? textInputType,
+  }) {
     return TextFormField(
       controller: controller,
+      keyboardType: textInputType,
       maxLines: maxLines,
       autofocus: true,
       textInputAction: TextInputAction.next,
