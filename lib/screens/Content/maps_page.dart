@@ -1,11 +1,13 @@
 import 'dart:async';
-
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:lottie/lottie.dart' as lotties;
+import 'package:petcare_project/controllers/map_controller.dart';
+import 'package:petcare_project/services/services.dart';
 import 'package:petcare_project/utils/constant.dart';
-import 'package:petcare_project/screens/Content/detaillocation_page.dart';
-import 'package:petcare_project/widget/search_bar.dart';
 
 class MapsPage extends StatefulWidget {
   const MapsPage({Key? key}) : super(key: key);
@@ -14,170 +16,179 @@ class MapsPage extends StatefulWidget {
   State<MapsPage> createState() => _MapsPageState();
 }
 
-class _MapsPageState extends State<MapsPage> {
-  Position? userLocation;
-  Completer<GoogleMapController> _mapController = Completer();
-  late LatLng _latLng = LatLng(13.803960, 100.739408);
-  late CameraPosition _cameraPosition =
-      CameraPosition(target: _latLng, zoom: 15);
+class _MapsPageState extends State<MapsPage>
+    with SingleTickerProviderStateMixin {
+  final MapController _mapController = Get.put(MapController());
+  late AnimationController _animationController;
+  Completer<GoogleMapController> _controller = Completer();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Platform.isIOS ? Duration(seconds: 6) : Duration(seconds: 5),
+    );
+    _animationController.forward();
+  }
 
-  Marker _markerRed = Marker(
-    markerId: MarkerId('Kasembundit'),
-    infoWindow: InfoWindow(title: "Kasembundit Universe"),
-    icon: BitmapDescriptor.defaultMarker,
-    position: LatLng(13.803960, 100.739408),
-  );
-
-  Marker _markerBlue = Marker(
-    markerId: MarkerId('ตลาดทองร่มเกล้า'),
-    infoWindow: InfoWindow(title: "ตลาดทองร่มเกล้า"),
-    icon: BitmapDescriptor.defaultMarker,
-    position: LatLng(13.800507, 100.744112),
-  );
-
-  Polyline _polyline = Polyline(
-    polylineId: PolylineId('polyline'),
-    points: [
-      LatLng(13.803960, 100.739408),
-      LatLng(13.800507, 100.744112),
-    ],
-    width: 5,
-  );
-
-  Polygon _polygon = Polygon(
-    polygonId: PolygonId('polygon'),
-    points: [
-      LatLng(13.803960, 100.739408),
-      LatLng(13.800507, 100.744112),
-      LatLng(13.799, 100.740),
-      LatLng(13.834, 100.740),
-    ],
-    strokeWidth: 5,
-    fillColor: Colors.transparent,
-  );
-
-  Future<Position?> _getLocation() async {
-    try {
-      userLocation = await Geolocator.getCurrentPosition(
-        // กำหนดค่าความแม่นยำ
-        desiredAccuracy: LocationAccuracy.best,
-      );
-    } catch (e) {
-      userLocation = null;
-    }
-    return userLocation; // return ตำแหน่งปัจจุบันออกไป
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    // var size = MediaQuery.of(context).size;
+    var size = Get.size;
+    // print('-----------------' * 50);
+    // print(placeDetail.toString());
     return Scaffold(
-        body: Stack(
-      children: [
-        FutureBuilder(
-          future: _getLocation(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircularProgressIndicator(),
-                  ],
-                ),
-              );
-            } else {
-              return Container(
-                width: size.width,
-                height: size.height,
-                child: GoogleMap(
-                  myLocationButtonEnabled: false,
-                  markers: {
-                    _markerRed,
-                    _markerBlue,
-                  },
-                  polylines: {_polyline},
-                  polygons: {_polygon},
-                  mapType: MapType.normal,
-                  onMapCreated: (GoogleMapController controller) {
-                    _mapController.complete(controller);
-                  },
-                  myLocationEnabled: true,
-                  initialCameraPosition: CameraPosition(
-                    target: _latLng,
-                    zoom: 15,
-                  ),
-                ),
-              );
-            }
-          },
-        ),
-        Positioned(
-          top: 80,
-          left: 30,
-          right: 30,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(50)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.shade50,
-                  spreadRadius: 0.5,
-                  blurRadius: 10,
-                )
-              ],
-            ),
-            child: SearchField(),
+      // appBar: AppBar(title: const Text('GoogleMaps examples')),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: kDefualtPadding,
           ),
-        ),
-        Positioned(
-          bottom: 30,
-          left: 30,
-          right: 30,
-          child: Container(
-            width: size.width,
-            height: 200,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DetailLocationPage(),
-                        ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // SizedBox(height: 50),
+              // // Search
+              // Container(
+              //   child: TextFormField(
+              //     decoration: InputDecoration(
+              //       filled: true,
+              //       fillColor: Colors.grey.shade200,
+              //       // fillColor: Colors.black,ad
+              //       prefixIcon: Icon(Icons.search),
+              //       border: OutlineInputBorder(
+              //         borderSide: BorderSide.none,
+              //         borderRadius: BorderRadius.circular(12),
+              //       ),
+              //       hintText: 'Search',
+              //     ),
+              //     textInputAction: TextInputAction.next,
+              //   ),
+              // ),
+              SizedBox(height: 20),
+              // Map
+              StreamBuilder(
+                  stream: _mapController.getUserPosition().asStream(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
                       );
-                    },
-                    child: Container(
-                      width: 200,
-                      height: 200,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
-                        border: Border.all(color: Colors.white),
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.white,
-                            blurRadius: 8,
-                            spreadRadius: 5,
-                            offset: Offset(0.1, 0.3),
-                          )
+                    } else {
+                      return Column(
+                        children: [
+                          Container(
+                            width: size.width,
+                            height: size.height * 0.6,
+                            child: GoogleMap(
+                              mapType: MapType.normal,
+                              zoomControlsEnabled: false,
+                              myLocationButtonEnabled: false,
+                              initialCameraPosition: CameraPosition(
+                                target: LatLng(
+                                  _mapController.userPosition.latitude,
+                                  _mapController.userPosition.longitude,
+                                ),
+                                zoom: 12,
+                              ),
+                              markers: placeKM.map((e) => e).toSet(),
+                              circles: Set.from(
+                                [
+                                  Circle(
+                                    circleId: CircleId('currentCircle'),
+                                    center: LatLng(
+                                        _mapController.userPosition.latitude,
+                                        _mapController.userPosition.longitude),
+                                    radius: 5000,
+                                    fillColor: Colors.orangeAccent.shade100
+                                        .withOpacity(0.5),
+                                    strokeColor: Colors.orange,
+                                    strokeWidth: 1,
+                                  ),
+                                ],
+                              ),
+                              onMapCreated: (GoogleMapController controller) {
+                                _controller.complete(controller);
+                              },
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          // NearMe
+                          Row(
+                            children: [
+                              Text(
+                                'ใกล้ฉัน',
+                                style: GoogleFonts.mitr(fontSize: 18),
+                              ),
+                              SizedBox(width: 5),
+                              Icon(Icons.near_me),
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          Container(
+                            width: size.width,
+                            height: 200,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: placeName.length,
+                              itemBuilder: (context, index) {
+                                var locationName = placeName[index];
+                                var locationImage = placeImage[index];
+                                var locationDesc = placeDesc[index];
+                                var locationLat = placeLat[index];
+                                var locationLong = placeLong[index];
+                                // print(locationImage);
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Get.toNamed(
+                                        '/locationpage',
+                                        arguments: [
+                                          locationName,
+                                          locationImage,
+                                          locationDesc,
+                                          locationLat,
+                                          locationLong,
+                                        ],
+                                      );
+                                    },
+                                    child: Container(
+                                      width: 200,
+                                      height: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey,
+                                        border: Border.all(),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(20)),
+                                        image: DecorationImage(
+                                          image: NetworkImage(locationImage),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                          SizedBox(height: 20),
                         ],
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
+                      );
+                    }
+                  }),
+            ],
           ),
         ),
-      ],
-    ));
+      ),
+    );
   }
 }

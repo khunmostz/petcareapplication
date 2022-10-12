@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:petcare_project/controllers/auth_controller.dart';
 import 'package:petcare_project/controllers/profile_controller.dart';
 import 'package:petcare_project/screens/Profile/Widget/Profile_edit.dart';
 import 'package:petcare_project/utils/constant.dart';
@@ -16,6 +18,7 @@ class ProfileContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ProfileController _profileController = Get.put(ProfileController());
+    final AuthController _authController = Get.find<AuthController>();
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: kDefualtPadding),
       width: size.width,
@@ -43,65 +46,139 @@ class ProfileContainer extends StatelessWidget {
                 StreamBuilder<dynamic>(
                     stream: _profileController.getUserDetail().asStream(),
                     builder: (context, snapshot) {
+                      // print('*' * 10 + _profileController.user['image']);
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return Center(child: CircularProgressIndicator());
                       } else {
                         return GetBuilder<ProfileController>(
                           id: 'updateProfile',
                           builder: (_) {
-                            return CircleAvatar(
-                              radius: 50,
-                              backgroundColor: Colors.grey[200],
-                              backgroundImage: NetworkImage(
-                                          '${_profileController.user['image']}') !=
-                                      null
-                                  ? NetworkImage(
-                                      '${_profileController.user['image']}')
-                                  : null,
-                              child: Align(
-                                alignment: Alignment.bottomCenter,
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      // showDialog(
-                                      //     context: context,
-                                      //     builder: (context) {
-                                      //       return AlertDialog(
-                                      //         content: Column(
-                                      //           children: [
-                                      //             Container(
-                                      //               width: size.width,
-                                      //               height: size.height * 0.5,
-                                      //               child: CircleAvatar(
-                                      //                 radius: 50,
-                                      //                 backgroundColor:
-                                      //                     Colors.grey[200],
-                                      //                 backgroundImage: NetworkImage(
-                                      //                             '${_profileController.user['image']}') !=
-                                      //                         null
-                                      //                     ? NetworkImage(
-                                      //                         '${_profileController.user['image']}')
-                                      //                     : null,
-                                      //               ),
-                                      //             ),
-                                      //           ],
-                                      //         ),
-                                      //       );
-                                      //     });
-                                      _profileController.uploadImageProfile();
-                                    },
-                                    child: Text(
-                                      'เลือกรูป',
-                                      style: GoogleFonts.mitr(
-                                        fontSize: 10,
+                            return Stack(children: [
+                              if (_profileController.user['image'] == '')
+                                CircleAvatar(
+                                  radius: 50,
+                                  backgroundColor: Colors.grey[200],
+                                  backgroundImage: AssetImage(
+                                      'assets/image/person-placeholder.jpg'),
+                                )
+                              else
+                                CircleAvatar(
+                                  radius: 50,
+                                  backgroundColor: Colors.grey[200],
+                                  backgroundImage: NetworkImage(
+                                      '${_profileController.user['image']}'),
+                                ),
+                              Positioned(
+                                bottom: 0,
+                                right: 0,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          title: Text('เลือกตัวเลือก'),
+                                          content: Container(
+                                            width: size.width,
+                                            height: 150,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                GestureDetector(
+                                                    onTap: () =>
+                                                        _profileController
+                                                            .uploadImageProfile(
+                                                                imageSource:
+                                                                    ImageSource
+                                                                        .camera),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Icon(
+                                                            Icons.camera,
+                                                            color:
+                                                                kDefualtColorMain,
+                                                          ),
+                                                          SizedBox(width: 20),
+                                                          Text('กล้อง'),
+                                                        ],
+                                                      ),
+                                                    )),
+                                                GestureDetector(
+                                                    onTap: () {
+                                                      _profileController
+                                                          .uploadImageProfile(
+                                                        imageSource:
+                                                            ImageSource.gallery,
+                                                      );
+                                                    },
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Icon(Icons.image,
+                                                              color:
+                                                                  kDefualtColorMain),
+                                                          SizedBox(width: 20),
+                                                          Text('เลือกรูปภาพ'),
+                                                        ],
+                                                      ),
+                                                    )),
+                                                GestureDetector(
+                                                    onTap: () => Get.back(),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Icon(
+                                                            Icons.remove_circle,
+                                                            color: Colors.red,
+                                                          ),
+                                                          SizedBox(width: 20),
+                                                          Text('ยกเลิก'),
+                                                        ],
+                                                      ),
+                                                    )),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: CircleAvatar(
+                                    radius: 20,
+                                    backgroundColor: Colors.grey,
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.add,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
-                            );
+                            ]);
                           },
                         );
                       }
@@ -109,12 +186,16 @@ class ProfileContainer extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text(
-                      'พลอากาศเอกฟูฟู่',
-                      style: GoogleFonts.mitr(
-                        fontSize: 18,
-                      ),
-                    ),
+                    GetBuilder<ProfileController>(
+                        id: 'updateUser',
+                        builder: (_) {
+                          return Text(
+                            '${_profileController.profileName.value}',
+                            style: GoogleFonts.mitr(
+                              fontSize: 18,
+                            ),
+                          );
+                        }),
                     SizedBox(
                       height: 10,
                     ),
@@ -153,6 +234,8 @@ class ProfileContainer extends StatelessWidget {
                                                 CrossAxisAlignment.stretch,
                                             children: [
                                               ProfileEdit(
+                                                color: Colors.grey[200],
+                                                readOnly: false,
                                                 hintText: 'Username',
                                                 keyboardType:
                                                     TextInputType.text,
@@ -161,6 +244,8 @@ class ProfileContainer extends StatelessWidget {
                                               ),
                                               SizedBox(height: 20),
                                               ProfileEdit(
+                                                color: Colors.grey[300],
+                                                readOnly: true,
                                                 hintText: 'Email',
                                                 keyboardType:
                                                     TextInputType.emailAddress,
@@ -169,6 +254,8 @@ class ProfileContainer extends StatelessWidget {
                                               ),
                                               SizedBox(height: 20),
                                               ProfileEdit(
+                                                color: Colors.grey[200],
+                                                readOnly: false,
                                                 hintText: 'Tel',
                                                 keyboardType:
                                                     TextInputType.phone,
@@ -178,6 +265,8 @@ class ProfileContainer extends StatelessWidget {
                                               SizedBox(height: 20),
                                               SingleChildScrollView(
                                                 child: ProfileEdit(
+                                                  color: Colors.grey[200],
+                                                  readOnly: false,
                                                   hintText: 'Address',
                                                   keyboardType:
                                                       TextInputType.text,
@@ -193,9 +282,13 @@ class ProfileContainer extends StatelessWidget {
                                                     child: ElevatedButton(
                                                       style: ElevatedButton
                                                           .styleFrom(
-                                                        onSurface: Colors.white,
+                                                        primary: Colors.white,
                                                       ),
-                                                      child: Text('ยกเลิก'),
+                                                      child: Text(
+                                                        'ยกเลิก',
+                                                        style: GoogleFonts.mitr(
+                                                            fontSize: 16),
+                                                      ),
                                                       onPressed: () {
                                                         Get.back();
                                                       },
@@ -204,7 +297,13 @@ class ProfileContainer extends StatelessWidget {
                                                   SizedBox(width: 10),
                                                   Expanded(
                                                     child: ElevatedButton(
-                                                      child: Text('ยืนยัน'),
+                                                      child: Text(
+                                                        'ยืนยัน',
+                                                        style: GoogleFonts.mitr(
+                                                          fontSize: 16,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
                                                       onPressed: () {
                                                         _profileController
                                                             .updateUser();
@@ -229,12 +328,27 @@ class ProfileContainer extends StatelessWidget {
                           },
                         );
                       },
-                      child: Text(
-                        'แก้ไข',
-                        style: GoogleFonts.mitr(
-                          fontSize: 16,
-                          color: Colors.grey,
-                        ),
+                      child: Column(
+                        children: [
+                          Text(
+                            'แก้ไข',
+                            style: GoogleFonts.mitr(
+                              fontSize: 16,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          GestureDetector(
+                            onTap: () => _authController.signOut(),
+                            child: Text(
+                              'ลงชื่อออก',
+                              style: GoogleFonts.mitr(
+                                fontSize: 16,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],

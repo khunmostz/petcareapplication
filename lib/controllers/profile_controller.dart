@@ -7,7 +7,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class ProfileController extends GetxController {
-  var user;
+  RxString userType = ''.obs;
+
+  late var user;
 
   final Rx<TextEditingController> usernameController =
       TextEditingController().obs;
@@ -16,23 +18,23 @@ class ProfileController extends GetxController {
   final Rx<TextEditingController> addressController =
       TextEditingController().obs;
 
+  RxString profileName = ''.obs;
+
   File? image;
 
-  // @override
-  // void onInit() async {
-  //   super.onInit();
-  //   await getUserDetail();
-  //   print('pull data');
-  // }
+  void onInit() async {
+    super.onInit();
+    await getUserDetail();
+  }
 
-  Future<void> uploadImageProfile() async {
+  Future<void> uploadImageProfile({required ImageSource imageSource}) async {
     try {
       final ImagePicker _picker = ImagePicker();
       final XFile? _pickedImage = await _picker.pickImage(
-        source: ImageSource.gallery,
-        imageQuality: 50,
-        maxHeight: 150,
-        maxWidth: 150,
+        source: imageSource,
+        imageQuality: 100,
+        maxHeight: 250,
+        maxWidth: 250,
       );
       if (_pickedImage != null) {
         final Rx<File> _imagePath = File(_pickedImage.path).obs;
@@ -52,10 +54,10 @@ class ProfileController extends GetxController {
     var uploadTask = firebaseRef.putFile(image!);
     var taskSnapshot = await uploadTask.whenComplete(() async {
       print('upload profile success');
-      Get.snackbar('แจ้งเตือน', 'เปลี่ยนรูปภาพสำเร็จ');
+      // Get.snackbar('แจ้งเตือน', 'เปลี่ยนรูปภาพสำเร็จ');
     }).then((value) async {
       var imageUrl = await value.ref.getDownloadURL();
-      print(imageUrl.toString());
+      // print(';djlksjfsalkfjklsdf: ${imageUrl.toString()}');
       user['image'] = imageUrl;
       updateImageProfile(imageUrl.toString());
     });
@@ -68,14 +70,18 @@ class ProfileController extends GetxController {
           .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
           .get()
           .then((snapshot) async {
-        print(snapshot.docs[0].data());
+        // print(snapshot.docs[0].data());
         snapshot.docs.forEach((data) {
           user = data.data();
-          // print(user['email']);
+          print('image : ${user!['image']}');
+
+          userType = user['type'].toString().obs;
+          print('controller eiei: ${userType}');
           usernameController.value.text = user['username'].toString();
           emailController.value.text = user['email'].toString();
           telController.value.text = user['tel'].toString();
           addressController.value.text = user['address'].toString();
+          profileName = user['username'].toString().obs;
         });
       });
       update(['getUserDetail']);
@@ -104,6 +110,7 @@ class ProfileController extends GetxController {
   }
 
   Future<void> updateUser() async {
+    profileName = usernameController.value.text.obs;
     try {
       await FirebaseFirestore.instance
           .collection('users')
@@ -127,6 +134,5 @@ class ProfileController extends GetxController {
         'เกิดข้อผิดพลาด',
       );
     }
-    // print(FirebaseAuth.instance.currentUser!.uid);
   }
 }

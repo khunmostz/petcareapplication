@@ -16,8 +16,6 @@ class AuthController extends GetxController {
 
   var _profileController = Get.put(ProfileController());
 
-  var isLogin = false;
-
   late Rx<User?> user;
 
   @override
@@ -33,20 +31,17 @@ class AuthController extends GetxController {
       SharedPreferences myPrefs = await SharedPreferences.getInstance();
       bool? checkPage = myPrefs.getBool("isFirstRun");
       if (checkPage == null || checkPage == true) {
-        print('iffffffffffffffff');
+        print('first run');
         Get.toNamed("/before");
       } else {
-        print('eeeeeeeeeeeeeeeeffffffffffffffff');
+        print('many run');
         Get.toNamed("/signin");
       }
-
-      print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
     } else {
       print('content page');
+      // print(user);
       _profileController.getUserDetail();
       Get.offAllNamed('/bottomnav');
-      // Future.delayed(
-      //     Duration(milliseconds: 350), () => );
     }
   }
 
@@ -71,6 +66,8 @@ class AuthController extends GetxController {
           return Get.snackbar('เกิดข้อผิดพลาด', 'ไม่พบข้อมูลในระบบ');
         case "wrong-password":
           return Get.snackbar('เกิดข้อผิดพลาด', 'บัญชีหรือรหัสผ่านผิดพลาด');
+        case "invalid-email":
+          return Get.snackbar('เกิดข้อผิดพลาด', 'บัญชีหรือรหัสผ่านผิดพลาด');
         default:
       }
     }
@@ -93,7 +90,7 @@ class AuthController extends GetxController {
       }
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
-        case "invalid-email":
+        case "email-already-in-use":
           return Get.snackbar(
               'เกิดข้อผิดพลาด', 'อีเมลนี้เชื่อมโยงกับบัญชีอื่นแล้ว');
       }
@@ -108,6 +105,7 @@ class AuthController extends GetxController {
             FirebaseAuth.instance.currentUser!.uid,
           )
           .set({
+        'uid': FirebaseAuth.instance.currentUser!.uid.toString(),
         'image': '',
         'username': username,
         'email': email,

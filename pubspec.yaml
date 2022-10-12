@@ -47,7 +47,13 @@ dependencies:
   cloud_firestore: ^3.2.1
   firebase_storage: ^10.3.2
   image_picker: ^0.8.5+3
+  dio: ^4.0.6
   shared_preferences: ^2.0.15
+  url_launcher: ^6.1.5
+  flutter_launcher_icons: ^0.10.0
+  quickalert: ^0.0.2
+  flutter_slidable: ^2.0.0
+  dropdown_search: ^5.0.2
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +69,11 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/image/logo-petcare-foreground.png"
+
 flutter:
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

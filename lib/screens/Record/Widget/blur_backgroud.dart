@@ -8,11 +8,13 @@ class BlurBackGroud extends StatelessWidget {
     Key? key,
     required this.size,
     required int selectedIndex,
+    required this.pet,
   })  : _selectedIndex = selectedIndex,
         super(key: key);
 
   final Size size;
   final int _selectedIndex;
+  final List pet;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class BlurBackGroud extends StatelessWidget {
             height: 200,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: NetworkImage('${petData[_selectedIndex].image}'),
+                image: NetworkImage('${pet.toString()}'),
                 fit: BoxFit.cover,
               ),
             ),

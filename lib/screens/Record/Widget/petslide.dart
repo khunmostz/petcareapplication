@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:petcare_project/data/petData.dart';
 import 'package:petcare_project/utils/constant.dart';
 
 class PetSlide extends StatelessWidget {
-  final Pet pet;
+  final String pet;
   const PetSlide({
     Key? key,
     required this.pet,
@@ -14,6 +13,7 @@ class PetSlide extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(kDefualtPadding),
       decoration: BoxDecoration(
+        color: Colors.black,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
@@ -25,7 +25,7 @@ class PetSlide extends StatelessWidget {
         ],
         image: DecorationImage(
           image: NetworkImage(
-            '${pet.image}',
+            '${pet}',
             scale: 0.5,
           ),
           fit: BoxFit.cover,

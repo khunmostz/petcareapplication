@@ -4,7 +4,8 @@ class ProfileEdit extends StatelessWidget {
   final int maxLines;
   final String hintText;
   final TextInputType keyboardType;
-
+  final bool readOnly;
+  final Color? color;
   final TextEditingController? controller;
   const ProfileEdit({
     Key? key,
@@ -12,6 +13,8 @@ class ProfileEdit extends StatelessWidget {
     required this.hintText,
     this.controller,
     required this.keyboardType,
+    required this.readOnly,
+    required this.color,
   }) : super(key: key);
 
   @override
@@ -23,12 +26,13 @@ class ProfileEdit extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: TextFormField(
+        readOnly: readOnly,
         controller: controller,
         maxLines: maxLines,
         keyboardType: keyboardType,
         decoration: InputDecoration(
           filled: true,
-          fillColor: Colors.grey.shade200,
+          fillColor: color,
           border: OutlineInputBorder(
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.circular(12),

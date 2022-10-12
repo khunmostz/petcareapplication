@@ -22,8 +22,9 @@ class _BeforePageState extends State<BeforePage>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-        vsync: this, duration: Duration(microseconds: 10000));
+    _controller =
+        AnimationController(vsync: this, duration: Duration(seconds: 3));
+    _controller.repeat();
   }
 
   @override
@@ -142,29 +143,29 @@ class _BeforePageState extends State<BeforePage>
                   ),
                   SizedBox(height: 15),
                   // Already a member ?
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Already a member ?",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      GestureDetector(
-                        onTap: () {
-                          Get.toNamed('/signin');
-                        },
-                        child: Text(
-                          "Sign In",
-                          style: TextStyle(
-                            color: kDefualtColorMain,
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     Text(
+                  //       "Already a member ?",
+                  //       style: TextStyle(
+                  //         color: Colors.white,
+                  //       ),
+                  //     ),
+                  //     SizedBox(width: 10),
+                  //     GestureDetector(
+                  //       onTap: () {
+                  //         Get.toNamed('/signin');
+                  //       },
+                  //       child: Text(
+                  //         "Sign In",
+                  //         style: TextStyle(
+                  //           color: kDefualtColorMain,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // )
                 ],
               ),
             ),
