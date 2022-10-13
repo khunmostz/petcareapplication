@@ -10,6 +10,7 @@ import 'package:petcare_project/models/promotion.dart';
 import 'package:petcare_project/utils/distance.dart';
 
 List allPlace = [];
+List equalPlace = [];
 List allPromotions = [];
 
 List<Marker> placeKM = [];
@@ -49,7 +50,7 @@ Future<dynamic> getRequestMapDistance(
           double.parse(place.locationLong));
 
       if (distancKm <= 5) {
-        // print('location distance 5 KM: ${place.locationName.toString()}');
+        print('location distance 5 KM: ${place.locationName.toString()}');
 
         Marker userLocation = Marker(
           markerId: MarkerId('User'),
@@ -104,6 +105,19 @@ Future<dynamic> getRequestAllMap({required String path}) async {
 
   data.forEach((place) {
     allPlace.add(place.locationName);
+  });
+}
+
+Future<dynamic> getRequestEqualAllMap({required String path}) async {
+  final res = await Dio().get(path);
+
+  var data = res.data['locations'].map((place) {
+    return Location.fromJson(place);
+  });
+
+  // equalPlace.add(data);
+  data.forEach((place) {
+    equalPlace.add(place);
   });
 }
 

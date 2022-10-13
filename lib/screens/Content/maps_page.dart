@@ -52,8 +52,6 @@ class _MapsPageState extends State<MapsPage>
             horizontal: kDefualtPadding,
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // SizedBox(height: 50),
               // // Search
@@ -79,8 +77,13 @@ class _MapsPageState extends State<MapsPage>
                   stream: _mapController.getUserPosition().asStream(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
-                        child: CircularProgressIndicator(),
+                      return Container(
+                        width: size.width,
+                        height: size.height,
+                        // decoration: BoxDecoration(border: Border.all()),
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
                       );
                     } else {
                       return Column(
@@ -181,6 +184,78 @@ class _MapsPageState extends State<MapsPage>
                             ),
                           ),
                           SizedBox(height: 20),
+
+                          if (_mapController.showEqual.length >= 1)
+                            Row(
+                              children: [
+                                Text(
+                                  'สถานที่่ในเครือ',
+                                  style: GoogleFonts.mitr(fontSize: 18),
+                                ),
+                                SizedBox(width: 5),
+                                Icon(
+                                  Icons.star,
+                                  color: Colors.yellow,
+                                ),
+                              ],
+                            )
+                          else
+                            Container(),
+
+                          SizedBox(height: 20),
+                          Container(
+                            width: size.width,
+                            height:
+                                _mapController.showEqual.length == 0 ? 0 : 200,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: _mapController.showEqual.length,
+                              itemBuilder: (context, index) {
+                                var locationName = _mapController
+                                    .showEqual[index][index].locationName;
+                                var locationImage = _mapController
+                                    .showEqual[index][index].locationImage;
+                                var locationDesc = _mapController
+                                    .showEqual[index][index].locationDesc;
+                                var locationLat = _mapController
+                                    .showEqual[index][index].locationLat;
+                                var locationLong = _mapController
+                                    .showEqual[index][index].locationLong;
+                                // print(locationImage);
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Get.toNamed(
+                                        '/locationpage',
+                                        arguments: [
+                                          locationName,
+                                          locationImage,
+                                          locationDesc,
+                                          locationLat,
+                                          locationLong,
+                                        ],
+                                      );
+                                    },
+                                    child: Container(
+                                      width: 200,
+                                      height: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey,
+                                        border: Border.all(),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(20)),
+                                        image: DecorationImage(
+                                          image: NetworkImage(locationImage),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
                         ],
                       );
                     }
