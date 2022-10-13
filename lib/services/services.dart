@@ -50,7 +50,7 @@ Future<dynamic> getRequestMapDistance(
           double.parse(place.locationLong));
 
       if (distancKm <= 5) {
-        print('location distance 5 KM: ${place.locationName.toString()}');
+        // print('location distance 5 KM: ${place.locationName.toString()}');
 
         Marker userLocation = Marker(
           markerId: MarkerId('User'),
@@ -108,7 +108,8 @@ Future<dynamic> getRequestAllMap({required String path}) async {
   });
 }
 
-Future<dynamic> getRequestEqualAllMap({required String path}) async {
+Future<dynamic> getRequestEqualAllMap(
+    {required String path, required Position userPosition}) async {
   final res = await Dio().get(path);
 
   var data = res.data['locations'].map((place) {
@@ -117,7 +118,17 @@ Future<dynamic> getRequestEqualAllMap({required String path}) async {
 
   // equalPlace.add(data);
   data.forEach((place) {
-    equalPlace.add(place);
+    // equalPlace.add(place);
+    double distancKm = calcDistance(
+        userPosition.latitude,
+        userPosition.longitude,
+        double.parse(place.locationLat),
+        double.parse(place.locationLong));
+
+    if (distancKm <= 5) {
+      // print('place : ${place.locationName}');
+      equalPlace.add(place);
+    }
   });
 }
 

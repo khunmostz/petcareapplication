@@ -69,9 +69,18 @@ class MapController extends GetxController {
 
   Future<dynamic> getEqualLocation() async {
     showEqual.clear();
-    await getRequestEqualAllMap(
+
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best).then((currentLo) async {
+        userPosition = currentLo;
+         await getRequestEqualAllMap(
         path: API_URL.hostName +
-            '/get/location/type/${_contentController.param}');
+            '/get/location/type/${_contentController.param}', userPosition: userPosition);
+    });
+      
+    equalPlace.forEach((element) { 
+      print(element.locationName);
+    });
+
     try {
       await FirebaseFirestore.instance.collection('doctor').get().then((value) {
         value.docs.forEach((location) {
