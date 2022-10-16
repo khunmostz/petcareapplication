@@ -49,7 +49,7 @@ class MapController extends GetxController {
     }
     await _getCurrentUser();
     await getEqualLocation();
-    print('asdasd 2: ${placeKM}');
+    // print('asdasd 2: ${placeKM}');
 
     update();
   }
@@ -70,14 +70,16 @@ class MapController extends GetxController {
   Future<dynamic> getEqualLocation() async {
     showEqual.clear();
 
-    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best).then((currentLo) async {
-        userPosition = currentLo;
-         await getRequestEqualAllMap(
-        path: API_URL.hostName +
-            '/get/location/type/${_contentController.param}', userPosition: userPosition);
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        .then((currentLo) async {
+      userPosition = currentLo;
+      await getRequestEqualAllMap(
+          path: API_URL.hostName +
+              '/get/location/type/${_contentController.param}',
+          userPosition: userPosition);
     });
-      
-    equalPlace.forEach((element) { 
+
+    equalPlace.forEach((element) {
       print(element.locationName);
     });
 
@@ -95,6 +97,7 @@ class MapController extends GetxController {
           showEqual.add(data);
 
           // print(showEqual[0][0]);
+          update(['equalPlace']);
         });
       });
     } catch (e) {

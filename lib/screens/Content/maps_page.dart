@@ -24,6 +24,7 @@ class _MapsPageState extends State<MapsPage>
   @override
   void initState() {
     // TODO: implement initState
+
     super.initState();
     _animationController = AnimationController(
       vsync: this,
@@ -203,59 +204,70 @@ class _MapsPageState extends State<MapsPage>
                             Container(),
 
                           SizedBox(height: 20),
-                          Container(
-                            width: size.width,
-                            height:
-                                _mapController.showEqual.length == 0 ? 0 : 200,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: _mapController.showEqual.length,
-                              itemBuilder: (context, index) {
-                                var locationName = _mapController
-                                    .showEqual[index][index].locationName;
-                                var locationImage = _mapController
-                                    .showEqual[index][index].locationImage;
-                                var locationDesc = _mapController
-                                    .showEqual[index][index].locationDesc;
-                                var locationLat = _mapController
-                                    .showEqual[index][index].locationLat;
-                                var locationLong = _mapController
-                                    .showEqual[index][index].locationLong;
-                                // print(locationImage);
-                                return Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Get.toNamed(
-                                        '/locationpage',
-                                        arguments: [
-                                          locationName,
-                                          locationImage,
-                                          locationDesc,
-                                          locationLat,
-                                          locationLong,
-                                        ],
+                          GetBuilder<MapController>(
+                              init: MapController(),
+                              id: 'equalPlace',
+                              builder: (context) {
+                                return Container(
+                                  width: size.width,
+                                  height: _mapController.showEqual.length >= 1
+                                      ? 200
+                                      : 0,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: _mapController.showEqual.length,
+                                    itemBuilder: (context, index) {
+                                      print('length' +
+                                          _mapController.showEqual.length
+                                              .toString());
+                                      var locationName = _mapController
+                                          .showEqual[index][index].locationName;
+                                      var locationImage = _mapController
+                                          .showEqual[index][index]
+                                          .locationImage;
+                                      var locationDesc = _mapController
+                                          .showEqual[index][index].locationDesc;
+                                      var locationLat = _mapController
+                                          .showEqual[index][index].locationLat;
+                                      var locationLong = _mapController
+                                          .showEqual[index][index].locationLong;
+                                      // print(locationImage);
+                                      return Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Get.toNamed(
+                                              '/locationpage',
+                                              arguments: [
+                                                locationName,
+                                                locationImage,
+                                                locationDesc,
+                                                locationLat,
+                                                locationLong,
+                                              ],
+                                            );
+                                          },
+                                          child: Container(
+                                            width: 200,
+                                            height: double.infinity,
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey,
+                                              border: Border.all(),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(20)),
+                                              image: DecorationImage(
+                                                image:
+                                                    NetworkImage(locationImage),
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                       );
                                     },
-                                    child: Container(
-                                      width: 200,
-                                      height: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey,
-                                        border: Border.all(),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(20)),
-                                        image: DecorationImage(
-                                          image: NetworkImage(locationImage),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
                                   ),
                                 );
-                              },
-                            ),
-                          ),
+                              }),
                         ],
                       );
                     }

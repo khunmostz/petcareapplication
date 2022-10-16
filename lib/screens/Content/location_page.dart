@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:petcare_project/data/promotionId.dart';
 import 'package:petcare_project/utils/constant.dart';
 import 'package:petcare_project/widget/custom_button.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -65,17 +66,55 @@ class LocationPage extends StatelessWidget {
               ),
               SizedBox(height: 20),
               Container(
-                width: size.width,
-                height: size.height * 0.6,
-                decoration: BoxDecoration(
-                  border: Border.all(),
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  image: DecorationImage(
-                    image: NetworkImage(locationImage),
-                    fit: BoxFit.contain,
+                  width: size.width,
+                  height: size.height * 0.6,
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    image: DecorationImage(
+                      image: NetworkImage(locationImage),
+                      fit: BoxFit.contain,
+                    ),
                   ),
-                ),
-              ),
+                  child: ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 1,
+                    itemBuilder: (context, index) {
+                      var proname = '';
+                      var proimage = '';
+                      var filter = listPromoId.where(
+                          (element) => element.name.contains(locationName));
+
+                      filter.forEach((element) {
+                        proname = element.name;
+                        proimage = element.image;
+                      });
+
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: 150,
+                              height: 150,
+                              decoration: BoxDecoration(
+                                // border: Border.all(),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(14),
+                                ),
+                                image: DecorationImage(
+                                  image: AssetImage(proimage),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  )),
               SizedBox(height: 30),
               CustomButton(
                 text: 'นำทาง',

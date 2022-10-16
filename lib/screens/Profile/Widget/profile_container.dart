@@ -339,7 +339,11 @@ class ProfileContainer extends StatelessWidget {
                           ),
                           SizedBox(height: 20),
                           GestureDetector(
-                            onTap: () => _authController.signOut(),
+                            onTap: () {
+                              _authController.signOut().then((value) {
+                                _profileController.profileName.value = '';
+                              });
+                            },
                             child: Text(
                               'ลงชื่อออก',
                               style: GoogleFonts.mitr(
