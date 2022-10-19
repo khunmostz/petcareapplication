@@ -49,26 +49,15 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-<<<<<<< HEAD
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs access to location when open.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>This app needs access to location when in the background.</string>
-=======
-	<key>NSPhotoLibraryUsageDescription</key>
+	  <key>NSPhotoLibraryUsageDescription</key>
 	<string>Upload images for screen background</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Upload image from camera for screen background</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Post videos to profile</string>
-<<<<<<< HEAD
->>>>>>> forgotpage
-=======
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-	<string>sms</string>
-	<string>tel</string>
-	</array>
->>>>>>> 1eae8c36df7722d167e5d6e21015fc327dd68ec7
 </dict>
 </plist>
