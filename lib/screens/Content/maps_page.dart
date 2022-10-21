@@ -187,21 +187,21 @@ class _MapsPageState extends State<MapsPage>
                           SizedBox(height: 20),
 
                           if (_mapController.showEqual.length >= 1)
-                          Row(
-                            children: [
-                              Text(
-                                'สถานที่่ในเครือ',
-                                style: GoogleFonts.mitr(fontSize: 18),
-                              ),
-                              SizedBox(width: 5),
-                              Icon(
-                                Icons.star,
-                                color: Colors.yellow,
-                              ),
-                            ],
-                          )
+                            Row(
+                              children: [
+                                Text(
+                                  'สถานที่่ในเครือ',
+                                  style: GoogleFonts.mitr(fontSize: 18),
+                                ),
+                                SizedBox(width: 5),
+                                Icon(
+                                  Icons.star,
+                                  color: Colors.yellow,
+                                ),
+                              ],
+                            )
                           else
-                          Container(),
+                            Container(),
 
                           SizedBox(height: 20),
                           GetBuilder<MapController>(
@@ -217,6 +217,7 @@ class _MapsPageState extends State<MapsPage>
                                     scrollDirection: Axis.horizontal,
                                     itemCount: _mapController.showEqual.length,
                                     itemBuilder: (context, index) {
+                                      var idx = index;
                                       print('length' +
                                           _mapController.showEqual.length
                                               .toString());

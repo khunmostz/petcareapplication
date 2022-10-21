@@ -93,7 +93,7 @@ class MapController extends GetxController {
               .where((x) =>
                   x.locationName.toString().contains(location['establishment']))
               .toList();
-          print(data.toString());
+          // print(data.toString());
           showEqual.add(data);
 
           // print(showEqual[0][0]);
