@@ -59,7 +59,7 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
     // var value = Categories.where((element) => (element).contains('กบ'));
 
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      // backgroundColor: Colors.grey[300],
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showDialog(
@@ -396,6 +396,7 @@ class _MyPetPageState extends State<MyPetPage> with TickerProviderStateMixin {
                   ),
                 );
               });
+       
         },
         child: Icon(Icons.add),
       ),

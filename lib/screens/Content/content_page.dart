@@ -198,6 +198,7 @@ class _ContentPageState extends State<ContentPage>
                     animation: _contentAniamtion.animationController,
                     builder: (context, _) {
                       return GridView.builder(
+                        physics: BouncingScrollPhysics(),
                         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                           maxCrossAxisExtent: 130,
                           childAspectRatio: 1.5,

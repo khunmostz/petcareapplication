@@ -10,6 +10,7 @@ import 'package:petcare_project/controllers/record_controller.dart';
 import 'package:petcare_project/screens/Content/content_page.dart';
 import 'package:petcare_project/screens/Doctor/docsearch.dart';
 import 'package:petcare_project/screens/Pet/mypet_page.dart';
+import 'package:petcare_project/screens/Pet/re_mypet_page.dart';
 import 'package:petcare_project/screens/Profile/profile_page.dart';
 import 'package:petcare_project/screens/Record/record_page.dart';
 import 'constant.dart';
@@ -35,7 +36,8 @@ class _BottomNavState extends State<BottomNav> {
   final screenUser = [
     ContentPage(),
     RecordPage(),
-    MyPetPage(),
+    // MyPetPage(),
+    ReMyPetPage(),
     ProfilePage(),
   ];
   final screenHospitalH = [
@@ -102,8 +104,14 @@ class _BottomNavState extends State<BottomNav> {
         builder: (_) {
           if (_profileController.userType.value == 'User') {
             return Container(
+              margin: const EdgeInsets.all(12),
               width: size.width,
-              color: kDefualtColorMain,
+              decoration: BoxDecoration(
+                color: kDefualtColorMain,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(36),
+                ),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(kDefualtPadding / 2),
                 child: GNav(
