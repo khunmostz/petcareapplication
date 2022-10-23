@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:petcare_project/controllers/auth_controller.dart';
 import 'package:petcare_project/utils/constant.dart';
 import 'package:petcare_project/widget/custom_button.dart';
@@ -35,12 +36,24 @@ class _SignInContainerState extends State<SignInContainer> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // username textfield
-              Text(
-                'Email',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+              Row(
+                children: [
+                  Text(
+                    'Email',
+                    style: GoogleFonts.mitr(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w200,
+                    ),
+                  ),
+                  Text(
+                    ' *',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 10),
               AuthTextField(
@@ -54,12 +67,24 @@ class _SignInContainerState extends State<SignInContainer> {
                 },
               ),
               SizedBox(height: 20),
-              Text(
-                'Password',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+              Row(
+                children: [
+                  Text(
+                    'Password',
+                    style: GoogleFonts.mitr(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w200,
+                    ),
+                  ),
+                  Text(
+                    ' *',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 10),
               // password textfield
@@ -90,9 +115,7 @@ class _SignInContainerState extends State<SignInContainer> {
                   onTap: () => Get.toNamed('/forgot'),
                   child: Text(
                     'Forgot Password ?',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: GoogleFonts.mitr(),
                   ),
                 ),
               ),
@@ -103,9 +126,7 @@ class _SignInContainerState extends State<SignInContainer> {
                 children: [
                   Text(
                     "Don't have an account ?",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: GoogleFonts.mitr(),
                   ),
                   SizedBox(
                     width: 5,
@@ -114,9 +135,8 @@ class _SignInContainerState extends State<SignInContainer> {
                     onTap: () => Get.toNamed('/signup'),
                     child: Text(
                       'Sign Up',
-                      style: TextStyle(
+                      style: GoogleFonts.mitr(
                         color: kDefualtColorMain,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   )

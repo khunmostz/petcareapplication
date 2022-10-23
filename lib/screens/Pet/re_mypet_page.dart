@@ -20,7 +20,7 @@ class ReMyPetPage extends StatefulWidget {
 
 class _ReMyPetPageState extends State<ReMyPetPage> {
   final PetController _petController = Get.put(PetController());
-  var birdthday, vaccine;
+  var birdthday, vaccine, nevaccine;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +57,7 @@ class _ReMyPetPageState extends State<ReMyPetPage> {
         ),
         Positioned(
           // duration: const Duration(milliseconds: 250),
-          top: -size.height * 0.44,
+          top: -size.height * 0.42,
           left: 15,
           right: 15,
           child: Padding(
@@ -83,7 +83,7 @@ class _ReMyPetPageState extends State<ReMyPetPage> {
                       ),
                       FadeTextAnimation(
                         child: Text(
-                          'หาไรมาใส่',
+                          'รายการสัตว์เลี้ยง',
                           style: GoogleFonts.mitr(
                             color: Colors.grey[600],
                             fontSize: 20,
@@ -453,8 +453,61 @@ class _ReMyPetPageState extends State<ReMyPetPage> {
                                                   ),
                                                 ],
                                               ),
-                                              // SizedBox(height: 30),
-                                              Spacer(),
+                                              SizedBox(height: 10),
+                                              Expanded(
+                                                child: GestureDetector(
+                                                  onTap: () => _petController
+                                                      .selectNextVaccine(
+                                                          this.context,
+                                                          nevaccine),
+                                                  child:
+                                                      GetBuilder<PetController>(
+                                                    id: 'updateNextVaccine',
+                                                    builder: (_) {
+                                                      return Container(
+                                                        width: size.width,
+                                                        height: 60,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border.all(
+                                                              color:
+                                                                  Colors.grey),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(4),
+                                                        ),
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  left: 10),
+                                                          child: Align(
+                                                            alignment: Alignment
+                                                                .centerLeft,
+                                                            child: Text(
+                                                              _petController
+                                                                          .vaccine
+                                                                          .toString() ==
+                                                                      ''
+                                                                  ? 'กำหนดการฉีดวัคซีน'
+                                                                  : _petController
+                                                                      .vaccine
+                                                                      .toString()
+                                                                      .characters
+                                                                      .take(10)
+                                                                      .toString(),
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .black),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
+                                                ),
+                                              ), // SizedBox(height: 30),
+                                              SizedBox(height: 10),
                                               CustomButton(
                                                 text: 'ยืนยัน',
                                                 onPressed: () async {
@@ -520,8 +573,11 @@ class _ReMyPetPageState extends State<ReMyPetPage> {
           ),
         ),
         Positioned(
-          top: -size.height * 0.36,
-          bottom: 10,
+          // top: -size.height * 0.36,
+          top: size.height > 860
+              ? -size.height * 0.001 + 130
+              : -size.height * 0.001 + 100,
+          bottom: 0,
           right: 0,
           left: 0,
           // left: 10,
@@ -532,119 +588,229 @@ class _ReMyPetPageState extends State<ReMyPetPage> {
               tween: Tween(begin: 0, end: 1),
               builder: (context, value, _) {
                 return Transform.scale(
-                    scale: value,
-                    child: Row(children: [
-                      AnimatedContainer(
-                        duration: const Duration(milliseconds: 450),
-                        width: lerpDouble(0, 30, 0.3),
-                        height: lerpDouble(0, size.height * 0.65, 0.3),
-                        decoration: BoxDecoration(
-                          color: kDefualtColorMain,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(14),
-                            bottomLeft: Radius.circular(14),
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black45,
-                              spreadRadius: 1,
-                              blurRadius: 7,
-                              offset: Offset(2, 6),
-                            )
-                          ],
-                        ),
-                      ),
-                      AnimatedContainer(
-                        duration: const Duration(milliseconds: 350),
-                        width: size.width - 30,
-                        height: size.height * 0.2,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(14),
-                            bottomRight: Radius.circular(14),
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black45,
-                              spreadRadius: 1,
-                              blurRadius: 7,
-                              offset: Offset(2, 6),
-                            )
-                          ],
-                          color: Colors.orangeAccent.shade100,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  FadeTextAnimation(
-                                    duration: const Duration(seconds: 1),
-                                    child: Text(
-                                      'ชื่อ Pet Name',
-                                      style: GoogleFonts.mitr(
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                  ),
-                                  FadeTextAnimation(
-                                    duration: const Duration(seconds: 1),
-                                    child: Text(
-                                      'สายพันธฺุ์',
-                                      style: GoogleFonts.mitr(
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ),
-                                  FadeTextAnimation(
-                                    duration: const Duration(seconds: 1),
-                                    child: Text(
-                                      'น้ำหนัก',
-                                      style: GoogleFonts.mitr(
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(height: 10),
-                                  Container(
-                                    width: 100,
-                                    height: 40,
-                                    // color: Colors.black,
-                                    decoration: BoxDecoration(
-                                      color: kDefualtColorMain,
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(20)),
-                                    ),
-                                    child: Center(
-                                        child: Text(
-                                      'เพิ่มเติม',
-                                      style: GoogleFonts.mitr(),
-                                    )),
-                                  )
-                                ],
-                              ),
-                              Container(
-                                width: 100,
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                        'https://www.khaosod.co.th/wpapp/uploads/2021/03/c2-2.jpg'),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ]));
+                  scale: value,
+                  child: StreamBuilder<dynamic>(
+                      stream: _petController.getPet().asStream(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else {
+                          return GetBuilder<PetController>(
+                              id: 'addPets',
+                              builder: (_) {
+                                return GetBuilder<PetController>(builder: (_) {
+                                  return ListView.builder(
+                                      itemCount: _petController.docLength,
+                                      itemBuilder: (context, index) {
+                                        // print('length ${_petController.petName[0]}');
+                                        return Padding(
+                                          padding: const EdgeInsets.only(
+                                              bottom: kDefualtPadding),
+                                          child: GestureDetector(
+                                            onTap: (() async {
+                                              await _petController.fetchTreat(
+                                                  petName: _petController
+                                                      .petName[index]);
+                                              Get.toNamed(
+                                                '/repetdetail',
+                                                arguments: [
+                                                  _petController
+                                                          .petImage[index] ??
+                                                      [],
+                                                  _petController
+                                                          .petName[index] ??
+                                                      [],
+                                                  _petController
+                                                          .petType[index] ??
+                                                      [],
+                                                  _petController
+                                                          .petSpecies[index] ??
+                                                      [],
+                                                ],
+                                              );
+                                            }),
+                                            child: Row(
+                                              children: [
+                                                AnimatedContainer(
+                                                  duration: const Duration(
+                                                      milliseconds: 450),
+                                                  width: lerpDouble(0, 30, 0.3),
+                                                  height: lerpDouble(0,
+                                                      size.height * 0.65, 0.3),
+                                                  decoration: BoxDecoration(
+                                                    color: kDefualtColorMain,
+                                                    borderRadius:
+                                                        BorderRadius.only(
+                                                      topLeft:
+                                                          Radius.circular(14),
+                                                      bottomLeft:
+                                                          Radius.circular(14),
+                                                    ),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: Colors.black45,
+                                                        spreadRadius: 1,
+                                                        blurRadius: 7,
+                                                        offset: Offset(2, 6),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                                AnimatedContainer(
+                                                  duration: const Duration(
+                                                      milliseconds: 350),
+                                                  width: size.width - 30,
+                                                  height: size.height * 0.2,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.only(
+                                                      topRight:
+                                                          Radius.circular(14),
+                                                      bottomRight:
+                                                          Radius.circular(14),
+                                                    ),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: Colors.black45,
+                                                        spreadRadius: 1,
+                                                        blurRadius: 7,
+                                                        offset: Offset(2, 6),
+                                                      )
+                                                    ],
+                                                    color: Colors
+                                                        .orangeAccent.shade100,
+                                                  ),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 20.0),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            FadeTextAnimation(
+                                                              duration:
+                                                                  const Duration(
+                                                                      seconds:
+                                                                          1),
+                                                              child: Text(
+                                                                'ชื่อ: ${_petController.petName[index]}',
+                                                                //'adsad',
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .mitr(
+                                                                  fontSize: 18,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            FadeTextAnimation(
+                                                              duration:
+                                                                  const Duration(
+                                                                      seconds:
+                                                                          1),
+                                                              child: Text(
+                                                                'สายพันธฺุ์: ${_petController.petSpecies[index]}',
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .mitr(
+                                                                  fontSize: 16,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            FadeTextAnimation(
+                                                              duration:
+                                                                  const Duration(
+                                                                      seconds:
+                                                                          1),
+                                                              child: Text(
+                                                                'น้ำหนัก: ${_petController.petWeight[index]}',
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .mitr(
+                                                                  fontSize: 16,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                                height: 10),
+                                                            GestureDetector(
+                                                              onTap: () =>
+                                                                  print(size
+                                                                      .height),
+                                                              child: Container(
+                                                                width: 100,
+                                                                height: 40,
+                                                                // color: Colors.black,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color:
+                                                                      kDefualtColorMain,
+                                                                  borderRadius:
+                                                                      BorderRadius.all(
+                                                                          Radius.circular(
+                                                                              20)),
+                                                                ),
+                                                                child: Center(
+                                                                    child: Text(
+                                                                  'เพิ่มเติม',
+                                                                  style:
+                                                                      GoogleFonts
+                                                                          .mitr(),
+                                                                )),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                        Container(
+                                                          width: 100,
+                                                          height: 100,
+                                                          child: ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        12),
+                                                            child: Hero(
+                                                              tag: _petController
+                                                                      .petName[
+                                                                  index],
+                                                              child:
+                                                                  Image.network(
+                                                                '${_petController.petImage[index]}',
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      });
+                                });
+                              });
+                        }
+                      }),
+                );
               },
             ),
           ),

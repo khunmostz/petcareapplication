@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AuthTextField extends StatelessWidget {
   final String hintText;
@@ -28,6 +29,7 @@ class AuthTextField extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
         ),
         hintText: hintText,
+        hintStyle: GoogleFonts.mitr(),
       ),
       validator: validator,
       onSaved: onSaved,

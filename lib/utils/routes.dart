@@ -13,6 +13,7 @@ import 'package:petcare_project/screens/Doctor/docsearch.dart';
 import 'package:petcare_project/screens/Doctor/userdetail.dart';
 import 'package:petcare_project/screens/Pet/mypet_page.dart';
 import 'package:petcare_project/screens/Pet/petdetail_page.dart';
+import 'package:petcare_project/screens/Pet/re_petdetail_page.dart';
 import 'package:petcare_project/screens/Profile/profile_page.dart';
 import 'package:petcare_project/screens/Record/record_page.dart';
 import 'package:petcare_project/utils/bottomnav.dart';
@@ -37,5 +38,6 @@ class Routes {
     GetPage(name: '/docseach', page: () => DocSearch()),
     GetPage(name: '/userdetail', page: () => UserDetail()),
     GetPage(name: '/adddetailpet', page: () => AddDetailPet()),
+    GetPage(name: '/repetdetail', page: () => RePetDetailPage()),
   ];
 }

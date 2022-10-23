@@ -140,8 +140,14 @@ class _BottomNavState extends State<BottomNav> {
           } else {
             return GetBuilder<AddLocationController>(builder: (_) {
               return Container(
+                margin: const EdgeInsets.all(12),
                 width: size.width,
-                color: kDefualtColorMain,
+                decoration: BoxDecoration(
+                  color: kDefualtColorMain,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(36),
+                  ),
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(kDefualtPadding / 2),
                   child: GNav(

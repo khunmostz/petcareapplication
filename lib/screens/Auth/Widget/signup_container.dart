@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:petcare_project/controllers/auth_controller.dart';
 import 'package:petcare_project/utils/constant.dart';
 import 'package:petcare_project/widget/custom_button.dart';
@@ -35,12 +36,24 @@ class _SignUpContainerState extends State<SignUpContainer> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Username',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+              Row(
+                children: [
+                  Text(
+                    'Username',
+                    style: GoogleFonts.mitr(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w200,
+                    ),
+                  ),
+                  Text(
+                    ' *',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 10),
               // username textfield
@@ -53,12 +66,24 @@ class _SignUpContainerState extends State<SignUpContainer> {
                 },
               ),
               SizedBox(height: 10),
-              Text(
-                'Email',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+              Row(
+                children: [
+                  Text(
+                    'Email',
+                    style: GoogleFonts.mitr(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w200,
+                    ),
+                  ),
+                  Text(
+                    ' *',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 10),
               // email textfield
@@ -73,12 +98,24 @@ class _SignUpContainerState extends State<SignUpContainer> {
                 },
               ),
               SizedBox(height: 20),
-              Text(
-                'Password',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+              Row(
+                children: [
+                  Text(
+                    'Password',
+                    style: GoogleFonts.mitr(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w200,
+                    ),
+                  ),
+                  Text(
+                    ' *',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 10),
               // password textfield
@@ -94,12 +131,24 @@ class _SignUpContainerState extends State<SignUpContainer> {
                 },
               ),
               SizedBox(height: 10),
-              Text(
-                'Confirm Password',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+              Row(
+                children: [
+                  Text(
+                    'Confirm Password',
+                    style: GoogleFonts.mitr(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w200,
+                    ),
+                  ),
+                  Text(
+                    ' *',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 10),
               AuthTextField(
@@ -112,12 +161,24 @@ class _SignUpContainerState extends State<SignUpContainer> {
                 onSaved: (value) {},
               ),
               SizedBox(height: 10),
-              Text(
-                'Types',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+              Row(
+                children: [
+                  Text(
+                    'Types',
+                    style: GoogleFonts.mitr(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w200,
+                    ),
+                  ),
+                  Text(
+                    ' *',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 10),
               // type dropdown
@@ -127,7 +188,13 @@ class _SignUpContainerState extends State<SignUpContainer> {
                 items: _dropdownValue.map((value) {
                   return DropdownMenuItem(
                     value: value,
-                    child: Text(value),
+                    child: Text(
+                      value,
+                      style: GoogleFonts.mitr(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w200,
+                      ),
+                    ),
                   );
                 }).toList(),
                 onChanged: (value) {
@@ -151,9 +218,7 @@ class _SignUpContainerState extends State<SignUpContainer> {
                 alignment: Alignment.centerRight,
                 child: Text(
                   'Forgot Password ?',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: GoogleFonts.mitr(),
                 ),
               ),
               SizedBox(height: 20),
@@ -163,8 +228,8 @@ class _SignUpContainerState extends State<SignUpContainer> {
                 children: [
                   Text(
                     "Already have an account ?",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                    style: GoogleFonts.mitr(
+                      fontWeight: FontWeight.w200,
                     ),
                   ),
                   SizedBox(width: 5),
@@ -174,9 +239,9 @@ class _SignUpContainerState extends State<SignUpContainer> {
                     },
                     child: Text(
                       'Sign In',
-                      style: TextStyle(
+                      style: GoogleFonts.mitr(
                         color: kDefualtColorMain,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w200,
                       ),
                     ),
                   )

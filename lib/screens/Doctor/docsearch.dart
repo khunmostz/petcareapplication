@@ -24,7 +24,7 @@ class _DocSearchState extends State<DocSearch>
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.grey.shade300,
+      backgroundColor: Colors.white,
       body: Container(
         width: double.infinity,
         child: GetBuilder<DocSearchController>(
@@ -44,6 +44,7 @@ class _DocSearchState extends State<DocSearch>
                           return Transform.translate(
                             offset: Offset(0.0, _aniamtion.animation.value),
                             child: Container(
+                              margin: EdgeInsets.only(bottom: 10),
                               decoration: BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20)),

@@ -22,6 +22,7 @@ class PetController extends GetxController {
   List petGender = [].obs;
   List petBday = [].obs;
   List petVday = [].obs;
+  List petNeVday = [].obs;
   List petImage = [].obs;
   List petWeight = [].obs;
 
@@ -34,9 +35,11 @@ class PetController extends GetxController {
 
   late String bday;
   late String vday;
+  late String neday;
 
   RxString birdthday = ''.obs;
   RxString vaccine = ''.obs;
+  RxString nevaccine = ''.obs;
   String? pathImageStore;
 
   File? image;
@@ -57,9 +60,16 @@ class PetController extends GetxController {
     {'id': 11, 'value': 'แมว'},
     {'id': 12, 'value': 'ลิง'},
     {'id': 13, 'value': 'หนู'},
-    {'id': 14, 'value': 'หมา'}
+    {'id': 14, 'value': 'หมา'},
+    {'id': 15, 'value': 'อื่นๆ'}
   ];
   List<dynamic> typeCategories = [
+    {
+      'id': 'อื่นๆ',
+      'type': [
+        'ไม่รู้ (Unknown)',
+      ]
+    },
     {
       'id': 'กบ',
       'type': ['ไม่รู้ (Unknown)', 'ฮอร์นฟร็อก Horned Frogs']
@@ -389,6 +399,36 @@ class PetController extends GetxController {
     ;
   }
 
+  selectNextVaccine(BuildContext context, date) async {
+    DateTime? picker = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2030),
+    ).then((value) {
+      // print(value);
+      if (value == null) {
+        print('-' * 100);
+        var check = value.toString();
+        // print(check);
+        check = 'ตารางวัคซีน';
+        // print(check);
+        nevaccine = check.obs;
+        update(['updateNextVaccine']);
+        return;
+      }
+      date = value;
+      neday = date.toString();
+      nevaccine = neday.obs;
+
+      update(['updateNextVaccine']);
+    });
+
+    if (picker == null) return;
+
+    ;
+  }
+
   Future<dynamic> getPet() async {
     petName = [].obs; // กันมันแสดง index ตัวแรก
     petImage = [].obs;
@@ -438,10 +478,11 @@ class PetController extends GetxController {
         'petName': petNameController.text.trim().toLowerCase(),
         'type': typeController.text.trim().toLowerCase(),
         'species': speciesController.text.trim().toLowerCase(),
-        'weight': weightController.text.trim() + 'กิโลกรัม',
+        'weight': weightController.text.trim() + ' กิโลกรัม',
         'gender': genderController.text.trim().toLowerCase(),
         'birdthday': birdthday.substring(0, 10),
         'vaccine': vaccine.substring(0, 10),
+        'next-vaccine': nevaccine.substring(0, 10),
       }).then((value) {
         petName.add(petNameController.text.trim());
         petImage.add(image);
@@ -451,7 +492,7 @@ class PetController extends GetxController {
         petGender.add(genderController.text.trim());
         petBday.add(pets['birdthday']);
         petVday.add(pets['vaccine']);
-
+        petNeVday.add(pets['next-vaccine']);
         // docLength++;
 
         this.image = null;
@@ -462,7 +503,7 @@ class PetController extends GetxController {
         genderController.text = '';
         birdthday = 'เลือกวันเกิด';
         vaccine = 'ตารางวัคซีน';
-
+        // nevaccine = 'กำหนดการฉีดวัคซีน';
         update(['addPets']);
       });
     } catch (e) {

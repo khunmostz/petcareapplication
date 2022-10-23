@@ -93,10 +93,11 @@ class _PetDetailPageState extends State<PetDetailPage> {
                           ),
                           SizedBox(height: 10),
                           ...List.generate(
-                              _petController.treat.length,
-                              (index) => BlogContent(
-                                    index: index,
-                                  ))
+                            _petController.treat.length,
+                            (index) => BlogContent(
+                              index: index,
+                            ),
+                          )
                         ],
                       ),
                     ),
