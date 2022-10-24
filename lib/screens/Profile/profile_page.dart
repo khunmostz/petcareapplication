@@ -59,7 +59,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     builder: (context, value, _) {
                       return ProfileContainer(size: size);
                     },
-                  ),git 
+                  ),
                 ),
               ],
             ),
