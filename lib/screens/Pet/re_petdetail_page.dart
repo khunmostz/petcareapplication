@@ -104,93 +104,151 @@ class _RePetDetailPageState extends State<RePetDetailPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-          margin: EdgeInsets.only(top: 20),
-          width: gsize.width * 0.7,
-          height: gsize.height * 0.3,
-          decoration: BoxDecoration(
-            color: Colors.orangeAccent.shade100,
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey,
-                blurRadius: 3,
-                spreadRadius: 2,
-                offset: Offset(0, 1),
-              ),
-            ],
-          ),
-          child: Padding(
-            padding: EdgeInsets.all(20),
-            child: FadeTextAnimation(
-              child: Text(
-                '${_petController.treat[index]['description']}',
-                style: GoogleFonts.mitr(
-                  fontSize: 18,
-                ),
-              ),
-            ),
-          ),
-        ),
-        SizedBox(width: 20),
-        Container(
-          margin: EdgeInsets.only(top: 20),
-          width: gsize.width * 0.2,
-          height: gsize.height * 0.3,
-          decoration: BoxDecoration(
-            color: kDefualtColorMain,
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey,
-                blurRadius: 3,
-                spreadRadius: 2,
-                offset: Offset(0, 1),
-              ),
-            ],
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              RotatedBox(
-                quarterTurns: 1,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    FadeTextAnimation(
+        TweenAnimationBuilder<double>(
+            duration: const Duration(milliseconds: 500),
+            tween: Tween(begin: 1.0, end: 0.0),
+            builder: (context, value, _) {
+              double offset = 140.0;
+              return Transform.translate(
+                offset: Offset(-value * offset, value * offset),
+                child: Container(
+                  margin: EdgeInsets.only(top: 20),
+                  width: gsize.width * 0.7,
+                  height: gsize.height * 0.3,
+                  decoration: BoxDecoration(
+                    color: Colors.orangeAccent.shade100,
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 3,
+                        spreadRadius: 2,
+                        offset: Offset(0, 1),
+                      ),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(20),
+                    child: FadeTextAnimation(
                       child: Text(
-                        '${split[0]}',
+                        '${_petController.treat[index]['description']}',
                         style: GoogleFonts.mitr(
-                          fontSize: 20,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FadeTextAnimation(
-                    child: Text(
-                      '${split[2]} / ${split[1]}',
-                      style: GoogleFonts.mitr(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
                   ),
-                ],
-              )
-            ],
-          ),
-        ),
+                ),
+              );
+            }),
+        SizedBox(width: 20),
+        TweenAnimationBuilder<double>(
+            duration: const Duration(milliseconds: 500),
+            tween: Tween(begin: 1.0, end: 0.0),
+            curve: Curves.easeInOut,
+            builder: (context, value, _) {
+              // bool left = false;
+              double offset = 140.0;
+              return Transform.translate(
+                offset: Offset(value * offset, -value * offset),
+                child: Container(
+                  margin: EdgeInsets.only(top: 20),
+                  width: gsize.width * 0.2,
+                  height: gsize.height * 0.3,
+                  decoration: BoxDecoration(
+                    color: kDefualtColorMain,
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 3,
+                        spreadRadius: 2,
+                        offset: Offset(0, 1),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      RotatedBox(
+                        quarterTurns: 1,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            FadeTextAnimation(
+                              child: Text(
+                                '${split[0]}',
+                                style: GoogleFonts.mitr(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Divider(
+                        thickness: 2,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: FadeTextAnimation(
+                                child: Text(
+                                  '${split[2]}',
+                                  style: GoogleFonts.mitr(
+                                    fontSize: 18,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.center,
+                              child: FadeTextAnimation(
+                                child: Text(
+                                  '/',
+                                  style: GoogleFonts.mitr(
+                                    fontSize: 18,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.topRight,
+                              child: FadeTextAnimation(
+                                child: Text(
+                                  '${split[1]}',
+                                  style: GoogleFonts.mitr(
+                                    fontSize: 18,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              );
+            }),
       ],
     );
   }

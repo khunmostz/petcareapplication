@@ -53,78 +53,96 @@ class _ProfilePageState extends State<ProfilePage> {
                   top: 80,
                   right: 0,
                   left: 0,
-                  child: ProfileContainer(size: size),
+                  child: TweenAnimationBuilder<double>(
+                    duration: const Duration(milliseconds: 500),
+                    tween: Tween(begin: 0, end: 1),
+                    builder: (context, value, _) {
+                      return ProfileContainer(size: size);
+                    },
+                  ),git 
                 ),
               ],
             ),
             SizedBox(
               height: 20,
             ),
-            Container(
-              color: Colors.white,
-              width: size.width,
-              height: size.height < 920 ? size.height * 0.7 : size.height * 0.6,
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: kDefualtPadding),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(18),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black26,
-                      blurRadius: 5,
-                      spreadRadius: 1,
+            TweenAnimationBuilder<double>(
+                duration: const Duration(milliseconds: 500),
+                tween: Tween(begin: 0, end: 1),
+                builder: (context, value, _) {
+                  return Opacity(
+                    opacity: value,
+                    child: Container(
+                      color: Colors.white,
+                      width: size.width,
+                      height: size.height < 920
+                          ? size.height * 0.7
+                          : size.height * 0.6,
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: kDefualtPadding),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(18),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black26,
+                              blurRadius: 5,
+                              spreadRadius: 1,
+                            ),
+                          ],
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: kDefualtPadding),
+                          child: StreamBuilder<dynamic>(
+                              stream:
+                                  _profileController.getUserDetail().asStream(),
+                              builder: (context, snapshot) {
+                                return GetBuilder<ProfileController>(
+                                  id: 'getUserDetail',
+                                  builder: (_) {
+                                    return Column(
+                                      children: [
+                                        SizedBox(height: 30),
+                                        ProfileTextField(
+                                          hintText: 'Username',
+                                          readOnly: true,
+                                          controller: _profileController
+                                              .usernameController.value,
+                                        ),
+                                        SizedBox(height: 20),
+                                        ProfileTextField(
+                                          hintText: 'Email',
+                                          readOnly: true,
+                                          controller: _profileController
+                                              .emailController.value,
+                                        ),
+                                        SizedBox(height: 20),
+                                        ProfileTextField(
+                                          hintText: 'Tel',
+                                          readOnly: true,
+                                          controller: _profileController
+                                              .telController.value,
+                                        ),
+                                        SizedBox(height: 20),
+                                        ProfileTextField(
+                                          hintText: 'Address',
+                                          readOnly: true,
+                                          maxLines: 8,
+                                          controller: _profileController
+                                              .addressController.value,
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }),
+                        ),
+                      ),
                     ),
-                  ],
-                ),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: kDefualtPadding),
-                  child: StreamBuilder<dynamic>(
-                      stream: _profileController.getUserDetail().asStream(),
-                      builder: (context, snapshot) {
-                        return GetBuilder<ProfileController>(
-                          id: 'getUserDetail',
-                          builder: (_) {
-                            return Column(
-                              children: [
-                                SizedBox(height: 30),
-                                ProfileTextField(
-                                  hintText: 'Username',
-                                  readOnly: true,
-                                  controller: _profileController
-                                      .usernameController.value,
-                                ),
-                                SizedBox(height: 20),
-                                ProfileTextField(
-                                  hintText: 'Email',
-                                  readOnly: true,
-                                  controller:
-                                      _profileController.emailController.value,
-                                ),
-                                SizedBox(height: 20),
-                                ProfileTextField(
-                                  hintText: 'Tel',
-                                  readOnly: true,
-                                  controller:
-                                      _profileController.telController.value,
-                                ),
-                                SizedBox(height: 20),
-                                ProfileTextField(
-                                  hintText: 'Address',
-                                  readOnly: true,
-                                  maxLines: 8,
-                                  controller: _profileController
-                                      .addressController.value,
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      }),
-                ),
-              ),
-            ),
+                  );
+                }),
             SizedBox(height: 10),
           ],
         ),

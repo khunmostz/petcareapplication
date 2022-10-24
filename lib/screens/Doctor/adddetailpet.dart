@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:petcare_project/controllers/adddetailpet_controller.dart';
 import 'package:petcare_project/utils/constant.dart';
 import 'package:petcare_project/widget/custom_button.dart';
+import 'package:petcare_project/widget/shake_transition.dart';
 
 class AddDetailPet extends StatefulWidget {
   const AddDetailPet({Key? key}) : super(key: key);
@@ -63,46 +64,73 @@ class _AddDetailPetState extends State<AddDetailPet> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Center(
-                child: CircleAvatar(
-                  radius: 100,
-                  backgroundColor: Colors.green,
-                  backgroundImage: NetworkImage('${image}'),
+              TweenAnimationBuilder<double>(
+                  duration: const Duration(milliseconds: 600),
+                  tween: Tween(begin: 1, end: 0),
+                  builder: (context, value, _) {
+                    return Transform(
+                      transform: Matrix4.identity()
+                        ..setEntry(3, 2, 0.002)
+                        ..rotateZ(value),
+                      child: Center(
+                        child: CircleAvatar(
+                          radius: 100,
+                          backgroundColor: Colors.green,
+                          backgroundImage: NetworkImage('${image}'),
+                        ),
+                      ),
+                    );
+                  }),
+              SizedBox(height: 20),
+              ShakeTransition(
+                duration: const Duration(milliseconds: 600),
+                child: Column(
+                  children: [
+                    Text(
+                      'ชื่อ ${petname}',
+                      style: GoogleFonts.mitr(
+                        fontSize: 20,
+                      ),
+                    ),
+                    Text(
+                      'เพศ ${gender} / น้ำหนัก ${weight}',
+                      style: GoogleFonts.mitr(
+                        fontSize: 20,
+                      ),
+                    ),
+                    Text(
+                      'ประเภท ${type} / พันธุ์ ${species}',
+                      style: GoogleFonts.mitr(
+                        fontSize: 20,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(height: 20),
-              Text(
-                'ชื่อ ${petname}',
-                style: GoogleFonts.mitr(
-                  fontSize: 20,
-                ),
-              ),
-              Text(
-                'เพศ ${gender} / น้ำหนัก ${weight}',
-                style: GoogleFonts.mitr(
-                  fontSize: 20,
-                ),
-              ),
-              Text(
-                'ประเภท ${type} / พันธุ์ ${species}',
-                style: GoogleFonts.mitr(
-                  fontSize: 20,
-                ),
+              ShakeTransition(
+                left: false,
+                child: myFormField(_addDetailPetController.dateTimeController,
+                    Icon(Icons.calendar_today), 'วันที่', 1, true),
               ),
               SizedBox(height: 20),
-              myFormField(_addDetailPetController.dateTimeController,
-                  Icon(Icons.calendar_today), 'วันที่', 1, true),
-              SizedBox(height: 20),
-              myFormField(_addDetailPetController.desController,
-                  Icon(Icons.description), 'รายละเอียด', 5, false),
+              ShakeTransition(
+                child: myFormField(_addDetailPetController.desController,
+                    Icon(Icons.description), 'รายละเอียด', 5, false),
+              ),
               SizedBox(height: 20),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: kDefualtPadding),
-                child: CustomButton(
-                  text: 'ยืนยัน',
-                  onPressed: () =>
-                      _addDetailPetController.addPetTreat(petName: petname),
+                child: ShakeTransition(
+                  left: false,
+                  offset: 200,
+                  duration: const Duration(milliseconds: 600),
+                  child: CustomButton(
+                    text: 'ยืนยัน',
+                    onPressed: () =>
+                        _addDetailPetController.addPetTreat(petName: petname),
+                  ),
                 ),
               )
             ],
