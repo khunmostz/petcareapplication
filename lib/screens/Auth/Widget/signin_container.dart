@@ -77,11 +77,10 @@ class _SignInContainerState extends State<SignInContainer> {
                     ),
                   ),
                   Text(
-                    ' *',
+                    ' * 8 ตัวขึ้นไป',
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 13,
                       color: Colors.red,
-                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],

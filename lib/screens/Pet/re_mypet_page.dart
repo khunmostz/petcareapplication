@@ -489,7 +489,7 @@ class _ReMyPetPageState extends State<ReMyPetPage> {
                                                                           .vaccine
                                                                           .toString() ==
                                                                       ''
-                                                                  ? 'กำหนดการฉีดวัคซีน'
+                                                                  ? 'การฉีดวัคซีนครั้งถัดไป'
                                                                   : _petController
                                                                       .vaccine
                                                                       .toString()
