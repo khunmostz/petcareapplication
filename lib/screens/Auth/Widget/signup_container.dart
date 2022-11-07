@@ -171,10 +171,11 @@ class _SignUpContainerState extends State<SignUpContainer> {
                     ),
                   ),
                   Text(
-                    ' * 8 ตัวขึ้นไป',
+                    ' *',
                     style: TextStyle(
-                      fontSize: 13,
+                      fontSize: 18,
                       color: Colors.red,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],

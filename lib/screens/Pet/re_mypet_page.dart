@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
@@ -606,202 +607,260 @@ class _ReMyPetPageState extends State<ReMyPetPage> {
                                       itemCount: _petController.docLength,
                                       itemBuilder: (context, index) {
                                         // print('length ${_petController.petName[0]}');
-                                        return Padding(
-                                          padding: const EdgeInsets.only(
-                                              bottom: kDefualtPadding),
-                                          child: GestureDetector(
-                                            onTap: (() async {
-                                              await _petController.fetchTreat(
-                                                  petName: _petController
-                                                      .petName[index]);
-                                              Get.toNamed(
-                                                '/repetdetail',
-                                                arguments: [
-                                                  _petController
-                                                          .petImage[index] ??
-                                                      [],
-                                                  _petController
-                                                          .petName[index] ??
-                                                      [],
-                                                  _petController
-                                                          .petType[index] ??
-                                                      [],
-                                                  _petController
-                                                          .petSpecies[index] ??
-                                                      [],
-                                                ],
-                                              );
-                                            }),
-                                            child: Row(
-                                              children: [
-                                                AnimatedContainer(
-                                                  duration: const Duration(
-                                                      milliseconds: 450),
-                                                  width: lerpDouble(0, 30, 0.3),
-                                                  height: lerpDouble(0,
-                                                      size.height * 0.65, 0.3),
+                                        return Slidable(
+                                          endActionPane: ActionPane(
+                                            motion: const ScrollMotion(),
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10),
+                                                child: Container(
+                                                  width: size.width * 0.3,
+                                                  height: size.height * 0.14,
                                                   decoration: BoxDecoration(
-                                                    color: kDefualtColorMain,
+                                                    color: Colors.black,
                                                     borderRadius:
-                                                        BorderRadius.only(
-                                                      topLeft:
-                                                          Radius.circular(14),
-                                                      bottomLeft:
-                                                          Radius.circular(14),
+                                                        BorderRadius.all(
+                                                      Radius.circular(20),
                                                     ),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: Colors.black45,
-                                                        spreadRadius: 1,
-                                                        blurRadius: 7,
-                                                        offset: Offset(2, 6),
-                                                      )
-                                                    ],
+                                                  ),
+                                                  child: IconButton(
+                                                    icon: Icon(
+                                                      Icons.delete,
+                                                      color: Colors.white,
+                                                      size: 36,
+                                                    ),
+                                                    onPressed: () {
+                                                      _petController.deletePet(
+                                                          _petController
+                                                              .petName[index],
+                                                          index);
+                                                      setState(() {});
+                                                    },
                                                   ),
                                                 ),
-                                                AnimatedContainer(
-                                                  duration: const Duration(
-                                                      milliseconds: 350),
-                                                  width: size.width - 30,
-                                                  height: size.height * 0.2,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.only(
-                                                      topRight:
-                                                          Radius.circular(14),
-                                                      bottomRight:
-                                                          Radius.circular(14),
-                                                    ),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: Colors.black45,
-                                                        spreadRadius: 1,
-                                                        blurRadius: 7,
-                                                        offset: Offset(2, 6),
-                                                      )
-                                                    ],
-                                                    color: Colors
-                                                        .orangeAccent.shade100,
-                                                  ),
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 20.0),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            FadeTextAnimation(
-                                                              duration:
-                                                                  const Duration(
-                                                                      seconds:
-                                                                          1),
-                                                              child: Text(
-                                                                'ชื่อ: ${_petController.petName[index]}',
-                                                                //'adsad',
-                                                                style:
-                                                                    GoogleFonts
-                                                                        .mitr(
-                                                                  fontSize: 18,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            FadeTextAnimation(
-                                                              duration:
-                                                                  const Duration(
-                                                                      seconds:
-                                                                          1),
-                                                              child: Text(
-                                                                'สายพันธฺุ์: ${_petController.petSpecies[index]}',
-                                                                style:
-                                                                    GoogleFonts
-                                                                        .mitr(
-                                                                  fontSize: 16,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            FadeTextAnimation(
-                                                              duration:
-                                                                  const Duration(
-                                                                      seconds:
-                                                                          1),
-                                                              child: Text(
-                                                                'น้ำหนัก: ${_petController.petWeight[index]}',
-                                                                style:
-                                                                    GoogleFonts
-                                                                        .mitr(
-                                                                  fontSize: 16,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            SizedBox(
-                                                                height: 10),
-                                                            GestureDetector(
-                                                              onTap: () =>
-                                                                  print(size
-                                                                      .height),
-                                                              child: Container(
-                                                                width: 100,
-                                                                height: 40,
-                                                                // color: Colors.black,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color:
-                                                                      kDefualtColorMain,
-                                                                  borderRadius:
-                                                                      BorderRadius.all(
-                                                                          Radius.circular(
-                                                                              20)),
-                                                                ),
-                                                                child: Center(
-                                                                    child: Text(
-                                                                  'เพิ่มเติม',
-                                                                  style:
-                                                                      GoogleFonts
-                                                                          .mitr(),
-                                                                )),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        ),
-                                                        Container(
-                                                          width: 100,
-                                                          height: 100,
-                                                          child: ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        12),
-                                                            child: Hero(
-                                                              tag: _petController
-                                                                      .petName[
-                                                                  index],
-                                                              child:
-                                                                  Image.network(
-                                                                '${_petController.petImage[index]}',
-                                                                fit: BoxFit
-                                                                    .cover,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
+                                              ),
+                                            ],
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: kDefualtPadding),
+                                            child: GestureDetector(
+                                              onTap: (() async {
+                                                await _petController.fetchTreat(
+                                                    petName: _petController
+                                                        .petName[index]);
+                                                Get.toNamed(
+                                                  '/repetdetail',
+                                                  arguments: [
+                                                    _petController
+                                                            .petImage[index] ??
+                                                        [],
+                                                    _petController
+                                                            .petName[index] ??
+                                                        [],
+                                                    _petController
+                                                            .petType[index] ??
+                                                        [],
+                                                    _petController.petSpecies[
+                                                            index] ??
+                                                        [],
+                                                  ],
+                                                );
+                                              }),
+                                              child: Row(
+                                                children: [
+                                                  AnimatedContainer(
+                                                    duration: const Duration(
+                                                        milliseconds: 450),
+                                                    width:
+                                                        lerpDouble(0, 30, 0.3),
+                                                    height: lerpDouble(
+                                                        0,
+                                                        size.height * 0.65,
+                                                        0.22),
+                                                    decoration: BoxDecoration(
+                                                      color: kDefualtColorMain,
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                        topLeft:
+                                                            Radius.circular(14),
+                                                        bottomLeft:
+                                                            Radius.circular(14),
+                                                      ),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: Colors.black45,
+                                                          spreadRadius : 1,
+                                                          blurRadius: 7,
+                                                          offset: Offset(2, 6),
+                                                        )
                                                       ],
                                                     ),
                                                   ),
-                                                ),
-                                              ],
+                                                  AnimatedContainer(
+                                                    duration: const Duration(
+                                                        milliseconds: 350),
+                                                    width: size.width - 30,
+                                                    height: size.height * 0.23,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                        topRight:
+                                                            Radius.circular(14),
+                                                        bottomRight:
+                                                            Radius.circular(14),
+                                                      ),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: Colors.black45,
+                                                          spreadRadius: 1,
+                                                          blurRadius: 7,
+                                                          offset: Offset(2, 6),
+                                                        )
+                                                      ],
+                                                      color: Colors.orangeAccent
+                                                          .shade100,
+                                                    ),
+                                                    child: Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 20.0),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              FadeTextAnimation(
+                                                                duration:
+                                                                    const Duration(
+                                                                        seconds:
+                                                                            1),
+                                                                child: Text(
+                                                                  'ชื่อ: ${_petController.petName[index]}',
+                                                                  //'adsad',
+                                                                  style:
+                                                                      GoogleFonts
+                                                                          .mitr(
+                                                                    fontSize:
+                                                                        18,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              FadeTextAnimation(
+                                                                duration:
+                                                                    const Duration(
+                                                                        seconds:
+                                                                            1),
+                                                                child: Text(
+                                                                  'สายพันธฺุ์: ${_petController.petSpecies[index]}',
+                                                                  style:
+                                                                      GoogleFonts
+                                                                          .mitr(
+                                                                    fontSize:
+                                                                        16,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              FadeTextAnimation(
+                                                                duration:
+                                                                    const Duration(
+                                                                        seconds:
+                                                                            1),
+                                                                child: Text(
+                                                                  'น้ำหนัก: ${_petController.petWeight[index]}',
+                                                                  style:
+                                                                      GoogleFonts
+                                                                          .mitr(
+                                                                    fontSize:
+                                                                        16,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              FadeTextAnimation(
+                                                                duration:
+                                                                    const Duration(
+                                                                        seconds:
+                                                                            1),
+                                                                child: Text(
+                                                                  'การฉีกวัคซีนครั้งถัดไป: \n ${_petController.petNeVday[index]}',
+                                                                  style:
+                                                                      GoogleFonts
+                                                                          .mitr(
+                                                                    fontSize:
+                                                                        16,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                  height: 10),
+                                                              GestureDetector(
+                                                                onTap: () =>
+                                                                    print(size
+                                                                        .height),
+                                                                child:
+                                                                    Container(
+                                                                  width: 100,
+                                                                  height: 40,
+                                                                  // color: Colors.black,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    color:
+                                                                        kDefualtColorMain,
+                                                                    borderRadius:
+                                                                        BorderRadius.all(
+                                                                            Radius.circular(20)),
+                                                                  ),
+                                                                  child: Center(
+                                                                      child:
+                                                                          Text(
+                                                                    'เพิ่มเติม',
+                                                                    style: GoogleFonts
+                                                                        .mitr(),
+                                                                  )),
+                                                                ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                          Container(
+                                                            width: 100,
+                                                            height: 100,
+                                                            child: ClipRRect(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          12),
+                                                              child: Hero(
+                                                                tag: _petController
+                                                                        .petName[
+                                                                    index],
+                                                                child: Image
+                                                                    .network(
+                                                                  '${_petController.petImage[index]}',
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         );

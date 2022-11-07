@@ -453,12 +453,14 @@ class PetController extends GetxController {
           petGender.add(pets['gender']);
           petBday.add(pets['birdthday']);
           petVday.add(pets['vaccine']);
+          petNeVday.add(pets['next-vaccine']);
 
           // petName.refresh();
         });
         print('pet controller' + petName.length.toString());
         docLength = value.docs.length;
         print(petType.length.toString());
+        // print(petNeVday[0]);
         update(['getPets']);
 
         // print(data.toString());
