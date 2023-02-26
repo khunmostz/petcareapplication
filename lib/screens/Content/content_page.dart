@@ -21,6 +21,7 @@ class _ContentPageState extends State<ContentPage>
     with SingleTickerProviderStateMixin {
   final ProfileController _profileController = Get.find<ProfileController>();
   final ContentController _contentController = Get.put(ContentController());
+  // final AuthController _authController = Get.find<AuthController>();
 
   final ContentAnimation _contentAniamtion = Get.put(ContentAnimation());
   final AddLocationController _addLocationController =
@@ -229,6 +230,9 @@ class _ContentPageState extends State<ContentPage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // IconButton(
+                    //     onPressed: () => _authController.signOut(),
+                    //     icon: Icon(Icons.logout)),
                     Text("Promotion",
                         style: GoogleFonts.mitr(
                           fontSize: 20,
