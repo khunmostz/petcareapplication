@@ -1,16 +1,22 @@
-# Petcare Application
+PetCare
+PetCare เป็นแอปพลิเคชัน Flutter ที่ช่วยให้ผู้ใช้งานสามารถหาสถานพยาบาลสัตว์เลี้ยงใกล้เคียงในระยะ 5 กิโลเมตร และบันทึกค่าใช้จ่ายของสัตว์เลี้ยงได้ ผู้ใช้สามารถดูวันฉีดวัคซีนจากหมอได้ ในขณะที่หมอสามารถตรวจสุขภาพของสัตว์เลี้ยงและบันทึกข้อมูลการตรวจได้
 
-A new Flutter project.
+คุณสมบัติ
 
-## Getting Started
+- เข้าสู่ระบบผ่านการล็อกอิน
+- ค้นหาสถานพยาบาลสัตว์เลี้ยงใกล้เคียงในระยะ 5 กิโลเมตร
+- บันทึกค่าใช้จ่ายของสัตว์เลี้ยง
+- รายละเอียดของสัตว์เลี้ยงที่แนะนำจากหมอ
+- แผนที่แสดงสถานที่ใกล้เคียงกับสถานพยาบาลสัตว์เลี้ยง
+  นำทางไปยังสถานที่
+- ผู้ใช้สามารถดูข้อมูลสำคัญเกี่ยวกับสัตว์เลี้ยงของตนได้หลังจากหมอ
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+การใช้งาน
+1.เปิดแอพพลิเคชัน PetCare
+2.กดที่ปุ่ม "เข้าสู่ระบบ" แล้วกรอกข้อมูลการล็อกอิน
+3.เมื่อเข้าสู่ระบบเรียบร้อยแล้ว
+4.หน้าจอหลักของแอปพลิเคชันจะแสดงรายการสถานพยาบาลสัตว์เลี้ยงใกล้เคียงในระยะ 5.กิโลเมตร ที่สามารถค้นหาได้
+6.กดที่รายการสถานพยาบาลสัตว์เลี้ยงเพื่อดูรายละเอียดของสถานพยาบาลสัตว์เลี้ยง
+กรอกข้อมูล
+ึ7.หากต้องการดูรายละเอียดของสัตว์เลี้ยงที่แนะนำจากหมอ กดที่เมนู "สัตว์เลี้ยง"
+8.หากต้องการดูแผนที่และนำทางไปยังสถานพยาบาลสัตว์เลี้ยง กดที่ปุ่ม "ตามสถานที่นั้นๆ" เช่น Groomer
